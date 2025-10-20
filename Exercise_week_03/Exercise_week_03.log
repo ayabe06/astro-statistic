@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.9.8)  14 OCT 2025 21:00
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.9.8)  21 OCT 2025 02:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**Exercise_week_02
-(./Exercise_week_02.tex
+**Exercise_week_03
+(./Exercise_week_03.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/base/article.cls
@@ -867,7 +867,7 @@ Package: mathrsfs 1996/01/01 Math RSFS package v1.0 (jk)
 \Wrappedvisiblespacebox=\box101
 Package hyperref Info: Option `breaklinks' set `true' on input line 402.
 Package hyperref Info: Option `colorlinks' set `true' on input line 402.
- (./Exercise_week_02.aux
+ (./Exercise_week_03.aux
 
 LaTeX Warning: Label `discussions' multiply defined.
 
@@ -875,7 +875,7 @@ LaTeX Warning: Label `discussions' multiply defined.
 LaTeX Warning: Label `discussions' multiply defined.
 
 )
-\openout1 = `Exercise_week_02.aux'.
+\openout1 = `Exercise_week_03.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 409.
 LaTeX Font Info:    ... okay on input line 409.
@@ -1089,9 +1089,9 @@ LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/cmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 409.
 Package hyperref Info: Link coloring ON on input line 409.
-(./Exercise_week_02.out) (./Exercise_week_02.out)
+(./Exercise_week_03.out) (./Exercise_week_03.out)
 \@outlinefile=\write5
-\openout5 = `Exercise_week_02.out'.
+\openout5 = `Exercise_week_03.out'.
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
 (Font)              scaled to size 12.00128pt on input line 411.
@@ -1117,6 +1117,25 @@ LaTeX Font Info:    Trying to load font information for U+rsfs on input line 411
  (/usr/local/texlive/2025/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
+
+LaTeX Warning: No \author given.
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 10.95116pt on input line 432.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 7.6658pt on input line 432.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.47559pt on input line 432.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 10.94882pt on input line 432.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 7.66417pt on input line 432.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.47441pt on input line 432.
+
+LaTeX Font Warning: Font shape `U/rsfs/m/n' in size <5.475> not available
+(Font)              size <5> substituted on input line 432.
+
 
 Package fontspec Info: 
 (fontspec)             Script 'CJK' not explicitly supported within font
@@ -1151,44 +1170,38 @@ Package fontspec Info:
 (fontspec)             <->"STFangsong/OT:script=hani;language=dflt;"
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00053pt on input line 448.
+(Font)              scaled to size 5.00053pt on input line 449.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 448.
+(Font)              scaled to size 4.99947pt on input line 449.
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 451.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 453.
+
+LaTeX Font Warning: Font shape `TU/STFangsong(0)/m/it' undefined
+(Font)              using `TU/STFangsong(0)/m/n' instead on input line 461.
+
 
 
 [1
 
 ]
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.95116pt on input line 518.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.6658pt on input line 518.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.47559pt on input line 518.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.94882pt on input line 518.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.66417pt on input line 518.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.47441pt on input line 518.
-
-
-LaTeX Font Warning: Font shape `U/rsfs/m/n' in size <5.475> not available
-(Font)              size <5> substituted on input line 518.
-
-
 
 [2]
+File: Exercise_week_03_files/Exercise_week_03_4_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_4_0.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 524--525
+
+ []
+
+
 
 [3]
-File: Exercise_week_02_files/Exercise_week_02_10_0.png Graphic file (type bmp)
-<Exercise_week_02_files/Exercise_week_02_10_0.png>
-
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 624--625
+File: Exercise_week_03_files/Exercise_week_03_8_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_8_0.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 602--603
 
  []
 
@@ -1197,88 +1210,171 @@ Underfull \hbox (badness 10000) in paragraph at lines 624--625
 [5]
 
 [6]
+File: Exercise_week_03_files/Exercise_week_03_11_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_11_0.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 691--692
+
+ []
+
+
 
 [7]
-File: Exercise_week_02_files/Exercise_week_02_16_0.png Graphic file (type bmp)
-<Exercise_week_02_files/Exercise_week_02_16_0.png>
-
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 785--786
+File: Exercise_week_03_files/Exercise_week_03_12_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_12_0.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 739--740
 
  []
 
 
 
 [9]
+File: Exercise_week_03_files/Exercise_week_03_14_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_14_0.png>
+
 
 [10]
+Underfull \hbox (badness 10000) in paragraph at lines 802--803
+
+ []
+
+
 
 [11]
 
 [12]
-File: Exercise_week_02_files/Exercise_week_02_24_0.png Graphic file (type bmp)
-<Exercise_week_02_files/Exercise_week_02_24_0.png>
+File: Exercise_week_03_files/Exercise_week_03_17_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_17_0.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 964--965
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 887--888
 
  []
 
 
+Underfull \hbox (badness 4084) in paragraph at lines 914--917
+[]\TU/lmr/bx/n/10.95 Hint: \TU/lmr/m/n/10.95 The Pareto distribution with parameters $[]$ and $[][]$ can be sampled using:
+ []
 
-[13]
+
 
 [14]
 
 [15]
-File: Exercise_week_02_files/Exercise_week_02_30_0.png Graphic file (type bmp)
-<Exercise_week_02_files/Exercise_week_02_30_0.png>
+File: Exercise_week_03_files/Exercise_week_03_21_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_21_0.png>
 
-
-[16]
-Underfull \hbox (badness 10000) in paragraph at lines 1118--1119
+Underfull \hbox (badness 10000) in paragraph at lines 981--982
 
  []
 
 
 
+[16]
+
 [17]
 
 [18]
-File: Exercise_week_02_files/Exercise_week_02_33_0.png Graphic file (type bmp)
-<Exercise_week_02_files/Exercise_week_02_33_0.png>
+File: Exercise_week_03_files/Exercise_week_03_25_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_25_0.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 1213--1214
+Underfull \hbox (badness 10000) in paragraph at lines 1087--1088
 
  []
 
 
 
 [19]
+File: Exercise_week_03_files/Exercise_week_03_26_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_26_0.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 1122--1123
+
+ []
+
+
 
 [20]
-File: Exercise_week_02_files/Exercise_week_02_36_0.png Graphic file (type bmp)
-<Exercise_week_02_files/Exercise_week_02_36_0.png>
+File: Exercise_week_03_files/Exercise_week_03_27_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_27_0.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 1157--1158
+
+ []
+
 
 
 [21]
-Underfull \hbox (badness 10000) in paragraph at lines 1302--1303
-
- []
-
-
 
 [22]
-File: Exercise_week_02_files/Exercise_week_02_37_0.png Graphic file (type bmp)
-<Exercise_week_02_files/Exercise_week_02_37_0.png>
+File: Exercise_week_03_files/Exercise_week_03_30_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_30_0.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 1336--1337
+Underfull \hbox (badness 10000) in paragraph at lines 1225--1226
 
  []
 
 
 
-[23] (./Exercise_week_02.aux)
+[23]
+File: Exercise_week_03_files/Exercise_week_03_31_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_31_0.png>
+
+
+[24]
+Underfull \hbox (badness 10000) in paragraph at lines 1274--1275
+
+ []
+
+
+
+[25]
+File: Exercise_week_03_files/Exercise_week_03_32_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_32_0.png>
+
+
+[26]
+Underfull \hbox (badness 10000) in paragraph at lines 1329--1330
+
+ []
+
+
+
+[27]
+
+[28]
+File: Exercise_week_03_files/Exercise_week_03_36_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_36_0.png>
+
+
+[29]
+Underfull \hbox (badness 10000) in paragraph at lines 1440--1441
+
+ []
+
+
+
+[30]
+
+[31]
+
+[32]
+File: Exercise_week_03_files/Exercise_week_03_37_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_37_0.png>
+
+
+[33]
+Underfull \hbox (badness 10000) in paragraph at lines 1561--1562
+
+ []
+
+
+
+[34] (./Exercise_week_03.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/07/14>
@@ -1289,18 +1385,21 @@ LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.475pt have occurred.
 
 
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
 LaTeX Warning: There were multiply-defined labels.
 
-Package rerunfilecheck Info: File `Exercise_week_02.out' has not changed.
-(rerunfilecheck)             Checksum: A1217197093DC1B5DE25DF3E69A9BB5F;1682.
+Package rerunfilecheck Info: File `Exercise_week_03.out' has not changed.
+(rerunfilecheck)             Checksum: 8EB34A016EDA854B4989FF1A5C1F10AA;1759.
  ) 
 Here is how much of TeX's memory you used:
- 36057 strings out of 473832
- 745713 string characters out of 5729482
- 1309205 words of memory out of 5000000
- 58509 multiletter control sequences out of 15000+600000
- 568897 words of font info for 117 fonts, out of 8000000 for 9000
+ 36120 strings out of 473832
+ 748258 string characters out of 5729482
+ 1324332 words of memory out of 5000000
+ 58556 multiletter control sequences out of 15000+600000
+ 568937 words of font info for 122 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 116i,7n,121p,597b,754s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 116i,7n,121p,670b,764s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Exercise_week_02.pdf (23 pages).
+Output written on Exercise_week_03.pdf (34 pages).

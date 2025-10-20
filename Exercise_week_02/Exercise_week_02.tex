@@ -1,9 +1,8 @@
 \documentclass[11pt]{article}
-
+    \author{刘乐融}
     \usepackage[breakable]{tcolorbox}
     \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
     \usepackage{ctex}
-    
 
     % Basic figure setup, for now with no caption control since it's done
     % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
@@ -445,7 +444,7 @@ Estimate the expected number of floods per 365-day year.
 and rainy days, e.g., 0 for sunny and 1 for rainy.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{4}{\boxspacing}
+\prompt{In}{incolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} NOTE: Run this cell in the first place}
 \PY{c+c1}{\PYZsh{} Load packages for numerical calculations and plotting}
@@ -458,7 +457,7 @@ and rainy days, e.g., 0 for sunny and 1 for rainy.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{5}{\boxspacing}
+\prompt{In}{incolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} A helper function to return the lengths of consecutive runs of 1s in a binary array}
 \PY{k}{def}\PY{+w}{ }\PY{n+nf}{consecutive\PYZus{}ones}\PY{p}{(}\PY{n}{arr}\PY{p}{)}\PY{p}{:}
@@ -474,7 +473,7 @@ and rainy days, e.g., 0 for sunny and 1 for rainy.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{6}{\boxspacing}
+\prompt{In}{incolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Set the random seed}
 \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{2024011182} \PY{c+c1}{\PYZsh{} NOTE: EDIT HERE to insert your student ID as the seed}
@@ -493,7 +492,7 @@ Fraction of rainy days: 49.9785\%
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{7}{\boxspacing}
+\prompt{In}{incolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Get the lengths of consecutive rainy days}
 \PY{n}{rainy\PYZus{}lengths} \PY{o}{=} \PY{n}{consecutive\PYZus{}ones}\PY{p}{(}\PY{n}{weather}\PY{p}{)}
@@ -539,7 +538,7 @@ scales to clearly show the differences between the two distributions. 3.
 Comment on the differences between the two distributions.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{8}{\boxspacing}
+\prompt{In}{incolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def}\PY{+w}{ }\PY{n+nf}{markov\PYZus{}chain\PYZus{}simulation}\PY{p}{(}\PY{n}{transition\PYZus{}matrix}\PY{p}{,} \PY{n}{n\PYZus{}steps}\PY{p}{,} \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
 \PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Markov\PYZhy{}chain Monte\PYZhy{}Carlo simulation of weather data.}
@@ -564,7 +563,7 @@ Comment on the differences between the two distributions.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{9}{\boxspacing}
+\prompt{In}{incolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{nsample} \PY{o}{=} \PY{l+m+mi}{365} \PY{o}{*} \PY{l+m+mi}{100} \PY{c+c1}{\PYZsh{} number of days to simulate}
 \PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to complete the transition matrix simulate}
@@ -583,7 +582,7 @@ Fraction of rainy days (Markov chain): 51.1836\%
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{10}{\boxspacing}
+\prompt{In}{incolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Get the lengths of consecutive rainy days}
 \PY{n}{rainy\PYZus{}lengths\PYZus{}mc} \PY{o}{=} \PY{n}{consecutive\PYZus{}ones}\PY{p}{(}\PY{n}{weather\PYZus{}mc}\PY{p}{)}
@@ -599,7 +598,7 @@ Fraction of rainy days (Markov chain): 51.1836\%
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{11}{\boxspacing}
+\prompt{In}{incolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to plot the histogram of lengths of rainy day runs}
 \PY{n}{bins} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{rainy\PYZus{}lengths\PYZus{}mc}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{)}
@@ -663,7 +662,7 @@ rainy on the \(N\)-th day as functions of \(N\) with appropriate axes
 scales. 3. Comment on the results.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{12}{\boxspacing}
+\prompt{In}{incolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Modify the Markov\PYZhy{}chain simulation for three states: sunny, cloudy, and rainy}
 \PY{k}{def}\PY{+w}{ }\PY{n+nf}{markov\PYZus{}chain\PYZus{}simulation\PYZus{}3}\PY{p}{(}\PY{n}{transition\PYZus{}matrix}\PY{p}{,} \PY{n}{n\PYZus{}steps}\PY{p}{,} \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
@@ -690,7 +689,7 @@ scales. 3. Comment on the results.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{13}{\boxspacing}
+\prompt{In}{incolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{transition\PYZus{}matrix\PYZus{}3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{0.2}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{]}\PY{p}{,}
                                 \PY{p}{[}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.2}\PY{p}{]}\PY{p}{,}
@@ -714,7 +713,7 @@ Probability of rainy on the 5th day: 0.18
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{14}{\boxspacing}
+\prompt{In}{incolor}{13}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{nsample} \PY{o}{=} \PY{l+m+mi}{100} \PY{c+c1}{\PYZsh{} number of days to simulate}
 \PY{n}{days} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{200}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{]}\PY{p}{)}
@@ -751,7 +750,7 @@ Probability of rainy on the 5th day: 0.18
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{15}{\boxspacing}
+\prompt{In}{incolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to plot the probabilities of different weather states on different days}
 \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
@@ -821,7 +820,7 @@ average age of a solar-mass star when it becomes a white dwarf using the
 4-state Markov model.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{16}{\boxspacing}
+\prompt{In}{incolor}{15}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def}\PY{+w}{ }\PY{n+nf}{markov\PYZus{}chain\PYZus{}simulation\PYZus{}star}\PY{p}{(}\PY{n}{transition\PYZus{}matrix}\PY{p}{,} \PY{n}{n\PYZus{}steps}\PY{p}{,} \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
 \PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Markov\PYZhy{}chain Monte\PYZhy{}Carlo simulation of stellar evolution with four states: }
@@ -849,7 +848,7 @@ average age of a solar-mass star when it becomes a white dwarf using the
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{17}{\boxspacing}
+\prompt{In}{incolor}{16}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def}\PY{+w}{ }\PY{n+nf}{stellar\PYZus{}age}\PY{p}{(}\PY{n}{states}\PY{p}{)}\PY{p}{:}
 \PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Calculate the age of a star based on its state sequence.}
@@ -871,7 +870,7 @@ average age of a solar-mass star when it becomes a white dwarf using the
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{18}{\boxspacing}
+\prompt{In}{incolor}{17}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{stellar\PYZus{}transition\PYZus{}matrix} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{]}\PY{p}{,}
                                       \PY{p}{[}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{0.99}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{]}\PY{p}{,}
@@ -893,7 +892,7 @@ average age of a solar-mass star when it becomes a white dwarf using the
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{19}{\boxspacing}
+\prompt{In}{incolor}{18}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Compute the ages of all stars}
 \PY{n}{ages} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{stellar\PYZus{}age}\PY{p}{(}\PY{n}{states}\PY{p}{)} \PY{k}{for} \PY{n}{states} \PY{o+ow}{in} \PY{n}{stellar\PYZus{}states}\PY{p}{]}\PY{p}{)}
@@ -918,7 +917,7 @@ porportion of stars in each stage (Y, M, R, W) as a function of time (up
 to 10 billion years). Use appropriate axes scales.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{20}{\boxspacing}
+\prompt{In}{incolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Compute the fractions of stars in each stage over time}
 \PY{n}{fractions} \PY{o}{=} \PY{p}{(}\PY{n}{stellar\PYZus{}states}\PY{p}{[}\PY{o}{.}\PY{o}{.}\PY{o}{.}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]} \PY{o}{==} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}
@@ -979,7 +978,7 @@ population.
 simulation?
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{21}{\boxspacing}
+\prompt{In}{incolor}{20}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}
 \PY{n}{birth\PYZus{}times} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{integers}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n}{nsample}\PY{p}{)}   \PY{c+c1}{\PYZsh{} Birth times of stars (unit: 10 million years)}
@@ -1034,7 +1033,7 @@ clear, then check if there are two consecutive 1s within the \(D\)
 nights starting from a random night.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{22}{\boxspacing}
+\prompt{In}{incolor}{21}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{durations} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{]}
 
@@ -1057,7 +1056,7 @@ nights starting from a random night.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{23}{\boxspacing}
+\prompt{In}{incolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def}\PY{+w}{ }\PY{n+nf}{generate\PYZus{}clear\PYZus{}nights}\PY{p}{(}\PY{n}{probability} \PY{o}{=} \PY{l+m+mf}{0.6}\PY{p}{,} \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
 \PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}generate a binary random number sequence for clear and unusable nights with probability:}
@@ -1082,7 +1081,7 @@ nights starting from a random night.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{24}{\boxspacing}
+\prompt{In}{incolor}{23}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{detection\PYZus{}probabilities} \PY{o}{=} \PY{p}{[}\PY{p}{]}
 
@@ -1148,7 +1147,7 @@ nights is still 0.6. Compare your transient detection probability
 results with those from Question 3.1.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{25}{\boxspacing}
+\prompt{In}{incolor}{24}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def}\PY{+w}{ }\PY{n+nf}{generate\PYZus{}clear\PYZus{}nights\PYZus{}mc}\PY{p}{(}\PY{n}{transition\PYZus{}matrix\PYZus{}question\PYZus{}3}\PY{p}{,} \PY{n}{num\PYZus{}steps}\PY{p}{,} \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
 \PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}generate a binary random number sequence for clear and unusable nights with markov chain method:}
@@ -1175,7 +1174,7 @@ results with those from Question 3.1.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{26}{\boxspacing}
+\prompt{In}{incolor}{25}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{detection\PYZus{}probabilities\PYZus{}mc} \PY{o}{=} \PY{p}{[}\PY{p}{]}
 \PY{n}{transition\PYZus{}matrix\PYZus{}question\PYZus{}3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{0.3}\PY{p}{]}\PY{p}{,}
@@ -1232,7 +1231,7 @@ rerun the weather simulation; just apply the cadence gaps to the results
 from Question 3.2.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{34}{\boxspacing}
+\prompt{In}{incolor}{26}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def}\PY{+w}{ }\PY{n+nf}{generate\PYZus{}clear\PYZus{}nights\PYZus{}mc\PYZus{}gaps}\PY{p}{(}\PY{n}{transition\PYZus{}matrix\PYZus{}question\PYZus{}3\PYZus{}gaps}\PY{p}{,} \PY{n}{num\PYZus{}steps}\PY{p}{,} \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
 \PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}generate a binary random number sequence for clear and unusable nights with markov chain method, considering the gaps:}
@@ -1264,7 +1263,7 @@ from Question 3.2.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{ }{\boxspacing}
+\prompt{In}{incolor}{27}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{detection\PYZus{}probabilities\PYZus{}mc\PYZus{}gaps} \PY{o}{=} \PY{p}{[}\PY{p}{]}
 \PY{n}{transition\PYZus{}matrix\PYZus{}question\PYZus{}3\PYZus{}gaps} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{0.3}\PY{p}{]}\PY{p}{,}
@@ -1299,6 +1298,40 @@ from Question 3.2.
 
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_02_files/Exercise_week_02_36_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+    \PY{n}{durations}\PY{p}{,}
+    \PY{n}{detection\PYZus{}probabilities}\PY{p}{,}
+    \PY{n}{marker} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Detection probability}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+    \PY{n}{durations}\PY{p}{,}
+    \PY{n}{detection\PYZus{}probabilities\PYZus{}mc}\PY{p}{,}
+    \PY{n}{marker} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Detection probability (Markov chain)}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+    \PY{n}{durations}\PY{p}{,}
+    \PY{n}{detection\PYZus{}probabilities\PYZus{}mc\PYZus{}gaps}\PY{p}{,}
+    \PY{n}{marker} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Detection probability (Markov chain with gaps)}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Duration of transient event}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Probability of successful detection}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Detection probabilities for different duration}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_02_files/Exercise_week_02_37_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
