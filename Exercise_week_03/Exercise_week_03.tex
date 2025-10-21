@@ -445,7 +445,7 @@ with the formula derived in the lecture slides:
 between consecutive arrivals.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{1}{\boxspacing}
+\prompt{In}{incolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} NOTE: Run this cell in the first place}
 \PY{c+c1}{\PYZsh{} Load packages for numerical calculations and plotting}
@@ -463,7 +463,7 @@ between consecutive arrivals.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{2}{\boxspacing}
+\prompt{In}{incolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def}\PY{+w}{ }\PY{n+nf}{photon\PYZus{}arrivals}\PY{p}{(}\PY{n}{flux}\PY{p}{,} \PY{n}{duration}\PY{p}{,} \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
 \PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Simulate photon arrival times for a steady source.}
@@ -483,7 +483,7 @@ between consecutive arrivals.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{3}{\boxspacing}
+\prompt{In}{incolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Set the random seed}
 \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{2024011182} \PY{c+c1}{\PYZsh{} NOTE: EDIT HERE to insert your student ID as the seed}
@@ -536,7 +536,7 @@ per-frame expectation) for each run, and report the mean fraction over
 the 100 runs.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{4}{\boxspacing}
+\prompt{In}{incolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{t\PYZus{}fr} \PY{o}{=} \PY{l+m+mf}{0.01} \PY{c+c1}{\PYZsh{} s}
 \PY{n}{bin\PYZus{}edges} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{duration} \PY{o}{+} \PY{n}{t\PYZus{}fr}\PY{p}{,} \PY{n}{t\PYZus{}fr}\PY{p}{)}
@@ -567,7 +567,7 @@ photon. 2. Overlay the theoretical distribution of \(t_5\) using the
 formula above.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{5}{\boxspacing}
+\prompt{In}{incolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} For each photon, compute the waiting time to the 5th photon after it}
 \PY{n}{t5} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{convolve}\PY{p}{(}\PY{n}{intervals}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{mode} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{valid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -640,7 +640,7 @@ Gaussian distribution on each histogram.
 of the Gaussian distribution are, and how they depend on \(N_{\rm fr}\).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{6}{\boxspacing}
+\prompt{In}{incolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Set the random seed}
 \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{2024011182} \PY{c+c1}{\PYZsh{} NOTE: EDIT HERE to insert your student ID as the seed}
@@ -656,7 +656,7 @@ of the Gaussian distribution are, and how they depend on \(N_{\rm fr}\).
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{7}{\boxspacing}
+\prompt{In}{incolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to plot the histogram of num\PYZus{}photons and overlay the theoretical Poisson distribution}
 \PY{c+c1}{\PYZsh{} Use integer\PYZhy{}centered bins for counts and overlay the Poisson PMF for k = 0..kmax}
@@ -756,7 +756,7 @@ histogram, with the standard deviation of
 Derive the mean of the Gaussian distribution based on the CLT.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{11}{\boxspacing}
+\prompt{In}{incolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{nframes} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{64}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{1024}\PY{p}{]} \PY{c+c1}{\PYZsh{} number of frames for the total exposure}
 \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
@@ -818,7 +818,7 @@ distribution on each histogram, with the same mean and standard
 deviation as in Question 2.1. 4. Comment on what you observe.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{12}{\boxspacing}
+\prompt{In}{incolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{flux\PYZus{}transient} \PY{o}{=} \PY{l+m+mi}{1000} \PY{c+c1}{\PYZsh{} photon/s}
 \PY{n}{epsilon} \PY{o}{=} \PY{l+m+mf}{0.01} \PY{c+c1}{\PYZsh{} probability of transient contamination}
@@ -832,7 +832,7 @@ deviation as in Question 2.1. 4. Comment on what you observe.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{ }{\boxspacing}
+\prompt{In}{incolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{nframes} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{64}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{1024}\PY{p}{]} \PY{c+c1}{\PYZsh{} number of frames for the total exposure}
 \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
@@ -916,7 +916,7 @@ random seeds. 3. Comment on what you observe.
 \texttt{rng.pareto(a=alpha,\ size=1)\ *\ x\_m\ +\ x\_m}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{15}{\boxspacing}
+\prompt{In}{incolor}{13}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{epsilon} \PY{o}{=} \PY{l+m+mf}{0.01} \PY{c+c1}{\PYZsh{} probability of cosmic\PYZhy{}ray contamination}
 \PY{n}{pareto\PYZus{}alpha} \PY{o}{=} \PY{l+m+mf}{1.5} \PY{c+c1}{\PYZsh{} shape parameter for Pareto distribution}
@@ -939,7 +939,7 @@ random seeds. 3. Comment on what you observe.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{17}{\boxspacing}
+\prompt{In}{incolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{nframes} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{64}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{1024}\PY{p}{]} \PY{c+c1}{\PYZsh{} number of frames for the total exposure}
 \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
@@ -1014,7 +1014,7 @@ spherical shells with equal thickness, and overlaying the theoretical
 expectation.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{22}{\boxspacing}
+\prompt{In}{incolor}{15}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Set the random seed}
 \PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{2024011182} \PY{c+c1}{\PYZsh{} NOTE: EDIT HERE to insert your student ID as the seed}
@@ -1053,7 +1053,7 @@ Theoretical acceptance ratio: 52.3599\%
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{58}{\boxspacing}
+\prompt{In}{incolor}{16}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Plot the histogram of r}
 \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}
@@ -1087,7 +1087,7 @@ Theoretical acceptance ratio: 52.3599\%
     { \hspace*{\fill} \\}
     
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{57}{\boxspacing}
+\prompt{In}{incolor}{17}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Sample r from the theoretical distribution directly}
 \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed}\PY{p}{)}
@@ -1122,7 +1122,7 @@ Theoretical acceptance ratio: 52.3599\%
     { \hspace*{\fill} \\}
     
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{56}{\boxspacing}
+\prompt{In}{incolor}{18}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Define spherical shells with equal thickness}
 \PY{n}{r\PYZus{}edges} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)} \PY{c+c1}{\PYZsh{} 10 shells}
@@ -1171,7 +1171,7 @@ with appropriate parameters. 4. Given your observations from tasks 2 and
 Question 3.1 with appropriate error bars. Comment on your results.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{34}{\boxspacing}
+\prompt{In}{incolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{seeds} \PY{o}{=} \PY{p}{[}\PY{n}{seed} \PY{o}{+} \PY{n}{i} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1000}\PY{p}{)}\PY{p}{]} \PY{c+c1}{\PYZsh{} Different seeds based on student ID}
 \PY{n}{r\PYZus{}samples} \PY{o}{=} \PY{p}{[}\PY{p}{]}
@@ -1187,7 +1187,7 @@ Question 3.1 with appropriate error bars. Comment on your results.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{41}{\boxspacing}
+\prompt{In}{incolor}{20}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{binom}\PY{p}{,} \PY{n}{poisson}
 
@@ -1225,7 +1225,7 @@ Question 3.1 with appropriate error bars. Comment on your results.
     { \hspace*{\fill} \\}
     
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{48}{\boxspacing}
+\prompt{In}{incolor}{21}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Count stars within r \PYZlt{} 0.1}
 \PY{n}{r\PYZus{}thres\PYZus{}2} \PY{o}{=} \PY{l+m+mf}{0.1}
@@ -1274,7 +1274,7 @@ Question 3.1 with appropriate error bars. Comment on your results.
     { \hspace*{\fill} \\}
     
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{135}{\boxspacing}
+\prompt{In}{incolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Define spherical shells with equal thickness}
 \PY{n}{r\PYZus{}edges} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)} \PY{c+c1}{\PYZsh{} 10 shells}
@@ -1357,7 +1357,7 @@ with appropriate axes scales. Can you guess the underlying flux
 distribution function and overlay it on the histogram?
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{53}{\boxspacing}
+\prompt{In}{incolor}{23}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
 
@@ -1373,7 +1373,7 @@ distribution function and overlay it on the histogram?
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{110}{\boxspacing}
+\prompt{In}{incolor}{24}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Plot the histograms of luminosities and overlay theoretical distributions}
 \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
@@ -1439,8 +1439,28 @@ distribution function and overlay it on the histogram?
     \end{center}
     { \hspace*{\fill} \\}
     
+    理论分布如何计算？实际上我们这里有几个分布：对于每个 \(r\)，\(L\)
+有一个具体的分布，但是这个分布可能和 \(r\) 有关；\(r\)
+自身是均匀分布；我们要求的是 \(F\) 的分布函数.
+
+考虑处在 \(r\to r+\text{d}r\) 段的 \(r\)，概率为
+\(P_r(r)\text{d}r\)，这和在 \(f\to f+\text{d}f\) 段的 \(F\)
+概率相等，于是
+
+\[
+P_r(r)\text{d}r = P_f(f)\text{d}f \Longrightarrow P_f(f) = P_r(r)\left|\frac{\text{d}r}{\text{d}f}\right|
+\]
+
+但是，这里的 \(f\) 和 \(P_f(f)\) 并不是 \(F\) 和
+\(P_F(F)\)！因为我们并未考虑 \(L\) 自己分布的影响，所以上面得到的其实是
+\(P_F(F|L = L_0)\). 利用乘法规则，积分一次应该能够得到我们想要的结果：
+
+\[
+P_F(F) = \int_{L'} P_F(F|L = L')P(L')\text{d}L'
+\]
+
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{164}{\boxspacing}
+\prompt{In}{incolor}{25}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Compute the observed fluxes}
 \PY{n}{luminosities} \PY{o}{=} \PY{p}{[}\PY{n}{luminosity\PYZus{}1}\PY{p}{,} \PY{n}{luminosity\PYZus{}2}\PY{p}{,} \PY{n}{luminosity\PYZus{}3}\PY{p}{,} \PY{n}{luminosity\PYZus{}4}\PY{p}{]}
@@ -1556,7 +1576,7 @@ distribution function and overlay it on the histogram?
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_03_files/Exercise_week_03_37_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_03_files/Exercise_week_03_38_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     

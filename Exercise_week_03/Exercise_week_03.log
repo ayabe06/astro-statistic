@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.9.8)  21 OCT 2025 02:08
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.9.8)  21 OCT 2025 10:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1363,12 +1363,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 1440--1441
 [31]
 
 [32]
-File: Exercise_week_03_files/Exercise_week_03_37_0.png Graphic file (type bmp)
-<Exercise_week_03_files/Exercise_week_03_37_0.png>
+File: Exercise_week_03_files/Exercise_week_03_38_0.png Graphic file (type bmp)
+<Exercise_week_03_files/Exercise_week_03_38_0.png>
 
 
 [33]
-Underfull \hbox (badness 10000) in paragraph at lines 1561--1562
+Underfull \hbox (badness 10000) in paragraph at lines 1581--1582
 
  []
 
@@ -1394,10 +1394,10 @@ Package rerunfilecheck Info: File `Exercise_week_03.out' has not changed.
 (rerunfilecheck)             Checksum: 8EB34A016EDA854B4989FF1A5C1F10AA;1759.
  ) 
 Here is how much of TeX's memory you used:
- 36120 strings out of 473832
- 748258 string characters out of 5729482
- 1324332 words of memory out of 5000000
- 58556 multiletter control sequences out of 15000+600000
+ 36168 strings out of 473832
+ 751314 string characters out of 5729482
+ 1326333 words of memory out of 5000000
+ 58604 multiletter control sequences out of 15000+600000
  568937 words of font info for 122 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  116i,7n,121p,670b,764s stack positions out of 10000i,1000n,20000p,200000b,200000s
