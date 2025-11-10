@@ -1,0 +1,1530 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+\usepackage{ctex}
+    
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Keep aspect ratio if custom image width or height is specified
+    \setkeys{Gin}{keepaspectratio}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+
+    \usepackage{iftex}
+    \ifPDFTeX
+        \usepackage[T1]{fontenc}
+        \IfFileExists{alphabeta.sty}{
+              \usepackage{alphabeta}
+          }{
+              \usepackage[mathletters]{ucs}
+              \usepackage[utf8x]{inputenc}
+          }
+    \else
+        \usepackage{fontspec}
+        \usepackage{unicode-math}
+    \fi
+
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{array}     % table support for pandoc >= 2.11.3
+    \usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{soul}      % strikethrough (\st) support for pandoc >= 3.0.0
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \makeatletter
+    \newsavebox\pandoc@box
+    \newcommand*\pandocbounded[1]{%
+      \sbox\pandoc@box{#1}%
+      % scaling factors for width and height
+      \Gscale@div\@tempa\textheight{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+      \Gscale@div\@tempb\linewidth{\wd\pandoc@box}%
+      % select the smaller of both
+      \ifdim\@tempb\p@<\@tempa\p@
+        \let\@tempa\@tempb
+      \fi
+      % scaling accordingly (\@tempa < 1)
+      \ifdim\@tempa\p@<\p@
+        \scalebox{\@tempa}{\usebox\pandoc@box}%
+      % scaling not needed, use as it is
+      \else
+        \usebox{\pandoc@box}%
+      \fi
+    }
+    \makeatother
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Exercise\_week\_05}
+    
+    
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@ges}{\let\PY@bf=\textbf\let\PY@it=\textit}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb.
+    \makeatletter
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+            \catcode`\.\active
+            \catcode`\,\active
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active
+            \lccode`\~`\~
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \section{Statistical Methods in Astrophysics
+Exercises}\label{statistical-methods-in-astrophysics-exercises}
+
+\subsection{Week 05: Model Selection}\label{week-05-model-selection}
+
+\subsubsection{Personal Information}\label{personal-information}
+
+\textbf{Name:} physnya
+
+    \subsubsection{Exercise 1: Coin
+identification}\label{exercise-1-coin-identification}
+
+We compare two models for coin tossing: - \textbf{Model \(M_1\) (fixed
+parameter):} Head probability is a fixed value: 1. \(\hat{f} = 0.2\) 2.
+\(\hat{f} = 0.4\) 3. \(\hat{f} = 0.5\) - \textbf{Model \(M_2\) (free
+parameter):} Head probability \(f\) is a free parameter with a flat
+prior in the range \([0, 1]\).
+
+Assume a model prior of \(P(M_1|I) = P(M_2|I)\).
+
+The formulae for computing the likelihoods and posterior odds are given
+in the lecture slides.
+
+\paragraph{Question 1.1: Coin identification based on tossing
+results}\label{question-1.1-coin-identification-based-on-tossing-results}
+
+\textbf{Tasks:} 1. Simulate a total of 2500 coin tosses with a true head
+probability of \(f_{\rm true} = 0.5\). 2. For each
+\(N \in \{ 2^5, 2^7, 2^9, 2^{11} \}\), compute the posterior log-odds
+\(\ln O_{21} \equiv \ln [p(M_2|D, I) / p(M_1|D, I)]\) for each of the
+three fixed-parameter models in \(M_1\). 3. Run 1000 independent
+simulations for each \(N\) and each model, and plot the distributions of
+\(\ln O_{21}\).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: Run this cell in the first place}
+\PY{c+c1}{\PYZsh{} Load packages for numerical calculations and plotting}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{plt}
+\PY{c+c1}{\PYZsh{} Enable inline plotting in Jupyter notebooks}
+\PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{figure.figsize}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{figure.dpi}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{300}
+\PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\PY{n}{plt}\PY{o}{.}\PY{n}{rc}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{usetex} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{rc}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{font}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{family} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{serif}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} 由于设置了图片的高 dpi 和字体，所以编译速度变慢.}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{sim\PYZus{}coin\PYZus{}toss}\PY{p}{(}\PY{n}{num}\PY{p}{,} \PY{n}{head\PYZus{}prob}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Simulate coin tosses}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        num: int, number of tosses}
+\PY{l+s+sd}{        head\PYZus{}prob: float, probability of getting heads}
+\PY{l+s+sd}{        seed: int, random seed}
+\PY{l+s+sd}{    Return: array of int, 1 for heads and 0 for tails}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{tosses} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{num}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{head\PYZus{}prob}
+    \PY{k}{return} \PY{n}{tosses}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{special}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{betaln}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{posterior\PYZus{}odds\PYZus{}coin}\PY{p}{(}\PY{n}{tosses}\PY{p}{,} \PY{n}{fhat}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the log posterior odds of unknown coin head probability vs fixed head probability (fhat)}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        tosses: array of int, 1 for heads and 0 for tails}
+\PY{l+s+sd}{        fhat: float, fixed head probability for model comparison}
+\PY{l+s+sd}{    Return: float, log posterior odds}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{ntoss} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{tosses}\PY{p}{)}
+    \PY{n}{nhead} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{tosses}\PY{p}{)}
+    \PY{n}{ln\PYZus{}odds} \PY{o}{=} \PY{n}{betaln}\PY{p}{(}\PY{n}{nhead} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{ntoss} \PY{o}{\PYZhy{}} \PY{n}{nhead} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{fhat}\PY{p}{)} \PY{o}{*} \PY{n}{nhead} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{fhat}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{n}{ntoss} \PY{o}{\PYZhy{}} \PY{n}{nhead}\PY{p}{)}
+    \PY{k}{return} \PY{n}{ln\PYZus{}odds}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Set the random seed}
+\PY{c+c1}{\PYZsh{} NOTE: EDIT HERE to insert your seed as the seed}
+\PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{2024011182}
+\PY{n}{nsample} \PY{o}{=} \PY{l+m+mi}{2500}
+\PY{n}{nsims} \PY{o}{=} \PY{l+m+mi}{1000}
+\PY{n}{ftrue} \PY{o}{=} \PY{l+m+mf}{0.5}
+
+\PY{c+c1}{\PYZsh{} Simulate coin toss data}
+\PY{n}{data\PYZus{}coin} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{nsims}\PY{p}{)}\PY{p}{:}
+    \PY{n}{data\PYZus{}coin}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{sim\PYZus{}coin\PYZus{}toss}\PY{p}{(}\PY{n}{nsample}\PY{p}{,} \PY{n}{head\PYZus{}prob}\PY{o}{=}\PY{n}{ftrue}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{o}{+}\PY{n}{i}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{num\PYZus{}tosses} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{11}\PY{p}{]} \PY{c+c1}{\PYZsh{} Number of tosses to consider}
+\PY{n}{fhats} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{l+m+mf}{0.4}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{]}                \PY{c+c1}{\PYZsh{} Fixed head probabilities to compare against}
+\PY{n}{log\PYZus{}odds\PYZus{}results} \PY{o}{=} \PY{p}{[}\PY{p}{]}                  \PY{c+c1}{\PYZsh{} Store log posterior odds results}
+
+\PY{k}{for} \PY{n}{sim\PYZus{}data} \PY{o+ow}{in} \PY{n}{data\PYZus{}coin}\PY{p}{:}
+    \PY{n}{log\PYZus{}odds\PYZus{}results\PYZus{}sim} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n}{num\PYZus{}tosses}\PY{p}{:}
+        \PY{n}{toss\PYZus{}sample} \PY{o}{=} \PY{n}{sim\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{n}{n}\PY{p}{]}
+        \PY{n}{log\PYZus{}odds\PYZus{}toss} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{fhat} \PY{o+ow}{in} \PY{n}{fhats}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to compute the log posterior odds}
+            \PY{n}{log\PYZus{}odds} \PY{o}{=} \PY{n}{posterior\PYZus{}odds\PYZus{}coin}\PY{p}{(}\PY{n}{toss\PYZus{}sample}\PY{p}{,} \PY{n}{fhat}\PY{p}{)}
+            \PY{n}{log\PYZus{}odds\PYZus{}toss}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{log\PYZus{}odds}\PY{p}{)}
+        \PY{n}{log\PYZus{}odds\PYZus{}results\PYZus{}sim}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{log\PYZus{}odds\PYZus{}toss}\PY{p}{)}
+    \PY{n}{log\PYZus{}odds\PYZus{}results}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{log\PYZus{}odds\PYZus{}results\PYZus{}sim}\PY{p}{)}
+
+\PY{n}{log\PYZus{}odds\PYZus{}results} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{log\PYZus{}odds\PYZus{}results}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Plot the distributions of log posterior odds}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+\PY{n}{ax} \PY{o}{=} \PY{p}{[}\PY{p}{[}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{fhats}\PY{p}{)}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{num\PYZus{}tosses}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{num\PYZus{}tosses}\PY{p}{)}\PY{p}{)}
+    \PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{fhats}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+\PY{n}{fhat\PYZus{}colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{fhat} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{fhats}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{j}\PY{p}{,} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{num\PYZus{}tosses}\PY{p}{)}\PY{p}{:}
+        \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}
+            \PY{n}{log\PYZus{}odds\PYZus{}results}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{p}{,}
+            \PY{n}{histtype}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{step}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{,} \PY{n}{density}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{fhat\PYZus{}colors}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+        \PY{p}{)}
+        \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{fhat} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{fhats}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}p(}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{ln O\PYZus{}}\PY{l+s+si}{\PYZob{}21\PYZcb{}}\PY{l+s+s1}{)\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}
+        \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s+s1}{hat}\PY{l+s+se}{\PYZob{}\PYZob{}}\PY{l+s+s1}{f}\PY{l+s+se}{\PYZcb{}\PYZcb{}}\PY{l+s+s1}{ = }\PY{l+s+si}{\PYZob{}}\PY{n}{fhat}\PY{l+s+si}{:}\PY{l+s+s1}{g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xy}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{0.6}\PY{p}{,} \PY{l+m+mf}{0.7}\PY{p}{)}\PY{p}{,} \PY{n}{xycoords}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{axes fraction}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{12}
+    \PY{p}{)}
+
+\PY{k}{for} \PY{n}{j}\PY{p}{,} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{num\PYZus{}tosses}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}N = }\PY{l+s+si}{\PYZob{}}\PY{n}{n}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{ln O\PYZus{}}\PY{l+s+si}{\PYZob{}21\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_6_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{Question 1.2: Decisions based on posterior
+odds}\label{question-1.2-decisions-based-on-posterior-odds}
+
+We now use the Kass \& Raftery (1995) criteria to make decisions based
+on the posterior odds: - Barely worth mentioning: \(|\ln O_{21}| < 1\) -
+Substantial: \(1 \leq |\ln O_{21}| < 3\) - Strong:
+\(3 \leq |\ln O_{21}| < 5\) - Decisive: \(|\ln O_{21}| \geq 5\)
+
+\textbf{Tasks:} 1. For each \(N\) and \(\hat{f}\), compute the fraction
+of runs in each category. 2. For each \(\hat{f}\), plot the fractions of
+different categories as a function of \(N\).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to complete the question}
+\PY{n}{barely\PYZus{}worth\PYZus{}mentionings} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{substantials} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{strongs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{decisives} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{fhat} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{fhats}\PY{p}{)}\PY{p}{:}
+    \PY{n}{barely\PYZus{}worth\PYZus{}mentioning\PYZus{}fhats} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{n}{substantial\PYZus{}fhats} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{n}{strong\PYZus{}fhats} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{n}{decisive\PYZus{}fhats} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{k}{for} \PY{n}{j}\PY{p}{,} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{num\PYZus{}tosses}\PY{p}{)}\PY{p}{:}
+        \PY{n}{arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{log\PYZus{}odds\PYZus{}results}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{p}{)}
+        \PY{n}{barely\PYZus{}worth\PYZus{}mentioning} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{count\PYZus{}nonzero}\PY{p}{(}\PY{n}{arr} \PY{o}{\PYZlt{}} \PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{substantial} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{count\PYZus{}nonzero}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{logical\PYZus{}and}\PY{p}{(}\PY{n}{arr} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{arr} \PY{o}{\PYZlt{}} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+        \PY{n}{strong} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{count\PYZus{}nonzero}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{logical\PYZus{}and}\PY{p}{(}\PY{n}{arr} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{arr} \PY{o}{\PYZlt{}} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+        \PY{n}{decisive} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{count\PYZus{}nonzero}\PY{p}{(}\PY{n}{arr} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{5}\PY{p}{)}
+        \PY{n}{barely\PYZus{}worth\PYZus{}mentioning\PYZus{}fhats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{barely\PYZus{}worth\PYZus{}mentioning} \PY{o}{/} \PY{l+m+mi}{1000}\PY{p}{)}
+        \PY{n}{substantial\PYZus{}fhats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{substantial} \PY{o}{/} \PY{l+m+mi}{1000}\PY{p}{)}
+        \PY{n}{strong\PYZus{}fhats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{strong} \PY{o}{/} \PY{l+m+mi}{1000}\PY{p}{)}
+        \PY{n}{decisive\PYZus{}fhats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{decisive} \PY{o}{/} \PY{l+m+mi}{1000}\PY{p}{)}
+    \PY{n}{barely\PYZus{}worth\PYZus{}mentionings}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{barely\PYZus{}worth\PYZus{}mentioning\PYZus{}fhats}\PY{p}{)}
+    \PY{n}{substantials}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{substantial\PYZus{}fhats}\PY{p}{)}
+    \PY{n}{strongs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{strong\PYZus{}fhats}\PY{p}{)}
+    \PY{n}{decisives}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{decisive\PYZus{}fhats}\PY{p}{)}
+    
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{fhat} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{fhats}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{j}\PY{p}{,} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{num\PYZus{}tosses}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ fhat = }\PY{l+s+si}{\PYZob{}}\PY{n}{fhat}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  N = }\PY{l+s+si}{\PYZob{}}\PY{n}{n}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{, barely worth mentioning: }\PY{l+s+si}{\PYZob{}}\PY{n}{barely\PYZus{}worth\PYZus{}mentionings}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s2}{.1\PYZpc{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{, substantial: }\PY{l+s+si}{\PYZob{}}\PY{n}{substantials}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s2}{.1\PYZpc{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{, strong: }\PY{l+s+si}{\PYZob{}}\PY{n}{strongs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s2}{.1\PYZpc{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{, decisive: }\PY{l+s+si}{\PYZob{}}\PY{n}{decisives}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s2}{.1\PYZpc{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n}{fig}\PY{p}{,} \PY{n}{axs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{18}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{line\PYZus{}labels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{barely worth mentioning}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{substantial}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{strong}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{decisive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{line\PYZus{}colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{fhat} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{fhats}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ax} \PY{o}{=} \PY{n}{axs}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+        \PY{n}{num\PYZus{}tosses}\PY{p}{,} \PY{n}{barely\PYZus{}worth\PYZus{}mentionings}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{barely worth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{line\PYZus{}colors}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+        \PY{n}{num\PYZus{}tosses}\PY{p}{,} \PY{n}{substantials}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{substantial}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{line\PYZus{}colors}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+    \PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+        \PY{n}{num\PYZus{}tosses}\PY{p}{,} \PY{n}{strongs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{strong}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{line\PYZus{}colors}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+    \PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+        \PY{n}{num\PYZus{}tosses}\PY{p}{,} \PY{n}{decisives}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{decisive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{line\PYZus{}colors}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}
+    \PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}N\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+        \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fraction}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s+s1}{hat}\PY{l+s+se}{\PYZob{}\PYZob{}}\PY{l+s+s1}{f}\PY{l+s+se}{\PYZcb{}\PYZcb{}}\PY{l+s+s1}{ = }\PY{l+s+si}{\PYZob{}}\PY{n}{fhat}\PY{l+s+si}{:}\PY{l+s+s1}{g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{n+nb}{len}\PY{p}{(}\PY{n}{fhats}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{:}
+        \PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{8}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+data:
+ fhat = 0.2
+  N = 32, barely worth mentioning: 4.5\%, substantial: 13.4\%, strong: 25.1\%,
+decisive: 57.0\%
+ fhat = 0.2
+  N = 128, barely worth mentioning: 0.0\%, substantial: 0.0\%, strong: 0.1\%,
+decisive: 99.9\%
+ fhat = 0.2
+  N = 512, barely worth mentioning: 0.0\%, substantial: 0.0\%, strong: 0.0\%,
+decisive: 100.0\%
+ fhat = 0.2
+  N = 2048, barely worth mentioning: 0.0\%, substantial: 0.0\%, strong: 0.0\%,
+decisive: 100.0\%
+ fhat = 0.4
+  N = 32, barely worth mentioning: 47.9\%, substantial: 49.8\%, strong: 1.3\%,
+decisive: 1.0\%
+ fhat = 0.4
+  N = 128, barely worth mentioning: 39.7\%, substantial: 43.6\%, strong: 10.0\%,
+decisive: 6.7\%
+ fhat = 0.4
+  N = 512, barely worth mentioning: 4.0\%, substantial: 8.9\%, strong: 15.0\%,
+decisive: 72.1\%
+ fhat = 0.4
+  N = 2048, barely worth mentioning: 0.0\%, substantial: 0.0\%, strong: 0.0\%,
+decisive: 100.0\%
+ fhat = 0.5
+  N = 32, barely worth mentioning: 33.1\%, substantial: 66.5\%, strong: 0.4\%,
+decisive: 0.0\%
+ fhat = 0.5
+  N = 128, barely worth mentioning: 13.5\%, substantial: 86.3\%, strong: 0.2\%,
+decisive: 0.0\%
+ fhat = 0.5
+  N = 512, barely worth mentioning: 4.5\%, substantial: 95.2\%, strong: 0.2\%,
+decisive: 0.1\%
+ fhat = 0.5
+  N = 2048, barely worth mentioning: 2.4\%, substantial: 27.2\%, strong: 70.4\%,
+decisive: 0.0\%
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_8_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{Question 1.3: Large sample
+limit}\label{question-1.3-large-sample-limit}
+
+\textbf{Tasks:} 1. For each \(\hat{f}\), plot the mean and standard
+deviation of \(\ln O_{21}\) as a function of \(N\). 2. For
+\(\hat{f} = 0.5\), recompute the posterior log-odds with
+\(N=2^k, k=1,2,\dots,11\), plot the mean of \(\ln O_{21}\) as a function
+of \(N\). Overplot the analytical expectation in the large sample limit.
+3. Discuss your results for all questions in this exercise.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Plot the summary statistics}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\PY{n}{ax} \PY{o}{=} \PY{p}{[}\PY{p}{[}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{fhats}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+    \PY{p}{]} \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{fhats}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{fhat} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{fhats}\PY{p}{)}\PY{p}{:}
+    \PY{n}{means} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{log\PYZus{}odds\PYZus{}results}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{stds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{log\PYZus{}odds\PYZus{}results}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to make the plots; choose appropriate axes scales}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{errorbar}\PY{p}{(}
+        \PY{n}{num\PYZus{}tosses}\PY{p}{,} \PY{n}{means}\PY{p}{,} \PY{n}{yerr}\PY{o}{=}\PY{n}{stds}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{capsize}\PY{o}{=}\PY{l+m+mi}{3}
+    \PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+        \PY{n}{num\PYZus{}tosses}\PY{p}{,} \PY{n}{stds}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}
+    \PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}N = }\PY{l+s+si}{\PYZob{}}\PY{n}{num\PYZus{}tosses}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}N = }\PY{l+s+si}{\PYZob{}}\PY{n}{num\PYZus{}tosses}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+        \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{overline}\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{ln O\PYZus{}}\PY{l+s+si}{\PYZob{}12\PYZcb{}}\PY{l+s+s2}{\PYZcb{}\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sigma\PYZus{}}\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{ln O\PYZus{}}\PY{l+s+si}{\PYZob{}12\PYZcb{}}\PY{l+s+s2}{\PYZcb{}\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_10_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{num\PYZus{}tosses2} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{o}{*}\PY{o}{*}\PY{n}{k} \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{)}\PY{p}{]}
+\PY{n}{mean\PYZus{}log\PYZus{}odds\PYZus{}f05} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n}{num\PYZus{}tosses2}\PY{p}{:}
+    \PY{n}{log\PYZus{}odds\PYZus{}f05} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{k}{for} \PY{n}{sim\PYZus{}data} \PY{o+ow}{in} \PY{n}{data\PYZus{}coin}\PY{p}{:}
+        \PY{n}{toss\PYZus{}sample} \PY{o}{=} \PY{n}{sim\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{n}{n}\PY{p}{]}
+        \PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to compute the log posterior odds for fhat=0.5}
+        \PY{n}{log\PYZus{}odds} \PY{o}{=} \PY{n}{posterior\PYZus{}odds\PYZus{}coin}\PY{p}{(}\PY{n}{toss\PYZus{}sample}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{)}
+        \PY{n}{log\PYZus{}odds\PYZus{}f05}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{log\PYZus{}odds}\PY{p}{)}
+    \PY{n}{mean\PYZus{}log\PYZus{}odds\PYZus{}f05}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{log\PYZus{}odds\PYZus{}f05}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to plot the mean posterior log\PYZhy{}odds as a function of N and overplot the analytical expectation }
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+    \PY{n}{num\PYZus{}tosses2}\PY{p}{,}
+    \PY{n}{mean\PYZus{}log\PYZus{}odds\PYZus{}f05}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mean}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+\PY{n}{num\PYZus{}tosses2\PYZus{}arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{num\PYZus{}tosses2}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+    \PY{n}{num\PYZus{}tosses2\PYZus{}arr}\PY{p}{,}
+    \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{num\PYZus{}tosses2\PYZus{}arr}\PY{p}{)} \PY{o}{+} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{expectation}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}N\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{overline}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{ln O\PYZus{}}\PY{l+s+si}{\PYZob{}21\PYZcb{}}\PY{l+s+s1}{\PYZcb{}\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subparagraph{Discussions}\label{discussions}
+
+可以发现在数据量变大的时候，后验比离 \(1\)
+更远，这表现出我们对其中一个模型的信任程度增加；而且更加简单的模型
+(比如概率均匀分布) 比固定概率的模型要更加可信.
+
+    \subsubsection{Exercise 2: Signal identification: Gaussian
+vs.~Lorentzian}\label{exercise-2-signal-identification-gaussian-vs.-lorentzian}
+
+A series of signals \(\{x_i\}_{i=1}^N\) come from a distribution
+centered at 0. We want to decide whether the signals are from a Gaussian
+distribution or a Lorentzian distribution. - \textbf{Model \(M_G\)
+(Gaussian):} The signals are from a Gaussian distribution with mean 0
+and standard deviation \(\sigma\) (unknown):
+\[p(x|\sigma, M_G) = \frac{1}{\sqrt{2\pi}\sigma} \exp\left[-\frac{(x-\mu)^2}{2\sigma^2}\right],\]
+- \textbf{Model \(M_L\) (Lorentzian):} The signals are from a Lorentzian
+distribution with location 0 and scale \(\gamma\) (unknown):
+\[p(x|\gamma, M_L) = \frac{1}{\pi} \left[ \frac{\gamma}{(x-\mu)^2+\gamma^2} \right]\]
+
+Assume a model prior of \(P(M_G|I) = P(M_L|I)\).
+
+\paragraph{Question 2.1: Signal
+sampling}\label{question-2.1-signal-sampling}
+
+\textbf{Tasks:} 1. Sample two datasets of size 150 from each
+distribution: - Dataset 1: Gaussian with \(\mu_{\rm true} = 0\) and
+\(\sigma_{\rm true} = 1\). - Dataset 2: Lorentzian with
+\(\mu_{\rm true} = 0\) and \(\gamma_{\rm true} = 1\). 2. Plot the
+histograms overlaid with the true PDFs. 3. For each
+\(N \in \{ 8, 16, 32, 64, 128 \}\), compute the sample mean, standard
+deviation, and median for each dataset. Plot the results as a function
+of \(N\).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{sim\PYZus{}signal}\PY{p}{(}\PY{n}{num}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gaussian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Simulate the series of signals}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        num: int, number of signals to simulate}
+\PY{l+s+sd}{        dist: str, type of distribution (\PYZsq{}gaussian\PYZsq{} or \PYZsq{}lorentzian\PYZsq{})}
+\PY{l+s+sd}{        mu: float, mean of the distribution}
+\PY{l+s+sd}{        sigma: float, standard deviation for Gaussian}
+\PY{l+s+sd}{        gamma: float, scale parameter for Lorentzian}
+\PY{l+s+sd}{        seed: int, random seed}
+\PY{l+s+sd}{    Return: array of float, simulated signals}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to simulate signals based on the specified distribution}
+    \PY{k}{if} \PY{n}{dist} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gaussian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+        \PY{n}{signals} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{mu}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{num}\PY{p}{)}
+    \PY{k}{elif} \PY{n}{dist} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lorentzian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+        \PY{n}{signals} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{standard\PYZus{}cauchy}\PY{p}{(}\PY{n}{num}\PY{p}{)} \PY{o}{*} \PY{n}{gamma} \PY{o}{+} \PY{n}{mu}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Unsupported distribution type.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{k}{return} \PY{n}{signals}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{30}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Simulate the signals}
+\PY{n}{mu\PYZus{}true} \PY{o}{=} \PY{l+m+mf}{0.0}
+\PY{n}{sigma\PYZus{}true} \PY{o}{=} \PY{l+m+mf}{1.0}
+\PY{n}{gamma\PYZus{}true} \PY{o}{=} \PY{l+m+mf}{1.0}
+\PY{n}{nsample} \PY{o}{=} \PY{l+m+mi}{150}
+
+\PY{n}{data\PYZus{}g} \PY{o}{=} \PY{n}{sim\PYZus{}signal}\PY{p}{(}\PY{n}{nsample}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gaussian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{n}{mu\PYZus{}true}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{n}{sigma\PYZus{}true}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+\PY{n}{data\PYZus{}l} \PY{o}{=} \PY{n}{sim\PYZus{}signal}\PY{p}{(}\PY{n}{nsample}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lorentzian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{n}{mu\PYZus{}true}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{n}{gamma\PYZus{}true}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to plot the histograms of the simulated signals}
+\PY{n}{fig}\PY{p}{,} \PY{n}{axs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{2000}\PY{p}{)}
+
+\PY{n}{data\PYZus{}g\PYZus{}theory} \PY{o}{=} \PY{l+m+mi}{1} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{*} \PY{n}{sigma\PYZus{}true}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{mu\PYZus{}true}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{sigma\PYZus{}true}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+\PY{n}{data\PYZus{}l\PYZus{}theory} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{n}{gamma\PYZus{}true} \PY{o}{/} \PY{p}{(}\PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{mu\PYZus{}true}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{gamma\PYZus{}true}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}
+    \PY{n}{data\PYZus{}g}\PY{p}{,} \PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{,} \PY{n}{density}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+    \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gaussian sample}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+    \PY{n}{x}\PY{p}{,} \PY{n}{data\PYZus{}g\PYZus{}theory}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gaussian theory}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlim}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{x}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}
+    \PY{n}{data\PYZus{}l}\PY{p}{,} \PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{800}\PY{p}{,} \PY{n}{density}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+    \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lorentzian sample}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+    \PY{n}{x}\PY{p}{,} \PY{n}{data\PYZus{}l\PYZus{}theory}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lorentzian theory}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlim}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{x}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_17_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    说明：这里画出了理论的分布曲线，因为 Lorentz
+分布不归一，然后生成的时候出现了在 \(500\) 这种非常大位置的点，这导致
+\texttt{bins}
+取值必须要很大，来满足数据分布太宽、图片难以放下的需求；同时为了表现这个
+sampling 是满足这两个理论分布的，把理论曲线也画出来了.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{32}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{num\PYZus{}signals} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{64}\PY{p}{,} \PY{l+m+mi}{128}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{512}\PY{p}{,} \PY{l+m+mi}{1024}\PY{p}{]}  \PY{c+c1}{\PYZsh{} Different numbers of signals to consider}
+
+\PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to compute the sample statistics and plot the results as function of number of signals}
+\PY{n}{mean\PYZus{}data\PYZus{}g} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{mean\PYZus{}data\PYZus{}l} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{std\PYZus{}data\PYZus{}g} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{std\PYZus{}data\PYZus{}l} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{median\PYZus{}data\PYZus{}g} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{median\PYZus{}data\PYZus{}l} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n}{num\PYZus{}signals}\PY{p}{:}
+    \PY{n}{data\PYZus{}g\PYZus{}n} \PY{o}{=} \PY{n}{sim\PYZus{}signal}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gaussian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{n}{mu\PYZus{}true}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{n}{sigma\PYZus{}true}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{data\PYZus{}l\PYZus{}n} \PY{o}{=} \PY{n}{sim\PYZus{}signal}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lorentzian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{n}{mu\PYZus{}true}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{n}{gamma\PYZus{}true}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{mean\PYZus{}data\PYZus{}g}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{data\PYZus{}g\PYZus{}n}\PY{p}{)}\PY{p}{)}
+    \PY{n}{std\PYZus{}data\PYZus{}g}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{data\PYZus{}g\PYZus{}n}\PY{p}{)}\PY{p}{)}
+    \PY{n}{median\PYZus{}data\PYZus{}g}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{n}{data\PYZus{}g\PYZus{}n}\PY{p}{)}\PY{p}{)}
+    \PY{n}{mean\PYZus{}data\PYZus{}l}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{data\PYZus{}l\PYZus{}n}\PY{p}{)}\PY{p}{)}
+    \PY{n}{std\PYZus{}data\PYZus{}l}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{data\PYZus{}l\PYZus{}n}\PY{p}{)}\PY{p}{)}
+    \PY{n}{median\PYZus{}data\PYZus{}l}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{n}{data\PYZus{}l\PYZus{}n}\PY{p}{)}\PY{p}{)}
+    
+\PY{n}{statistic\PYZus{}colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{fig}\PY{p}{,} \PY{n}{axs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{errorbar}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{mean\PYZus{}data\PYZus{}g}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{yerr}\PY{o}{=}\PY{n}{std\PYZus{}data\PYZus{}g}\PY{p}{,} \PY{n}{capsize}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{median\PYZus{}data\PYZus{}g}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{median}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gaussian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{errorbar}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{mean\PYZus{}data\PYZus{}l}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{yerr}\PY{o}{=}\PY{n}{std\PYZus{}data\PYZus{}l}\PY{p}{,} \PY{n}{capsize}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{median\PYZus{}data\PYZus{}l}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{median}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lorentzian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_19_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{Question 2.2: Model
+comparison}\label{question-2.2-model-comparison}
+
+We compare the two models \(M_G\) and \(M_L\) using Jeffreys priors for
+the scale parameters: - For \(M_G\):
+\[p(\sigma|M_G) = \frac{1}{\sigma \ln(\sigma_{\rm max}/\sigma_{\rm min})}\]
+- For \(M_L\):
+\[p(\gamma|M_L) = \frac{1}{\gamma \ln(\gamma_{\rm max}/\gamma_{\rm min})}\]
+
+Assume a prior range of \(\sigma_{\rm min} = \gamma_{\rm min} = 0.1\)
+and \(\sigma_{\rm max} = \gamma_{\rm max} = 10\).
+
+\textbf{Tasks:} 1. For each dataset and each
+\(N \in \{ 8, 16, 32, 64, 128 \}\), compute the posterior log-odds
+\(\ln O_{GL} \equiv \ln [p(M_G|DI) / p(M_L|DI)]\). 2. Plot the posterior
+log-odds as a function of \(N\) for both datasets.
+
+\textbf{Hint:} The Jeffreys' prior is uniform in log space. So you can
+omit it when working with log-likelihoods and log-evidences.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{special}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{logsumexp}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}evidence\PYZus{}gaussian}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{sigma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{sigma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the log evidence for Gaussian model with unknown sigma}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        data: array of float, observed signals}
+\PY{l+s+sd}{        sigma\PYZus{}min: float, minimum sigma for prior}
+\PY{l+s+sd}{        sigma\PYZus{}max: float, maximum sigma for prior}
+\PY{l+s+sd}{        mu\PYZus{}true: float, true mean of the distribution}
+\PY{l+s+sd}{    Return: float, log evidence}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{nsigma} \PY{o}{=} \PY{l+m+mi}{1000}
+    \PY{n}{smin}\PY{p}{,} \PY{n}{smax} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{sigma\PYZus{}min}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{sigma\PYZus{}max}\PY{p}{)}
+    \PY{n}{sigma} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{logspace}\PY{p}{(}\PY{n}{smin}\PY{p}{,} \PY{n}{smax}\PY{p}{,} \PY{n}{nsigma}\PY{p}{,} \PY{n}{base}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{e}\PY{p}{)}
+
+    \PY{n}{loglike} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{)}\PY{o}{*}\PY{n}{sigma}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{d}\PY{o}{\PYZhy{}}\PY{n}{mu\PYZus{}true}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{sigma}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{data}\PY{p}{]}
+    \PY{n}{loglike\PYZus{}sum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{loglike}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{log\PYZus{}evidence} \PY{o}{=} \PY{n}{logsumexp}\PY{p}{(}\PY{n}{loglike\PYZus{}sum}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{nsigma}\PY{p}{)} \PY{c+c1}{\PYZsh{} Integration over log(sigma)}
+    \PY{k}{return} \PY{n}{log\PYZus{}evidence}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}evidence\PYZus{}lorentzian}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{gamma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{gamma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the log evidence for Lorentzian model with unknown gamma}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        data: array of float, observed signals}
+\PY{l+s+sd}{        gamma\PYZus{}min: float, minimum gamma for prior}
+\PY{l+s+sd}{        gamma\PYZus{}max: float, maximum gamma for prior}
+\PY{l+s+sd}{        mu\PYZus{}true: float, true mean of the distribution}
+\PY{l+s+sd}{    Return: float, log evidence}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{ngamma} \PY{o}{=} \PY{l+m+mi}{1000}
+    \PY{n}{gmin}\PY{p}{,} \PY{n}{gmax} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{gamma\PYZus{}min}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{gamma\PYZus{}max}\PY{p}{)}
+    \PY{n}{gamma} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{logspace}\PY{p}{(}\PY{n}{gmin}\PY{p}{,} \PY{n}{gmax}\PY{p}{,} \PY{n}{ngamma}\PY{p}{,} \PY{n}{base}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{e}\PY{p}{)}
+
+    \PY{n}{loglike} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{*} \PY{n}{gamma} \PY{o}{*} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{+} \PY{p}{(}\PY{p}{(}\PY{n}{d} \PY{o}{\PYZhy{}} \PY{n}{mu\PYZus{}true}\PY{p}{)}\PY{o}{/}\PY{n}{gamma}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{data}\PY{p}{]}
+    \PY{n}{loglike\PYZus{}sum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{loglike}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{log\PYZus{}evidence} \PY{o}{=} \PY{n}{logsumexp}\PY{p}{(}\PY{n}{loglike\PYZus{}sum}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{ngamma}\PY{p}{)} \PY{c+c1}{\PYZsh{} Integration over log(gamma)}
+    \PY{k}{return} \PY{n}{log\PYZus{}evidence}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to compute and plot the posterior log\PYZhy{}odds}
+\PY{c+c1}{\PYZsh{} we know that posterior odd ratio equals to evidence ratio}
+\PY{n}{posterior\PYZus{}odds\PYZus{}signal\PYZus{}g} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{posterior\PYZus{}odds\PYZus{}signal\PYZus{}l} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n}{num\PYZus{}signals}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} Gaussian data (trial 1)}
+    \PY{n}{data\PYZus{}g\PYZus{}n} \PY{o}{=} \PY{n}{sim\PYZus{}signal}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gaussian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{n}{mu\PYZus{}true}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{n}{sigma\PYZus{}true}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{log\PYZus{}evidence\PYZus{}g} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}gaussian}\PY{p}{(}\PY{n}{data\PYZus{}g\PYZus{}n}\PY{p}{,} \PY{n}{sigma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{sigma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{log\PYZus{}evidence\PYZus{}l} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}lorentzian}\PY{p}{(}\PY{n}{data\PYZus{}g\PYZus{}n}\PY{p}{,} \PY{n}{gamma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{gamma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{posterior\PYZus{}odds\PYZus{}signal\PYZus{}g}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{log\PYZus{}evidence\PYZus{}g} \PY{o}{\PYZhy{}} \PY{n}{log\PYZus{}evidence\PYZus{}l}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} Lorentzian data (trial 1)}
+    \PY{n}{data\PYZus{}l\PYZus{}n} \PY{o}{=} \PY{n}{sim\PYZus{}signal}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lorentzian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{n}{mu\PYZus{}true}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{n}{gamma\PYZus{}true}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{log\PYZus{}evidence\PYZus{}g\PYZus{}l} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}gaussian}\PY{p}{(}\PY{n}{data\PYZus{}l\PYZus{}n}\PY{p}{,} \PY{n}{sigma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{sigma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{log\PYZus{}evidence\PYZus{}l\PYZus{}l} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}lorentzian}\PY{p}{(}\PY{n}{data\PYZus{}l\PYZus{}n}\PY{p}{,} \PY{n}{gamma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{gamma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{posterior\PYZus{}odds\PYZus{}signal\PYZus{}l}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{log\PYZus{}evidence\PYZus{}g\PYZus{}l} \PY{o}{\PYZhy{}} \PY{n}{log\PYZus{}evidence\PYZus{}l\PYZus{}l}\PY{p}{)}
+
+\PY{n}{fig}\PY{p}{,} \PY{n}{axs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Gaussian (left)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{posterior\PYZus{}odds\PYZus{}signal\PYZus{}g}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}N\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Posterior log\PYZhy{}odds (Gaussian data) — trial 1: [0.1,10]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Lorentzian (right)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{posterior\PYZus{}odds\PYZus{}signal\PYZus{}l}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}N\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Posterior log\PYZhy{}odds (Lorentzian data) — trial 1: [0.1,10]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{ln O\PYZus{}}\PY{l+s+si}{\PYZob{}GL\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{Question 2.3: Prior
+sensitivity}\label{question-2.3-prior-sensitivity}
+
+\textbf{Tasks:} 1. Repeat Question 2.2 for prior ranges \([0.01, 100]\)
+and \([0.5, 2]\) for both \(\sigma\) and \(\gamma\). 2. For each dataset
+and each prior range, plot the posterior log-odds as a function of
+\(N\). 3. Discuss your results for all questions in this exercise.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{35}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to complete the question}
+\PY{n}{posterior\PYZus{}odds\PYZus{}g\PYZus{}1} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{posterior\PYZus{}odds\PYZus{}g\PYZus{}2} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{posterior\PYZus{}odds\PYZus{}g\PYZus{}3} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{posterior\PYZus{}odds\PYZus{}l\PYZus{}1} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{posterior\PYZus{}odds\PYZus{}l\PYZus{}2} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{posterior\PYZus{}odds\PYZus{}l\PYZus{}3} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n}{num\PYZus{}signals}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} Gaussian dataset}
+    \PY{n}{data\PYZus{}g\PYZus{}n} \PY{o}{=} \PY{n}{sim\PYZus{}signal}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gaussian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{n}{mu\PYZus{}true}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{n}{sigma\PYZus{}true}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{lg\PYZus{}g\PYZus{}1} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}gaussian}\PY{p}{(}\PY{n}{data\PYZus{}g\PYZus{}n}\PY{p}{,} \PY{n}{sigma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{sigma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{lg\PYZus{}l\PYZus{}1} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}lorentzian}\PY{p}{(}\PY{n}{data\PYZus{}g\PYZus{}n}\PY{p}{,} \PY{n}{gamma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{gamma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{posterior\PYZus{}odds\PYZus{}g\PYZus{}1}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{lg\PYZus{}g\PYZus{}1} \PY{o}{\PYZhy{}} \PY{n}{lg\PYZus{}l\PYZus{}1}\PY{p}{)}
+
+    \PY{n}{lg\PYZus{}g\PYZus{}2} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}gaussian}\PY{p}{(}\PY{n}{data\PYZus{}g\PYZus{}n}\PY{p}{,} \PY{n}{sigma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{n}{sigma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{lg\PYZus{}l\PYZus{}2} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}lorentzian}\PY{p}{(}\PY{n}{data\PYZus{}g\PYZus{}n}\PY{p}{,} \PY{n}{gamma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{n}{gamma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{posterior\PYZus{}odds\PYZus{}g\PYZus{}2}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{lg\PYZus{}g\PYZus{}2} \PY{o}{\PYZhy{}} \PY{n}{lg\PYZus{}l\PYZus{}2}\PY{p}{)}
+
+    \PY{n}{lg\PYZus{}g\PYZus{}3} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}gaussian}\PY{p}{(}\PY{n}{data\PYZus{}g\PYZus{}n}\PY{p}{,} \PY{n}{sigma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{n}{sigma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{lg\PYZus{}l\PYZus{}3} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}lorentzian}\PY{p}{(}\PY{n}{data\PYZus{}g\PYZus{}n}\PY{p}{,} \PY{n}{gamma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{n}{gamma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{posterior\PYZus{}odds\PYZus{}g\PYZus{}3}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{lg\PYZus{}g\PYZus{}3} \PY{o}{\PYZhy{}} \PY{n}{lg\PYZus{}l\PYZus{}3}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} Lorentzian dataset}
+    \PY{n}{data\PYZus{}l\PYZus{}n} \PY{o}{=} \PY{n}{sim\PYZus{}signal}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lorentzian}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{n}{mu\PYZus{}true}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{n}{gamma\PYZus{}true}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{ll\PYZus{}g\PYZus{}1} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}gaussian}\PY{p}{(}\PY{n}{data\PYZus{}l\PYZus{}n}\PY{p}{,} \PY{n}{sigma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{sigma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{ll\PYZus{}l\PYZus{}1} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}lorentzian}\PY{p}{(}\PY{n}{data\PYZus{}l\PYZus{}n}\PY{p}{,} \PY{n}{gamma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{gamma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{posterior\PYZus{}odds\PYZus{}l\PYZus{}1}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{ll\PYZus{}g\PYZus{}1} \PY{o}{\PYZhy{}} \PY{n}{ll\PYZus{}l\PYZus{}1}\PY{p}{)}
+
+    \PY{n}{ll\PYZus{}g\PYZus{}2} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}gaussian}\PY{p}{(}\PY{n}{data\PYZus{}l\PYZus{}n}\PY{p}{,} \PY{n}{sigma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{n}{sigma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{ll\PYZus{}l\PYZus{}2} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}lorentzian}\PY{p}{(}\PY{n}{data\PYZus{}l\PYZus{}n}\PY{p}{,} \PY{n}{gamma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{n}{gamma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{posterior\PYZus{}odds\PYZus{}l\PYZus{}2}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{ll\PYZus{}g\PYZus{}2} \PY{o}{\PYZhy{}} \PY{n}{ll\PYZus{}l\PYZus{}2}\PY{p}{)}
+
+    \PY{n}{ll\PYZus{}g\PYZus{}3} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}gaussian}\PY{p}{(}\PY{n}{data\PYZus{}l\PYZus{}n}\PY{p}{,} \PY{n}{sigma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{n}{sigma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{ll\PYZus{}l\PYZus{}3} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}lorentzian}\PY{p}{(}\PY{n}{data\PYZus{}l\PYZus{}n}\PY{p}{,} \PY{n}{gamma\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{n}{gamma\PYZus{}max}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{mu\PYZus{}true}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{posterior\PYZus{}odds\PYZus{}l\PYZus{}3}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{ll\PYZus{}g\PYZus{}3} \PY{o}{\PYZhy{}} \PY{n}{ll\PYZus{}l\PYZus{}3}\PY{p}{)}
+
+\PY{n}{fig}\PY{p}{,} \PY{n}{axs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Gaussian (left)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{posterior\PYZus{}odds\PYZus{}g\PYZus{}1}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{posterior\PYZus{}odds\PYZus{}g\PYZus{}2}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{s\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{posterior\PYZus{}odds\PYZus{}g\PYZus{}3}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{d\PYZhy{}.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}N\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Posterior log\PYZhy{}odds (Gaussian data)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Lorentzian (right)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{posterior\PYZus{}odds\PYZus{}l\PYZus{}1}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{trial 1: [0.1,10]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{posterior\PYZus{}odds\PYZus{}l\PYZus{}2}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{s\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{trial 2: [0.01,100]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}signals}\PY{p}{,} \PY{n}{posterior\PYZus{}odds\PYZus{}l\PYZus{}3}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{d\PYZhy{}.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{trial 3: [0.2,5]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}N\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Posterior log\PYZhy{}odds (Lorentzian data)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+
+\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{ln O\PYZus{}}\PY{l+s+si}{\PYZob{}GL\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_24_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subparagraph{Discussions}\label{discussions}
+
+从第一问可以看出来 Lorentz
+分布是一个非常长尾的分布，在生成的时候峰值要比 Gauss
+分布更窄，但是总体的宽度非常宽.
+
+计算后验分布，我们算的是
+\(\ln E(\text{Gaussian})/E(\text{Lorentzian})\)，可以明显看出在数据是由
+Gaussian 分布生成时，后验比随着数据量的增加不断增大，表现出 Gauss
+分布在描述这些数据上的优越性；在数据是由 Lorentz
+分布生成时，后验比随着数据量的增加不断降低. 但是我并不太理解为什么
+Lorentz 分布的后验比会有那么大的数量级，而且呈现出一个阶梯状的特征.
+
+    \subsubsection{Exercise 3: Spectral line
+identification}\label{exercise-3-spectral-line-identification}
+
+We observe integer-binned photon counts \(n(\lambda)\) for
+\(\lambda \in [-10,10]\) from a steady source. Consider three models of
+the \emph{expected} counts \(\mu(\lambda)\): 1. \(M_F\) (Flat
+continuum): \[\mu(\lambda) = B\] 2. \(M_G\) (Gaussian line + continuum):
+\[\mu(\lambda) = A \exp\left[-\frac{(\lambda - \lambda_0)^2}{2\sigma^2}\right] + B\]
+3. \(M_L\) (Lorentzian line + continuum):
+\[\mu(\lambda) = A \frac{\gamma^2}{(\lambda - \lambda_0)^2 + \gamma^2} + B\]
+
+\paragraph{Question 3.1: Simulate the
+spectrum}\label{question-3.1-simulate-the-spectrum}
+
+Use \(\lambda_0 = 0, \sigma = 1, \gamma = 1\). Consider the following 3
+parameter sets (effectively different exposure times): 1. \(A=10, B=50\)
+2. \(A=100, B=500\) 3. \(A=1000, B=5000\)
+
+\textbf{Tasks:} 1. Simulate the spectrum \(n(\lambda)\) for all the 3
+models and 3 parameter sets. 2. Plot the simulated spectra together with
+the expected counts \(\mu(\lambda)\).
+
+\textbf{Hint:} What is the appropriate distribution for simulating the
+observed photon counts given the expected counts for a steady source?
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT BELOW to complete the question (feel free to add more cells as needed)}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{sim\PYZus{}data}\PY{p}{(}\PY{n}{num}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{A}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{B}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Simulate the series of spectral counts}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        num: int, number of wavelength bins (will be spaced in [\PYZhy{}10, 10])}
+\PY{l+s+sd}{        dist: str, \PYZsq{}f\PYZsq{} (flat), \PYZsq{}g\PYZsq{} (gaussian), or \PYZsq{}l\PYZsq{} (lorentzian)}
+\PY{l+s+sd}{        A: amplitude of the line}
+\PY{l+s+sd}{        B: continuum level (counts)}
+\PY{l+s+sd}{        mu: line center (lambda0)}
+\PY{l+s+sd}{        sigma: Gaussian sigma}
+\PY{l+s+sd}{        gamma: Lorentzian gamma}
+\PY{l+s+sd}{        seed: random seed}
+\PY{l+s+sd}{    Return:}
+\PY{l+s+sd}{        lam: 1d array of wavelength bin centers}
+\PY{l+s+sd}{        counts: integer array of simulated Poisson counts}
+\PY{l+s+sd}{        mu\PYZus{}expect: expected counts (lambda) array used for Poisson sampling}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{lam} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{n}{num}\PY{p}{)}
+
+    \PY{k}{if} \PY{n}{dist} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+        \PY{n}{mu\PYZus{}expect} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full\PYZus{}like}\PY{p}{(}\PY{n}{lam}\PY{p}{,} \PY{n}{fill\PYZus{}value}\PY{o}{=}\PY{n}{B}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+    \PY{k}{elif} \PY{n}{dist} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+        \PY{n}{mu\PYZus{}expect} \PY{o}{=} \PY{n}{A} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{p}{(}\PY{p}{(}\PY{n}{lam} \PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{)} \PY{o}{/} \PY{n}{sigma}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)} \PY{o}{+} \PY{n}{B}
+    \PY{k}{elif} \PY{n}{dist} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{l}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+        \PY{n}{mu\PYZus{}expect} \PY{o}{=} \PY{n}{A} \PY{o}{*} \PY{p}{(}\PY{n}{gamma} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2} \PY{o}{/} \PY{p}{(}\PY{p}{(}\PY{n}{lam} \PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2} \PY{o}{+} \PY{n}{gamma} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{n}{B}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Unsupported distribution type.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+    \PY{n}{counts} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{poisson}\PY{p}{(}\PY{n}{mu\PYZus{}expect}\PY{p}{)}
+    \PY{k}{return} \PY{n}{lam}\PY{p}{,} \PY{n}{counts}\PY{p}{,} \PY{n}{mu\PYZus{}expect}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{61}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{param\PYZus{}sets} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1000}\PY{p}{,} \PY{l+m+mi}{5000}\PY{p}{)}\PY{p}{]}
+\PY{n}{models} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Flat \PYZdl{}(M\PYZus{}F)\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gaussian \PYZdl{}(M\PYZus{}G)\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{l}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lorentzian \PYZdl{}(M\PYZus{}L)\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{B}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{param\PYZus{}sets}\PY{p}{)}\PY{p}{:}
+    \PY{n}{fig}\PY{p}{,} \PY{n}{axs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{j}\PY{p}{,} \PY{p}{(}\PY{n}{dist}\PY{p}{,} \PY{n}{label}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{models}\PY{p}{)}\PY{p}{:}
+        \PY{n}{lam}\PY{p}{,} \PY{n}{counts}\PY{p}{,} \PY{n}{mu\PYZus{}expect} \PY{o}{=} \PY{n}{sim\PYZus{}data}\PY{p}{(}
+            \PY{l+m+mi}{512}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{n}{dist}\PY{p}{,} \PY{n}{A}\PY{o}{=}\PY{n}{A}\PY{p}{,} \PY{n}{B}\PY{o}{=}\PY{n}{B}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} 
+            \PY{n}{sigma}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed} \PY{o}{+} \PY{n}{i} \PY{o}{*} \PY{l+m+mi}{10} \PY{o}{+} \PY{n}{j}
+        \PY{p}{)}
+        \PY{n}{axs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}
+            \PY{n}{lam}\PY{p}{,} \PY{n}{counts}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+            \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{30}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{observed counts}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{3}
+        \PY{p}{)}
+        \PY{n}{axs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+            \PY{n}{lam}\PY{p}{,} \PY{n}{mu\PYZus{}expect}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+            \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{mu(}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{lambda)\PYZdl{} (expected)}\PY{l+s+s1}{\PYZsq{}}
+        \PY{p}{)}
+        \PY{n}{axs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlim}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+        \PY{n}{axs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{lambda\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{axs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{label}\PY{l+s+si}{\PYZcb{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{ A = }\PY{l+s+si}{\PYZob{}}\PY{n}{A}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{, B = }\PY{l+s+si}{\PYZob{}}\PY{n}{B}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{axs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.4}\PY{p}{)}
+        \PY{k}{if} \PY{n}{j} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+            \PY{n}{axs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{counts}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{axs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{9}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{suptitle}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Simulated spectra (parameter set }\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+m+mf}{1.02}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_28_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_28_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_28_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{Question 3.2: Is there a spectral
+line?}\label{question-3.2-is-there-a-spectral-line}
+
+Assume \(\lambda_0, \sigma, \gamma\), and \(B\) are all known, so the
+only free parameter is the amplitude \(A\). Use a flat prior for \(A\)
+in the range \([0, 2B]\).
+
+\textbf{Tasks:} 1. Assume the spectral line (if any) can be described by
+a Gaussian profile, we can test for the presence of the line by
+comparing models \(M_G\) and \(M_F\). For each dataset, compute the
+posterior log-odds \(\ln O_{GF} \equiv \ln [p(M_G|D,I) / p(M_F|D,I)]\)
+with a model prior of \(p(M_G) = p(M_F) = 0.5\). 2. Does your conclusion
+change if you assume a Lorentzian profile instead (i.e., compare \(M_L\)
+and \(M_F\))?
+
+\textbf{Hint:} Compute log-likelihoods to avoid numerical issues.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{special}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{gammaln}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}evidence\PYZus{}line}\PY{p}{(}\PY{n}{counts}\PY{p}{,} \PY{n}{profile\PYZus{}vals}\PY{p}{,} \PY{n}{B}\PY{p}{,} \PY{n}{A\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{A\PYZus{}max}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{nA}\PY{o}{=}\PY{l+m+mi}{2000}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute log evidence for model with expected mu = A * profile\PYZus{}vals + B}
+\PY{l+s+sd}{    using a flat prior for A over [A\PYZus{}min, A\PYZus{}max].}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{k}{if} \PY{n}{A\PYZus{}max} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:}
+        \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A\PYZus{}max must be provided}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{n}{A\PYZus{}min}\PY{p}{,} \PY{n}{A\PYZus{}max}\PY{p}{,} \PY{n}{nA}\PY{p}{)}
+    \PY{n}{dA} \PY{o}{=} \PY{p}{(}\PY{n}{A\PYZus{}max} \PY{o}{\PYZhy{}} \PY{n}{A\PYZus{}min}\PY{p}{)} \PY{o}{/} \PY{n+nb}{max}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{nA}\PY{p}{)}
+    \PY{n}{mu} \PY{o}{=} \PY{n}{A}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]} \PY{o}{*} \PY{n}{profile\PYZus{}vals}\PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{p}{:}\PY{p}{]} \PY{o}{+} \PY{n}{B}
+    \PY{n}{mu} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{clip}\PY{p}{(}\PY{n}{mu}\PY{p}{,} \PY{l+m+mf}{1e\PYZhy{}12}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+    \PY{n}{lnfact} \PY{o}{=} \PY{n}{gammaln}\PY{p}{(}\PY{n}{counts} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+    \PY{n}{logL} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{counts}\PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{p}{:}\PY{p}{]} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{mu}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{mu} \PY{o}{\PYZhy{}} \PY{n}{lnfact}\PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} integral approx: int L(A) dA approx dA * sum L(A)}
+    \PY{c+c1}{\PYZsh{} work in log\PYZhy{}space: log( dA * sum\PYZus{}i exp(logL\PYZus{}i) ) = logsumexp(logL) + log(dA)}
+    \PY{n}{log\PYZus{}integral} \PY{o}{=} \PY{n}{logsumexp}\PY{p}{(}\PY{n}{logL}\PY{p}{)} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{dA}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} divide by prior width (A\PYZus{}max \PYZhy{} A\PYZus{}min) for flat prior normalization}
+    \PY{n}{log\PYZus{}evidence} \PY{o}{=} \PY{n}{log\PYZus{}integral} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{A\PYZus{}max} \PY{o}{\PYZhy{}} \PY{n}{A\PYZus{}min}\PY{p}{)}
+    \PY{k}{return} \PY{n}{log\PYZus{}evidence}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 把 num\PYZus{}bins 变成序列并将 lnO\PYZus{}GF 和 lnO\PYZus{}LF 视为 num\PYZus{}bins 的函数画图（2 x 9 子图）}
+\PY{n}{num\PYZus{}bins\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{64}\PY{p}{,} \PY{l+m+mi}{128}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{512}\PY{p}{,} \PY{l+m+mi}{1024}\PY{p}{]}
+\PY{n}{param\PYZus{}sets} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1000}\PY{p}{,} \PY{l+m+mi}{5000}\PY{p}{)}\PY{p}{]}
+\PY{n}{data\PYZus{}models} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}M\PYZus{}F\PYZdl{} (flat)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}M\PYZus{}G\PYZdl{} (gaussian)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{l}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}M\PYZus{}L\PYZdl{} (lorentzian)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+
+\PY{n}{results\PYZus{}map} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{A\PYZus{}true}\PY{p}{,} \PY{n}{B}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{param\PYZus{}sets}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{dist\PYZus{}label}\PY{p}{,} \PY{n}{model\PYZus{}name} \PY{o+ow}{in} \PY{n}{data\PYZus{}models}\PY{p}{:}
+        \PY{n}{lnO\PYZus{}GF\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{lnO\PYZus{}LF\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{nb} \PY{o+ow}{in} \PY{n}{num\PYZus{}bins\PYZus{}list}\PY{p}{:}
+            \PY{n}{lam\PYZus{}i}\PY{p}{,} \PY{n}{counts}\PY{p}{,} \PY{n}{mu\PYZus{}expect} \PY{o}{=} \PY{n}{sim\PYZus{}data}\PY{p}{(}
+                \PY{n}{nb}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{n}{dist\PYZus{}label}\PY{p}{,} \PY{n}{A}\PY{o}{=}\PY{n}{A\PYZus{}true}\PY{p}{,} \PY{n}{B}\PY{o}{=}\PY{n}{B}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}
+                \PY{n}{seed}\PY{o}{=}\PY{n}{seed} \PY{o}{+} \PY{n}{i} \PY{o}{*} \PY{l+m+mi}{100} \PY{o}{+} \PY{p}{(}\PY{l+m+mi}{0} \PY{k}{if} \PY{n}{dist\PYZus{}label} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f}\PY{l+s+s1}{\PYZsq{}} \PY{k}{else} \PY{p}{(}\PY{l+m+mi}{1} \PY{k}{if} \PY{n}{dist\PYZus{}label} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}} \PY{k}{else} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+            \PY{p}{)}
+            \PY{c+c1}{\PYZsh{} flat model (no A): mu = B}
+            \PY{n}{loglike\PYZus{}F} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{counts} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{B}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{B} \PY{o}{\PYZhy{}} \PY{n}{gammaln}\PY{p}{(}\PY{n}{counts} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+            \PY{n}{log\PYZus{}evidence\PYZus{}F} \PY{o}{=} \PY{n}{loglike\PYZus{}F}
+
+            \PY{c+c1}{\PYZsh{} prepare profiles on the same lam grid}
+            \PY{n}{profile\PYZus{}g} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{p}{(}\PY{p}{(}\PY{n}{lam\PYZus{}i} \PY{o}{\PYZhy{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{/} \PY{l+m+mf}{1.0}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}
+            \PY{n}{profile\PYZus{}l} \PY{o}{=} \PY{p}{(}\PY{l+m+mf}{1.0} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{p}{(}\PY{n}{lam\PYZus{}i} \PY{o}{\PYZhy{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2} \PY{o}{+} \PY{l+m+mf}{1.0} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}
+
+            \PY{n}{A\PYZus{}max} \PY{o}{=} \PY{l+m+mf}{2.0} \PY{o}{*} \PY{n}{B}
+            \PY{n}{log\PYZus{}evidence\PYZus{}G} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}line}\PY{p}{(}\PY{n}{counts}\PY{p}{,} \PY{n}{profile\PYZus{}g}\PY{p}{,} \PY{n}{B}\PY{p}{,} \PY{n}{A\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{A\PYZus{}max}\PY{o}{=}\PY{n}{A\PYZus{}max}\PY{p}{,} \PY{n}{nA}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}
+            \PY{n}{log\PYZus{}evidence\PYZus{}L} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}line}\PY{p}{(}\PY{n}{counts}\PY{p}{,} \PY{n}{profile\PYZus{}l}\PY{p}{,} \PY{n}{B}\PY{p}{,} \PY{n}{A\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{A\PYZus{}max}\PY{o}{=}\PY{n}{A\PYZus{}max}\PY{p}{,} \PY{n}{nA}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}
+
+            \PY{n}{lnO\PYZus{}GF\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{log\PYZus{}evidence\PYZus{}G} \PY{o}{\PYZhy{}} \PY{n}{log\PYZus{}evidence\PYZus{}F}\PY{p}{)}
+            \PY{n}{lnO\PYZus{}LF\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{log\PYZus{}evidence\PYZus{}L} \PY{o}{\PYZhy{}} \PY{n}{log\PYZus{}evidence\PYZus{}F}\PY{p}{)}
+
+        \PY{n}{results\PYZus{}map}\PY{p}{[}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{dist\PYZus{}label}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{lnO\PYZus{}GF\PYZus{}list}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{lnO\PYZus{}LF\PYZus{}list}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{58}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 将三组 (每组对应一个 data\PYZus{}model) 垂直排列，每组 2 行 x 3 列 \PYZhy{}\PYZgt{} 总体 6 行 x 3 列}
+\PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{18}\PY{p}{)}\PY{p}{)}
+\PY{k}{for} \PY{n}{g}\PY{p}{,} \PY{p}{(}\PY{n}{dist\PYZus{}label}\PY{p}{,} \PY{n}{model\PYZus{}name}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{data\PYZus{}models}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{col\PYZus{}idx}\PY{p}{,} \PY{p}{(}\PY{n}{A\PYZus{}true}\PY{p}{,} \PY{n}{B}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{param\PYZus{}sets}\PY{p}{)}\PY{p}{:}
+        \PY{n}{lnO\PYZus{}GF\PYZus{}arr}\PY{p}{,} \PY{n}{lnO\PYZus{}LF\PYZus{}arr} \PY{o}{=} \PY{n}{results\PYZus{}map}\PY{p}{[}\PY{p}{(}\PY{n}{col\PYZus{}idx}\PY{p}{,} \PY{n}{dist\PYZus{}label}\PY{p}{)}\PY{p}{]}
+
+        \PY{n}{ax\PYZus{}top} \PY{o}{=} \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{g}\PY{p}{,} \PY{n}{col\PYZus{}idx}\PY{p}{]}     \PY{c+c1}{\PYZsh{} lnO\PYZus{}GF}
+        \PY{n}{ax\PYZus{}bot} \PY{o}{=} \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{g} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{col\PYZus{}idx}\PY{p}{]} \PY{c+c1}{\PYZsh{} lnO\PYZus{}LF}
+
+        \PY{n}{ax\PYZus{}top}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}bins\PYZus{}list}\PY{p}{,} \PY{n}{lnO\PYZus{}GF\PYZus{}arr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.\PYZhy{}k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{6}\PY{p}{)}
+        \PY{n}{ax\PYZus{}top}\PY{o}{.}\PY{n}{set\PYZus{}xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{ax\PYZus{}top}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{n}{num\PYZus{}bins\PYZus{}list}\PY{p}{)}
+        \PY{n}{ax\PYZus{}top}\PY{o}{.}\PY{n}{get\PYZus{}xaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}major\PYZus{}formatter}\PY{p}{(}\PY{n}{plt}\PY{o}{.}\PY{n}{ScalarFormatter}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{ax\PYZus{}top}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}
+            \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{model\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ \PYZhy{}\PYZhy{}\PYZhy{} set}\PY{l+s+si}{\PYZob{}}\PY{n}{col\PYZus{}idx}\PY{o}{+}\PY{l+m+mi}{1}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ A = }\PY{l+s+si}{\PYZob{}}\PY{n}{A\PYZus{}true}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{, B = }\PY{l+s+si}{\PYZob{}}\PY{n}{B}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{14}
+        \PY{p}{)}
+        \PY{k}{if} \PY{n}{col\PYZus{}idx} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+            \PY{n}{ax\PYZus{}top}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{ln O\PYZus{}}\PY{l+s+si}{\PYZob{}GF\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{14}\PY{p}{)}
+        \PY{n}{ax\PYZus{}top}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.4}\PY{p}{)}
+
+        \PY{n}{ax\PYZus{}bot}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}bins\PYZus{}list}\PY{p}{,} \PY{n}{lnO\PYZus{}LF\PYZus{}arr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.\PYZhy{}C1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{6}\PY{p}{)}
+        \PY{n}{ax\PYZus{}bot}\PY{o}{.}\PY{n}{set\PYZus{}xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{ax\PYZus{}bot}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{n}{num\PYZus{}bins\PYZus{}list}\PY{p}{)}
+        \PY{n}{ax\PYZus{}bot}\PY{o}{.}\PY{n}{get\PYZus{}xaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}major\PYZus{}formatter}\PY{p}{(}\PY{n}{plt}\PY{o}{.}\PY{n}{ScalarFormatter}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{k}{if} \PY{n}{col\PYZus{}idx} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+            \PY{n}{ax\PYZus{}bot}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{ln O\PYZus{}}\PY{l+s+si}{\PYZob{}LF\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{14}\PY{p}{)}
+        \PY{n}{ax\PYZus{}bot}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}N\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{14}\PY{p}{)}
+        \PY{n}{ax\PYZus{}bot}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.4}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_05_files/Exercise_week_05_32_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    对于三种不同的 \(A\) 真值和 \(B\) 值 (已知)，分别采用三个不同的模拟方式
+(flat, Gaussian, Lorentzian) 生成数据集，每个数据集生成了不同的 \(N\)
+个数据，并把 \(\ln O_{GF}\) (Gaussian 分布 over flat
+分布的后验比)、\(\ln O_{LF}\) (Lorentzian 分布 over flat 分布的后验比)
+视为 \(N\) 的函数绘图，得到上面 18 个图片.
+
+可以发现，对于 flat 分布生成的数据集，Gaussian 分布和 Lorentzian
+分布并没有体现出很大的优势
+(甚至没有优势)，但是后面两种数据集中，Gaussian 分布和 Lorentzian
+分布明显表现出极佳的适配性，而且和预期一样，\(N\) 越大后验比越大.
+
+另一个有趣的现象是，\(A\) 和 \(B\)
+的真值变大时，后验比都会变大，我想这可能是因为 \(A\)
+变大显著增强了分布的不均匀性，也就减弱了 flat 分布的适配度.
+
+    \paragraph{Question 3.3: Line profile
+identification}\label{question-3.3-line-profile-identification}
+
+\textbf{Tasks:} 1. For cases where a spectral line is present
+(\(\ln O_{GF} > 5\)), compare models \(M_G\) and \(M_L\) to identify the
+line profile. 2. Compute the posterior log-odds
+\(\ln O_{GL} \equiv \ln [p(M_G|D,I) / p(M_L|D,I)]\) with a model prior
+of \(p(M_G) = p(M_L) = 0.5\). 3. What is your conclusion regarding the
+line profile for each case?
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{76}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{threshold} \PY{o}{=} \PY{l+m+mf}{5.0}
+\PY{n}{summary} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{A\PYZus{}true}\PY{p}{,} \PY{n}{B}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{param\PYZus{}sets}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{dist\PYZus{}label}\PY{p}{,} \PY{n}{model\PYZus{}name} \PY{o+ow}{in} \PY{n}{data\PYZus{}models}\PY{p}{:}
+        \PY{n}{lnO\PYZus{}GF\PYZus{}arr}\PY{p}{,} \PY{n}{lnO\PYZus{}LF\PYZus{}arr} \PY{o}{=} \PY{n}{results\PYZus{}map}\PY{p}{[}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{dist\PYZus{}label}\PY{p}{)}\PY{p}{]}
+        \PY{n}{inds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{lnO\PYZus{}GF\PYZus{}arr} \PY{o}{\PYZgt{}} \PY{n}{threshold}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+        \PY{k}{if} \PY{n}{inds}\PY{o}{.}\PY{n}{size} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{set}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ }\PY{l+s+si}{\PYZob{}}\PY{n}{model\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{: 无 ln O\PYZus{}GF \PYZgt{} }\PY{l+s+si}{\PYZob{}}\PY{n}{threshold}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ 的情况}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{continue}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{set}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ }\PY{l+s+si}{\PYZob{}}\PY{n}{model\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{: 找到 }\PY{l+s+si}{\PYZob{}}\PY{n}{inds}\PY{o}{.}\PY{n}{size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ 个 lnO\PYZus{}GF \PYZgt{} }\PY{l+s+si}{\PYZob{}}\PY{n}{threshold}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ 的情况，逐一比较 M\PYZus{}G vs M\PYZus{}L：}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n}{inds}\PY{p}{:}
+            \PY{n}{nb} \PY{o}{=} \PY{n}{num\PYZus{}bins\PYZus{}list}\PY{p}{[}\PY{n}{k}\PY{p}{]}
+            \PY{n}{lam\PYZus{}i}\PY{p}{,} \PY{n}{counts}\PY{p}{,} \PY{n}{mu\PYZus{}expect} \PY{o}{=} \PY{n}{sim\PYZus{}data}\PY{p}{(}
+                \PY{n}{nb}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{n}{dist\PYZus{}label}\PY{p}{,} \PY{n}{A}\PY{o}{=}\PY{n}{A\PYZus{}true}\PY{p}{,} \PY{n}{B}\PY{o}{=}\PY{n}{B}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}
+                \PY{n}{seed}\PY{o}{=}\PY{n}{seed} \PY{o}{+} \PY{n}{i} \PY{o}{*} \PY{l+m+mi}{100} \PY{o}{+} \PY{p}{(}\PY{l+m+mi}{0} \PY{k}{if} \PY{n}{dist\PYZus{}label} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f}\PY{l+s+s1}{\PYZsq{}} \PY{k}{else} \PY{p}{(}\PY{l+m+mi}{1} \PY{k}{if} \PY{n}{dist\PYZus{}label} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}} \PY{k}{else} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+            \PY{p}{)}
+            \PY{n}{profile\PYZus{}g} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{p}{(}\PY{p}{(}\PY{n}{lam\PYZus{}i} \PY{o}{\PYZhy{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{/} \PY{l+m+mf}{1.0}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}
+            \PY{n}{profile\PYZus{}l} \PY{o}{=} \PY{p}{(}\PY{l+m+mf}{1.0} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{p}{(}\PY{n}{lam\PYZus{}i} \PY{o}{\PYZhy{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2} \PY{o}{+} \PY{l+m+mf}{1.0} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}
+            \PY{n}{A\PYZus{}max} \PY{o}{=} \PY{l+m+mf}{2.0} \PY{o}{*} \PY{n}{B}
+            \PY{n}{logE\PYZus{}G} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}line}\PY{p}{(}\PY{n}{counts}\PY{p}{,} \PY{n}{profile\PYZus{}g}\PY{p}{,} \PY{n}{B}\PY{p}{,} \PY{n}{A\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{A\PYZus{}max}\PY{o}{=}\PY{n}{A\PYZus{}max}\PY{p}{,} \PY{n}{nA}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}
+            \PY{n}{logE\PYZus{}L} \PY{o}{=} \PY{n}{log\PYZus{}evidence\PYZus{}line}\PY{p}{(}\PY{n}{counts}\PY{p}{,} \PY{n}{profile\PYZus{}l}\PY{p}{,} \PY{n}{B}\PY{p}{,} \PY{n}{A\PYZus{}min}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{A\PYZus{}max}\PY{o}{=}\PY{n}{A\PYZus{}max}\PY{p}{,} \PY{n}{nA}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}
+            \PY{n}{lnO\PYZus{}GL} \PY{o}{=} \PY{n}{logE\PYZus{}G} \PY{o}{\PYZhy{}} \PY{n}{logE\PYZus{}L}
+            \PY{n}{pref} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Gaussian}\PY{l+s+s2}{\PYZdq{}} \PY{k}{if} \PY{n}{lnO\PYZus{}GL} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0} \PY{k}{else} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Lorentzian}\PY{l+s+s2}{\PYZdq{}}
+            \PY{n}{cat} \PY{o}{=} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{decisive}\PY{l+s+s2}{\PYZdq{}} \PY{k}{if} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{lnO\PYZus{}GL}\PY{p}{)} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{5} \PY{k}{else}
+                   \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{strong}\PY{l+s+s2}{\PYZdq{}} \PY{k}{if} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{lnO\PYZus{}GL}\PY{p}{)} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{3} \PY{k}{else}
+                   \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{substantial}\PY{l+s+s2}{\PYZdq{}} \PY{k}{if} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{lnO\PYZus{}GL}\PY{p}{)} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{1} \PY{k}{else}
+                   \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{barely}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  N = }\PY{l+s+si}{\PYZob{}}\PY{n}{nb}\PY{l+s+si}{:}\PY{l+s+s2}{4d}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{: lnO\PYZus{}GF = }\PY{l+s+si}{\PYZob{}}\PY{n}{lnO\PYZus{}GF\PYZus{}arr}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s2}{6.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{, lnO\PYZus{}GL = }\PY{l+s+si}{\PYZob{}}\PY{n}{lnO\PYZus{}GL}\PY{l+s+si}{:}\PY{l+s+s2}{6.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ \PYZhy{}\PYZgt{} }\PY{l+s+si}{\PYZob{}}\PY{n}{pref}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ (}\PY{l+s+si}{\PYZob{}}\PY{n}{cat}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n}{summary}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{dist\PYZus{}label}\PY{p}{,} \PY{n}{nb}\PY{p}{)}\PY{p}{,} \PY{n}{lnO\PYZus{}GF\PYZus{}arr}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{,} \PY{n}{lnO\PYZus{}GL}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+set1 \$M\_F\$ (flat): 无 ln O\_GF > 5.0 的情况
+set1 \$M\_G\$ (gaussian): 找到 4 个 lnO\_GF > 5.0 的情况，逐一比较 M\_G vs M\_L：
+  N =  128: lnO\_GF =  10.78, lnO\_GL =  -0.26 -> Lorentzian (barely)
+  N =  256: lnO\_GF =  27.66, lnO\_GL =   1.14 -> Gaussian (substantial)
+  N =  512: lnO\_GF =  34.23, lnO\_GL =   0.99 -> Gaussian (barely)
+  N = 1024: lnO\_GF =  71.35, lnO\_GL =   6.70 -> Gaussian (decisive)
+set1 \$M\_L\$ (lorentzian): 找到 4 个 lnO\_GF > 5.0 的情况，逐一比较 M\_G vs M\_L：
+  N =  128: lnO\_GF =  11.12, lnO\_GL =   1.13 -> Gaussian (substantial)
+  N =  256: lnO\_GF =  18.37, lnO\_GL =   1.46 -> Gaussian (substantial)
+  N =  512: lnO\_GF =  22.85, lnO\_GL =  -1.06 -> Lorentzian (substantial)
+  N = 1024: lnO\_GF =  76.44, lnO\_GL =  -3.94 -> Lorentzian (strong)
+set2 \$M\_F\$ (flat): 无 ln O\_GF > 5.0 的情况
+set2 \$M\_G\$ (gaussian): 找到 7 个 lnO\_GF > 5.0 的情况，逐一比较 M\_G vs M\_L：
+  N =   16: lnO\_GF =  18.46, lnO\_GL =   1.75 -> Gaussian (substantial)
+  N =   32: lnO\_GF =  26.02, lnO\_GL =  -0.02 -> Lorentzian (barely)
+  N =   64: lnO\_GF =  57.24, lnO\_GL =  -0.89 -> Lorentzian (barely)
+  N =  128: lnO\_GF = 100.71, lnO\_GL =  -1.26 -> Lorentzian (substantial)
+  N =  256: lnO\_GF = 241.95, lnO\_GL =  13.71 -> Gaussian (decisive)
+  N =  512: lnO\_GF = 428.99, lnO\_GL =  11.40 -> Gaussian (decisive)
+  N = 1024: lnO\_GF = 829.85, lnO\_GL =  21.26 -> Gaussian (decisive)
+set2 \$M\_L\$ (lorentzian): 找到 6 个 lnO\_GF > 5.0 的情况，逐一比较 M\_G vs M\_L：
+  N =   32: lnO\_GF =  24.32, lnO\_GL =   0.01 -> Gaussian (barely)
+  N =   64: lnO\_GF =  61.29, lnO\_GL =  -5.39 -> Lorentzian (decisive)
+  N =  128: lnO\_GF =  56.30, lnO\_GL =  -5.87 -> Lorentzian (decisive)
+  N =  256: lnO\_GF = 199.87, lnO\_GL =  -3.76 -> Lorentzian (strong)
+  N =  512: lnO\_GF = 372.33, lnO\_GL = -19.64 -> Lorentzian (decisive)
+  N = 1024: lnO\_GF = 729.26, lnO\_GL = -35.44 -> Lorentzian (decisive)
+set3 \$M\_F\$ (flat): 无 ln O\_GF > 5.0 的情况
+set3 \$M\_G\$ (gaussian): 找到 8 个 lnO\_GF > 5.0 的情况，逐一比较 M\_G vs M\_L：
+  N =    8: lnO\_GF =  24.93, lnO\_GL =  -0.14 -> Lorentzian (barely)
+  N =   16: lnO\_GF = 108.03, lnO\_GL =   2.59 -> Gaussian (substantial)
+  N =   32: lnO\_GF = 294.94, lnO\_GL =  13.37 -> Gaussian (decisive)
+  N =   64: lnO\_GF = 516.62, lnO\_GL =  13.39 -> Gaussian (decisive)
+  N =  128: lnO\_GF = 1065.09, lnO\_GL =  29.11 -> Gaussian (decisive)
+  N =  256: lnO\_GF = 2151.79, lnO\_GL =  56.08 -> Gaussian (decisive)
+  N =  512: lnO\_GF = 4235.76, lnO\_GL = 113.99 -> Gaussian (decisive)
+  N = 1024: lnO\_GF = 8567.45, lnO\_GL = 241.43 -> Gaussian (decisive)
+set3 \$M\_L\$ (lorentzian): 找到 8 个 lnO\_GF > 5.0 的情况，逐一比较 M\_G vs M\_L：
+  N =    8: lnO\_GF =  22.34, lnO\_GL =  -0.72 -> Lorentzian (barely)
+  N =   16: lnO\_GF =  99.28, lnO\_GL =  -3.19 -> Lorentzian (strong)
+  N =   32: lnO\_GF = 218.28, lnO\_GL =  -2.56 -> Lorentzian (substantial)
+  N =   64: lnO\_GF = 429.19, lnO\_GL = -17.33 -> Lorentzian (decisive)
+  N =  128: lnO\_GF = 911.82, lnO\_GL = -23.54 -> Lorentzian (decisive)
+  N =  256: lnO\_GF = 1831.17, lnO\_GL = -52.59 -> Lorentzian (decisive)
+  N =  512: lnO\_GF = 3864.52, lnO\_GL = -112.31 -> Lorentzian (decisive)
+  N = 1024: lnO\_GF = 7504.44, lnO\_GL = -242.62 -> Lorentzian (decisive)
+    \end{Verbatim}
+
+    在峰值足够高的时候 (\(A\)
+真值足够大)，最终的决定性结果和生成数据集时采用的模型几乎是一一对应的.
+
+    \subsubsection{Note: steps for submitting the
+exercise}\label{note-steps-for-submitting-the-exercise}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  In the menu bar, select \texttt{File\ \textgreater{}\ Download} to
+  download your notebook as a \texttt{.ipynb} file.
+\item
+  Select
+  \texttt{File\ \textgreater{}\ Save\ and\ Export\ Notebook\ As\ \textgreater{}\ PDF}
+  to export your notebook as a PDF file.
+\item
+  Combine the \texttt{.ipynb} and \texttt{.pdf} files into a single
+  \texttt{.zip} or \texttt{.tar.gz} archive.
+\item
+  Upload your archive to the web learning platform (网络学堂).
+\end{enumerate}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
