@@ -1,0 +1,2588 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    \usepackage{ctex}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Keep aspect ratio if custom image width or height is specified
+    \setkeys{Gin}{keepaspectratio}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+
+    \usepackage{iftex}
+    \ifPDFTeX
+        \usepackage[T1]{fontenc}
+        \IfFileExists{alphabeta.sty}{
+              \usepackage{alphabeta}
+          }{
+              \usepackage[mathletters]{ucs}
+              \usepackage[utf8x]{inputenc}
+          }
+    \else
+        \usepackage{fontspec}
+        \usepackage{unicode-math}
+    \fi
+
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{array}     % table support for pandoc >= 2.11.3
+    \usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{soul}      % strikethrough (\st) support for pandoc >= 3.0.0
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \makeatletter
+    \newsavebox\pandoc@box
+    \newcommand*\pandocbounded[1]{%
+      \sbox\pandoc@box{#1}%
+      % scaling factors for width and height
+      \Gscale@div\@tempa\textheight{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+      \Gscale@div\@tempb\linewidth{\wd\pandoc@box}%
+      % select the smaller of both
+      \ifdim\@tempb\p@<\@tempa\p@
+        \let\@tempa\@tempb
+      \fi
+      % scaling accordingly (\@tempa < 1)
+      \ifdim\@tempa\p@<\p@
+        \scalebox{\@tempa}{\usebox\pandoc@box}%
+      % scaling not needed, use as it is
+      \else
+        \usebox{\pandoc@box}%
+      \fi
+    }
+    \makeatother
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Exercise\_week\_07}
+    
+    
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@ges}{\let\PY@bf=\textbf\let\PY@it=\textit}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb.
+    \makeatletter
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+            \catcode`\.\active
+            \catcode`\,\active
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active
+            \lccode`\~`\~
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \section{Statistical Methods in Astrophysics
+Exercises}\label{statistical-methods-in-astrophysics-exercises}
+
+\subsection{Week 07: Regression \&
+Samplers}\label{week-07-regression-samplers}
+
+\subsubsection{Personal Information}\label{personal-information}
+
+\textbf{Name:} physnya
+
+    \subsubsection{Exercise 1: Light curve
+fitting}\label{exercise-1-light-curve-fitting}
+
+The brightness of a variable star varies with time following the
+following sinusoidal model:
+
+\(m(t) = A \sin \left( \dfrac{2 \pi t}{T} + \phi \right) + m_0\)
+
+where \(A\) is the amplitude, \(T\) is the period, \(\phi\) is the
+phase, and \(m_0\) is the mean magnitude.
+
+The star is observed at \(N=32\) different random times \(t_i\) (in
+days) over a year. Due to the variability of observing conditions, the
+measurement uncertainties of the observed magnitudes follow a
+heteroscedastic distribution, i.e., different data points have different
+uncertainties.
+
+The expected uncertainties \(\{\sigma_i\}\) are uniformly distributed
+between 0.2 mag and 0.4 mag. The observed magnitudes \(m_i\) are
+generated by adding Gaussian noise to the true magnitudes at the
+observation times:
+
+\(m_i = m(t_i) + \epsilon_i\),
+
+where \(\epsilon_i \sim \mathcal{N}(0, \sigma_i^2)\), i.e., Gaussian
+noise with zero mean and standard deviation \(\sigma_i\).
+
+\paragraph{Question 1.1: inference with
+UltraNest}\label{question-1.1-inference-with-ultranest}
+
+\textbf{Tasks:} 1. Simulate the light curve data
+\(\{t_i, m_i, \sigma_i\}\) using the following true parameters:
+\(A=1.5\) mag, \(T=100\) days, \(\phi=1\) rad, and \(m_0=15\) mag. Plot
+the simulated light curve data with error bars, and overlay the true
+light curve model. 2. Infer parameters \((A, T, \phi, m_0)\) using the
+\texttt{UltraNest} package with uniform priors over the following
+ranges: - \(A \in [0, 3]\) mag - \(T \in [10, 300]\) days -
+\(\phi \in [0, 2\pi]\) rad - \(m_0 \in [10, 20]\) mag 3. Make triangle
+plots of the joint and marginalized posterior distributions of the
+parameters. 4. Report the mean, standard deviation, and 16-50-84
+percentiles of the marginalized posterior distributions, as well as the
+covariance matrix of the joint posterior distribution.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{74}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: Run this cell in the first place}
+\PY{c+c1}{\PYZsh{} Load packages for numerical calculations and plotting}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{pandas}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{pd}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{plt}
+\PY{c+c1}{\PYZsh{} Enable inline plotting in Jupyter notebooks}
+\PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{figure.figsize}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{figure.dpi}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{300}
+\PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\PY{n}{plt}\PY{o}{.}\PY{n}{rc}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{usetex} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{rc}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{font}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{family} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{serif}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} 由于设置了图片的高 dpi 和字体，所以编译速度变慢.}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{75}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{sim\PYZus{}light\PYZus{}curve}\PY{p}{(}\PY{n}{ndays}\PY{p}{,} \PY{n}{A}\PY{o}{=}\PY{l+m+mf}{1.5}\PY{p}{,} \PY{n}{T}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{phi}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{m0}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Simulate a light curve with Gaussian noise.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        ndays: int, number of days to simulate}
+\PY{l+s+sd}{        A: float, amplitude of variability}
+\PY{l+s+sd}{        T: float, period of variability in days}
+\PY{l+s+sd}{        phi: float, phase of variability}
+\PY{l+s+sd}{        m0: float, mean magnitude}
+\PY{l+s+sd}{        seed: int, random seed for reproducibility}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        t: array, time array in days}
+\PY{l+s+sd}{        m\PYZus{}obs: array, observed magnitudes with noise}
+\PY{l+s+sd}{        sigma: array, measurement uncertainties}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{t} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{rng}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{365}\PY{p}{,} \PY{n}{ndays}\PY{p}{)}\PY{p}{)}
+    \PY{n}{sigma} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{l+m+mf}{0.4}\PY{p}{,} \PY{n}{ndays}\PY{p}{)}
+
+    \PY{n}{m\PYZus{}true} \PY{o}{=} \PY{n}{A} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{*} \PY{n}{t} \PY{o}{/} \PY{n}{T} \PY{o}{+} \PY{n}{phi}\PY{p}{)} \PY{o}{+} \PY{n}{m0}
+    \PY{n}{m\PYZus{}obs} \PY{o}{=} \PY{n}{m\PYZus{}true} \PY{o}{+} \PY{n}{rng}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{ndays}\PY{p}{)}
+
+    \PY{k}{return} \PY{n}{t}\PY{p}{,} \PY{n}{m\PYZus{}obs}\PY{p}{,} \PY{n}{sigma}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{76}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Set the random seed}
+\PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{2024011182}
+
+\PY{c+c1}{\PYZsh{} Setup parameters}
+\PY{n}{ndays} \PY{o}{=} \PY{l+m+mi}{32}
+\PY{n}{param\PYZus{}names} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{phi}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{m0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{param\PYZus{}true} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{1.5}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{15.0}\PY{p}{]}
+\PY{n}{param\PYZus{}ranges} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{300}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Simulate the light curve}
+\PY{n}{t}\PY{p}{,} \PY{n}{m\PYZus{}obs}\PY{p}{,} \PY{n}{sigma} \PY{o}{=} \PY{n}{sim\PYZus{}light\PYZus{}curve}\PY{p}{(}\PY{n}{ndays}\PY{p}{,} \PY{o}{*}\PY{n}{param\PYZus{}true}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+
+\PY{n}{x\PYZus{}model} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{365}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}
+\PY{n}{y\PYZus{}model} \PY{o}{=} \PY{n}{param\PYZus{}true}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{*} \PY{n}{x\PYZus{}model} \PY{o}{/} \PY{n}{param\PYZus{}true}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{param\PYZus{}true}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n}{param\PYZus{}true}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{77}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x\PYZus{}model}\PY{p}{,} \PY{n}{y\PYZus{}model}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True model}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{errorbar}\PY{p}{(}\PY{n}{t}\PY{p}{,} \PY{n}{m\PYZus{}obs}\PY{p}{,} \PY{n}{yerr}\PY{o}{=}\PY{n}{sigma}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Observed data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{capsize}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Time (days)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Magnitude (mag)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Simulated Light Curve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_5_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{78}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Bayesian inference functions for UltraNest sampler}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{prior\PYZus{}transform\PYZus{}lightcurve}\PY{p}{(}\PY{n}{cube}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Transform unit cube to uniform prior space.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        cube: array, unit cube samples}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        params: array, transformed parameters}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{params} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{cube}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{pmin}\PY{p}{,} \PY{n}{pmax}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{param\PYZus{}ranges}\PY{p}{)}\PY{p}{:}
+        \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{pmin} \PY{o}{+} \PY{p}{(}\PY{n}{pmax} \PY{o}{\PYZhy{}} \PY{n}{pmin}\PY{p}{)} \PY{o}{*} \PY{n}{cube}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+    \PY{k}{return} \PY{n}{params}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}likelihood\PYZus{}lightcurve}\PY{p}{(}\PY{n}{params}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the log\PYZhy{}likelihood of the observed data given the model parameters.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        params: array, model parameters [A, T, phi, m0]}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        logL: float, log\PYZhy{}likelihood value}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{A}\PY{p}{,} \PY{n}{T}\PY{p}{,} \PY{n}{phi}\PY{p}{,} \PY{n}{m0} \PY{o}{=} \PY{n}{params}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT below to complete the log\PYZhy{}likelihood calculation}
+    \PY{c+c1}{\PYZsh{} model magnitudes at observation times}
+    \PY{n}{m\PYZus{}model} \PY{o}{=} \PY{n}{A} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{*} \PY{n}{t} \PY{o}{/} \PY{n}{T} \PY{o}{+} \PY{n}{phi}\PY{p}{)} \PY{o}{+} \PY{n}{m0}
+    \PY{c+c1}{\PYZsh{} residuals}
+    \PY{n}{resid} \PY{o}{=} \PY{n}{m\PYZus{}obs} \PY{o}{\PYZhy{}} \PY{n}{m\PYZus{}model}
+    \PY{c+c1}{\PYZsh{} Gaussian log\PYZhy{}likelihood with heteroscedastic errors}
+    \PY{n}{const} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{*} \PY{n}{sigma}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+    \PY{n}{chi2} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{(}\PY{n}{resid} \PY{o}{/} \PY{n}{sigma}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+    \PY{n}{logL} \PY{o}{=} \PY{n}{const} \PY{o}{+} \PY{n}{chi2}
+  
+    \PY{k}{return} \PY{n}{logL}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{79}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create and run the UltraNest sampler}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{ultranest}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{ReactiveNestedSampler}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{ultranest}\PY{n+nn}{.}\PY{n+nn}{plot}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{cornerplot}
+
+\PY{c+c1}{\PYZsh{} Directory for saving results}
+\PY{n}{log\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightcurve}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Initialize the sampler}
+\PY{n}{sampler} \PY{o}{=} \PY{n}{ReactiveNestedSampler}\PY{p}{(}
+    \PY{n}{param\PYZus{}names}\PY{p}{,} \PY{n}{log\PYZus{}likelihood\PYZus{}lightcurve}\PY{p}{,}
+    \PY{n}{prior\PYZus{}transform\PYZus{}lightcurve}\PY{p}{,} \PY{n}{log\PYZus{}dir}\PY{o}{=}\PY{n}{log\PYZus{}dir}
+\PY{p}{)}  \PY{c+c1}{\PYZsh{} Add resume=True if needed}
+
+\PY{c+c1}{\PYZsh{} Run the sampler}
+\PY{n}{results} \PY{o}{=} \PY{n}{sampler}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creating directory for new run lightcurve/run1
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+VBox(children=(HTML(value=''), GridspecLayout(children=(HTML(value="<div style='background-color:\#6E6BF4;'>\&nb…
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Z=-21.4(98.90\%) | Like=-5.68..-5.55 [-5.6802..-5.6802]*| it/evals=8120/45218
+eff=18.1177\% N=400   0    0
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{80}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create corner plot of the results}
+\PY{n}{cornerplot}\PY{p}{(}\PY{n}{results}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{param\PYZus{}true}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_8_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{81}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Report summary statistics}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paramnames}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{n}{percentiles}\PY{o}{=}\PY{p}{[}\PY{l+m+mf}{0.16}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.84}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{81}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                 A            T          phi           m0
+count  8559.000000  8559.000000  8559.000000  8559.000000
+mean      1.571754   100.297697     1.027605    15.048364
+std       0.074260     0.830979     0.110257     0.053563
+min       1.243882    97.592807     0.593769    14.821707
+16\%       1.497936    99.480002     0.916858    14.995999
+50\%       1.571524   100.293845     1.026627    15.047686
+84\%       1.646535   101.150908     1.137494    15.102016
+max       1.852623   103.807809     1.478882    15.227167
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{82}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Compute the covariance matrix from the samples}
+\PY{n}{names}   \PY{o}{=} \PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paramnames}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{samples} \PY{o}{=} \PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{n}{df}  \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{samples}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{names}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{cov}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+            A         T       phi        m0
+A    0.005515 -0.009929 -0.000836  0.000162
+T   -0.009929  0.690526  0.084081 -0.011616
+phi -0.000836  0.084081  0.012157 -0.001130
+m0   0.000162 -0.011616 -0.001130  0.002869
+    \end{Verbatim}
+
+    \paragraph{Question 1.2: inference with
+emcee}\label{question-1.2-inference-with-emcee}
+
+\textbf{Task:} Repeat the tasks in Question 1.1 using the \texttt{emcee}
+package.
+
+\textbf{Hint:} 1. Plot the chain traces to determine the burn-in period.
+2. \texttt{emcee} documentation:
+https://emcee.readthedocs.io/en/stable/tutorials/line/
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{83}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Bayesian inference functions for emcee}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}prior\PYZus{}lightcurve\PYZus{}emcee}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n}{param\PYZus{}ranges}\PY{o}{=}\PY{n}{param\PYZus{}ranges}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the log\PYZhy{}prior for emcee sampler.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        params: array, model parameters [A, T, phi, m0]}
+\PY{l+s+sd}{        param\PYZus{}ranges: list of tuples, parameter ranges}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        logP: float, log\PYZhy{}prior value}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{pmin}\PY{p}{,} \PY{n}{pmax}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{param\PYZus{}ranges}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if} \PY{o+ow}{not} \PY{p}{(}\PY{n}{pmin} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{pmax}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{inf}
+    \PY{k}{return} \PY{l+m+mf}{0.0}  \PY{c+c1}{\PYZsh{} uniform prior within the range}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}posterior\PYZus{}lightcurve\PYZus{}emcee}\PY{p}{(}\PY{n}{params}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the log\PYZhy{}posterior for emcee sampler.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        params: array, model parameters [A, T, phi, m0]}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        log\PYZus{}post: float, log\PYZhy{}posterior value}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{lnP} \PY{o}{=} \PY{n}{log\PYZus{}prior\PYZus{}lightcurve\PYZus{}emcee}\PY{p}{(}\PY{n}{params}\PY{p}{)}
+    \PY{k}{if} \PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{isfinite}\PY{p}{(}\PY{n}{lnP}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{inf}
+    \PY{n}{lnL} \PY{o}{=} \PY{n}{log\PYZus{}likelihood\PYZus{}lightcurve}\PY{p}{(}\PY{n}{params}\PY{p}{)}
+    \PY{k}{return} \PY{n}{lnP} \PY{o}{+} \PY{n}{lnL}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{84}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Setup and run the emcee sampler}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{emcee}
+
+\PY{n}{ndim} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{param\PYZus{}names}\PY{p}{)}
+\PY{n}{nwalkers} \PY{o}{=} \PY{l+m+mi}{256}
+\PY{n}{nsteps} \PY{o}{=} \PY{l+m+mi}{10000}
+
+\PY{c+c1}{\PYZsh{} Initialize walkers in the prior space}
+\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{p0} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{n}{low}\PY{o}{=}\PY{n}{param\PYZus{}ranges}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{high}\PY{o}{=}\PY{n}{param\PYZus{}ranges}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{n}{nwalkers}\PY{p}{,} \PY{n}{ndim}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{sampler\PYZus{}emcee} \PY{o}{=} \PY{n}{emcee}\PY{o}{.}\PY{n}{EnsembleSampler}\PY{p}{(}\PY{n}{nwalkers}\PY{p}{,} \PY{n}{ndim}\PY{p}{,} \PY{n}{log\PYZus{}posterior\PYZus{}lightcurve\PYZus{}emcee}\PY{p}{)}
+\PY{n}{sampler\PYZus{}emcee}\PY{o}{.}\PY{n}{run\PYZus{}mcmc}\PY{p}{(}\PY{n}{p0}\PY{p}{,} \PY{n}{nsteps}\PY{p}{,} \PY{n}{progress}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+100\%|██████████| 10000/10000 [00:31<00:00, 321.61it/s]
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{85}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Plot chain traces}
+\PY{n}{plot\PYZus{}steps} \PY{o}{=} \PY{l+m+mi}{1000}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{ndim}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{samples\PYZus{}emcee} \PY{o}{=} \PY{n}{sampler\PYZus{}emcee}\PY{o}{.}\PY{n}{get\PYZus{}chain}\PY{p}{(}\PY{p}{)}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{ndim}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{samples\PYZus{}emcee}\PY{p}{[}\PY{p}{:}\PY{n}{plot\PYZus{}steps}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{n}{param\PYZus{}names}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{ax}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Step number}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_14_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{86}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Remove burn\PYZhy{}in and flatten the chain}
+\PY{c+c1}{\PYZsh{} NOTE: EDIT HERE based on the trace plots}
+\PY{n}{burn\PYZus{}in} \PY{o}{=} \PY{l+m+mi}{1000}
+\PY{n}{flat\PYZus{}samples} \PY{o}{=} \PY{n}{sampler\PYZus{}emcee}\PY{o}{.}\PY{n}{get\PYZus{}chain}\PY{p}{(}\PY{n}{discard}\PY{o}{=}\PY{n}{burn\PYZus{}in}\PY{p}{,} \PY{n}{flat}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{thin}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{87}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Make corner plot of the emcee results}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{corner}
+
+\PY{n}{corner}\PY{o}{.}\PY{n}{corner}\PY{p}{(}\PY{n}{flat\PYZus{}samples}\PY{p}{,} \PY{n}{labels}\PY{o}{=}\PY{n}{param\PYZus{}names}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{param\PYZus{}true}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{88}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Report summary statistics}
+\PY{n}{df\PYZus{}emcee} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{flat\PYZus{}samples}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{param\PYZus{}names}\PY{p}{)}
+\PY{n}{df\PYZus{}emcee}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{n}{percentiles}\PY{o}{=}\PY{p}{[}\PY{l+m+mf}{0.16}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.84}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{88}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                  A             T           phi            m0
+count  2.304000e+06  2.304000e+06  2.304000e+06  2.304000e+06
+mean   1.459203e+00  1.164631e+02  2.438643e+00  1.506101e+01
+std    2.584358e-01  5.697349e+01  2.236359e+00  5.953490e-02
+min    9.394371e-02  9.285106e+01  4.903848e-01  1.478811e+01
+16\%    1.392486e+00  9.416742e+01  9.489992e-01  1.500236e+01
+50\%    1.528519e+00  1.000147e+02  1.106681e+00  1.505940e+01
+84\%    1.623341e+00  1.013543e+02  6.270686e+00  1.512012e+01
+max    1.931130e+00  2.999994e+02  6.283184e+00  1.532271e+01
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{89}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Report the covariance matrix from emcee samples}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{df\PYZus{}emcee}\PY{o}{.}\PY{n}{cov}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+             A            T        phi        m0
+A     0.066789   -13.552115  -0.098642 -0.005676
+T   -13.552115  3245.978907 -11.216066  1.192096
+phi  -0.098642   -11.216066   5.001300  0.023258
+m0   -0.005676     1.192096   0.023258  0.003544
+    \end{Verbatim}
+
+    \paragraph{Question 1.3: multimodal
+posterior?}\label{question-1.3-multimodal-posterior}
+
+You may notice a multimodal posterior distribution from the
+\texttt{emcee} results. (If not, try another random seed when simulating
+the data.)
+
+\textbf{Tasks:} 1. Identify a set of parameters corresponding to a
+different mode in the posterior distribution. 2. Plot the light curve
+model using these parameters over the simulated data, and compare it
+with the light curve model using the true parameters. 3. Vary one
+parameter of this model (such as \(\phi\)) while keeping other
+parameters fixed to see how the log-likelihood changes. Plot the
+log-likelihood as a function of this parameter to illustrate the
+presence of multiple modes, overlaying the log-likelihood curve from the
+true parameters for comparison. 4. Discuss all your results in the whole
+exercise.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{90}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{param\PYZus{}secondary} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.55}\PY{p}{,} \PY{l+m+mi}{170}\PY{p}{,} \PY{l+m+mf}{2.4}\PY{p}{,} \PY{l+m+mf}{15.1}\PY{p}{]}  \PY{c+c1}{\PYZsh{} NOTE: EDIT HERE to insert parameters of a different mode}
+
+\PY{c+c1}{\PYZsh{} Remake the corner plot to highlight the secondary mode (or to verify if your identified parameters are indeed a different mode)}
+\PY{n}{corner}\PY{o}{.}\PY{n}{corner}\PY{p}{(}\PY{n}{flat\PYZus{}samples}\PY{p}{,} \PY{n}{labels}\PY{o}{=}\PY{n}{param\PYZus{}names}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{param\PYZus{}secondary}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_20_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{91}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to compute the model using the secondary parameters}
+\PY{n}{y\PYZus{}model\PYZus{}secondary} \PY{o}{=} \PY{n}{param\PYZus{}secondary}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{*} \PY{n}{x\PYZus{}model} \PY{o}{/} \PY{n}{param\PYZus{}secondary}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{param\PYZus{}secondary}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n}{param\PYZus{}secondary}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x\PYZus{}model}\PY{p}{,} \PY{n}{y\PYZus{}model\PYZus{}secondary}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Secondary model}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x\PYZus{}model}\PY{p}{,} \PY{n}{y\PYZus{}model}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True model}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{errorbar}\PY{p}{(}\PY{n}{t}\PY{p}{,} \PY{n}{m\PYZus{}obs}\PY{p}{,} \PY{n}{yerr}\PY{o}{=}\PY{n}{sigma}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Observed data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{capsize}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to plot the model using the secondary parameters}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Time (days)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Magnitude (mag)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_21_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{92}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{loglike\PYZus{}true} \PY{o}{=} \PY{n}{log\PYZus{}likelihood\PYZus{}lightcurve}\PY{p}{(}\PY{n}{param\PYZus{}true}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} NOTE: feel free to scan over another parameter}
+\PY{n}{phi\PYZus{}values} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to compute log\PYZhy{}likelihood values over phi\PYZus{}values}
+\PY{n}{loglike\PYZus{}phi} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{log\PYZus{}likelihood\PYZus{}lightcurve}\PY{p}{(}\PY{p}{[}\PY{n}{param\PYZus{}true}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{param\PYZus{}true}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{phi}\PY{p}{,} \PY{n}{param\PYZus{}true}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{]}\PY{p}{)} 
+                        \PY{k}{for} \PY{n}{phi} \PY{o+ow}{in} \PY{n}{phi\PYZus{}values}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{phi\PYZus{}values}\PY{p}{,} \PY{n}{loglike\PYZus{}phi}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{n}{param\PYZus{}secondary}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Secondary phi}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{loglike\PYZus{}true}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True parameters logL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Phase (phi)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log\PYZhy{}Likelihood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subparagraph{Discussions}\label{discussions}
+
+在使用上还是可以明显地感受到 emcee 算法和 UltraNest 的差异，emcee 容易在
+burn-in 比较少、步长比较短的情况下陷入某一个区间内，UltraNest
+在这个方面的表现比 emcee 强了很多；另外，emcee
+的可调参数更多，虽然在这个问题中没有产生什么特别的影响，但是应该会在某些比较特殊的情况下展现敏感的特征.
+
+    \subsubsection{Exercise 2: spectral line
+fitting}\label{exercise-2-spectral-line-fitting}
+
+Let us revisit the spectral line problem with the following model
+(expected photon counts as a function of wavelength channel x):
+
+\(N_{\rm exp} (x) = A \exp \left[-\dfrac{(x - x_0)^2}{2 w^2}\right] + B\)
+
+where \(A\) is the amplitude of the Gaussian line, \(x_0\) is the center
+of the line, \(w\) is the width of the line, and \(B\) is the constant
+background level.
+
+The data is taken on integer \(x_i \in [-25, 25]\) with 51 wavelength
+channels. The observed photon counts \(n_i\) are generated by drawing
+from a Poisson distribution with mean \(N_{\rm exp}(x_i)\).
+
+Now, with the nested sampling method, we are able to infer all
+parameters simultaneously.
+
+\paragraph{Question 2.1: inference of all
+parameters}\label{question-2.1-inference-of-all-parameters}
+
+\textbf{Tasks:} 1. Simulate the spectral line data \(\{x_i, n_i\}\)
+using the following parameters: \(A=B=50, x_0=0, w=5\). Plot the
+simulated spectral line data, and overlay the true spectral line model.
+2. Infer parameters \((A, w, B, x_0)\) using the \texttt{UltraNest}
+package with uniform priors over the following ranges: -
+\(A \in [0, 100]\) - \(x_0 \in [-10, 10]\) - \(w \in [1, 20]\) -
+\(B \in [0, 100]\) 3. Plot the joint and marginalized posterior
+distributions of the parameters, along with two additional derived
+parameters: the galaxy star formation rate \(f = A w / 10\) and velocity
+dispersion \(\sigma_v = 10 * w\). 4. Report the mean, standard
+deviation, and 16-50-84 percentiles of the marginalized posterior
+distributions, as well as the covariance matrix of the joint posterior
+distribution (including the derived parameters). Present also the
+correlation matrix.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{93}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{spec\PYZus{}model}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{A}\PY{p}{,} \PY{n}{w}\PY{p}{,} \PY{n}{B}\PY{p}{,} \PY{n}{x0}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Model (expected) photon counts of a galaxy spectrum with a Gaussian line plus constant background.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        x: array\PYZhy{}like, wavelengths}
+\PY{l+s+sd}{        A: float, line amplitude}
+\PY{l+s+sd}{        w: float, line width (standard deviation)}
+\PY{l+s+sd}{        B: float, background level}
+\PY{l+s+sd}{        x0: float, line center (default: 0)}
+\PY{l+s+sd}{    Return: numpy array, expected photon counts at each wavelength}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{n} \PY{o}{=} \PY{p}{[}\PY{n}{A} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{xi} \PY{o}{\PYZhy{}} \PY{n}{x0}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{w}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{n}{B} \PY{k}{for} \PY{n}{xi} \PY{o+ow}{in} \PY{n}{x}\PY{p}{]}
+    \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{n}\PY{p}{)}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{sim\PYZus{}spec}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{w}\PY{p}{,} \PY{n}{B}\PY{p}{,} \PY{n}{x0}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Simulate a galaxy spectrum with given background and line width.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        A: float, line amplitude}
+\PY{l+s+sd}{        w: float, line width (standard deviation)}
+\PY{l+s+sd}{        B: float, background level}
+\PY{l+s+sd}{        x0: float, line center (default: 0)}
+\PY{l+s+sd}{        seed: int, random seed for reproducibility (default: 42)}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        x: numpy array, wavelengths}
+\PY{l+s+sd}{        n\PYZus{}obs: numpy array, observed photon counts at each wavelength}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{25}\PY{p}{,} \PY{l+m+mi}{26}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Wavelengths from \PYZhy{}25 to 25}
+    \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{N\PYZus{}exp} \PY{o}{=} \PY{n}{spec\PYZus{}model}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{A}\PY{p}{,} \PY{n}{w}\PY{p}{,} \PY{n}{B}\PY{p}{,} \PY{n}{x0}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} ensure non\PYZhy{}negative expected counts}
+    \PY{n}{N\PYZus{}exp} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{clip}\PY{p}{(}\PY{n}{N\PYZus{}exp}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+    \PY{n}{n\PYZus{}obs} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{poisson}\PY{p}{(}\PY{n}{N\PYZus{}exp}\PY{p}{)}
+    \PY{k}{return} \PY{n}{x}\PY{p}{,} \PY{n}{n\PYZus{}obs}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Set the random seed}
+\PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{2024011182}
+
+\PY{c+c1}{\PYZsh{} Parameter setup}
+\PY{n}{param\PYZus{}names} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{B}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{npar} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{param\PYZus{}names}\PY{p}{)}
+\PY{n}{param\PYZus{}true} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{50}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}
+\PY{n}{param\PYZus{}ranges} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Define derived parameters}
+\PY{n}{derived\PYZus{}names} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigma\PYZus{}v}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{derived\PYZus{}true} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{25}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Simulate the spectrum}
+\PY{n}{x\PYZus{}spec}\PY{p}{,} \PY{n}{spec} \PY{o}{=} \PY{n}{sim\PYZus{}spec}\PY{p}{(}\PY{o}{*}\PY{p}{(}\PY{n}{param\PYZus{}true}\PY{p}{[}\PY{p}{:}\PY{n}{npar}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Compute the expected spectrum with true parameters for comparison}
+\PY{n}{x\PYZus{}model} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{25}\PY{p}{,} \PY{l+m+mi}{25}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+\PY{n}{y\PYZus{}model} \PY{o}{=} \PY{n}{spec\PYZus{}model}\PY{p}{(}\PY{n}{x\PYZus{}model}\PY{p}{,} \PY{o}{*}\PY{p}{(}\PY{n}{param\PYZus{}true}\PY{p}{[}\PY{p}{:}\PY{n}{npar}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Plot the model and simulated spectrum}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x\PYZus{}model}\PY{p}{,} \PY{n}{y\PYZus{}model}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Expected Spectrum}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x\PYZus{}spec}\PY{p}{,} \PY{n}{spec}\PY{p}{,} \PY{n}{drawstyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steps\PYZhy{}mid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Simulated Spectrum}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Wavelength}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Photon Counts}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_26_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{95}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Bayesian inference functions for UltraNest sampler}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{special}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{gammaln}\PY{p}{,} \PY{n}{xlogy}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{prior\PYZus{}transform\PYZus{}spec}\PY{p}{(}\PY{n}{cube}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Transform unit cube to uniform prior space.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        cube: array, unit cube samples}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        params: array, transformed parameters}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{params} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{npar} \PY{o}{+} \PY{n+nb}{len}\PY{p}{(}\PY{n}{derived\PYZus{}names}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{pmin}\PY{p}{,} \PY{n}{pmax}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{param\PYZus{}ranges}\PY{p}{[}\PY{p}{:}\PY{n}{npar}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+        \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{pmin} \PY{o}{+} \PY{p}{(}\PY{n}{pmax} \PY{o}{\PYZhy{}} \PY{n}{pmin}\PY{p}{)} \PY{o}{*} \PY{n}{cube}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+    \PY{c+c1}{\PYZsh{} derived parameters}
+    \PY{n}{params}\PY{p}{[}\PY{n}{npar}\PY{p}{]} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{/} \PY{l+m+mi}{10}   \PY{c+c1}{\PYZsh{} f = A * w / 10}
+    \PY{n}{params}\PY{p}{[}\PY{n}{npar} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{10}           \PY{c+c1}{\PYZsh{} sigma\PYZus{}v = w * 10}
+    \PY{k}{return} \PY{n}{params}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}likelihood\PYZus{}spec}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n}{spec\PYZus{}data}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the log\PYZhy{}likelihood of the observed data given the model parameters.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        params: array, model parameters [A, w, B, x0]}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        logL: float, log\PYZhy{}likelihood value}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{N\PYZus{}exp} \PY{o}{=} \PY{n}{spec\PYZus{}model}\PY{p}{(}\PY{n}{x\PYZus{}spec}\PY{p}{,} \PY{o}{*}\PY{p}{(}\PY{n}{params}\PY{p}{[}\PY{p}{:}\PY{n}{npar}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+    \PY{n}{const\PYZus{}term} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{gammaln}\PY{p}{(}\PY{n}{spec\PYZus{}data} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}  \PY{c+c1}{\PYZsh{} log(factorial(spec))}
+    \PY{n}{logL} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{xlogy}\PY{p}{(}\PY{n}{spec\PYZus{}data}\PY{p}{,} \PY{n}{N\PYZus{}exp}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{N\PYZus{}exp}\PY{p}{)} \PY{o}{+} \PY{n}{const\PYZus{}term}  \PY{c+c1}{\PYZsh{} Complete Poisson log\PYZhy{}likelihood}
+    \PY{k}{return} \PY{n}{logL}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{96}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{logging}
+
+\PY{c+c1}{\PYZsh{} Create and run the UltraNest sampler for the spectrum}
+\PY{n}{log\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spectrum}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Use extended parameter names including derived parameters so prior\PYZus{}transform\PYZus{}spec returns the expected shape}
+\PY{n}{param\PYZus{}names\PYZus{}extended} \PY{o}{=} \PY{n}{param\PYZus{}names} \PY{o}{+} \PY{n}{derived\PYZus{}names}
+
+\PY{c+c1}{\PYZsh{} Create the sampler with the extended parameter list (log\PYZus{}likelihood\PYZus{}spec uses only the first npar entries)}
+\PY{n}{logging}\PY{o}{.}\PY{n}{getLogger}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ultranest}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{setLevel}\PY{p}{(}\PY{n}{logging}\PY{o}{.}\PY{n}{WARNING}\PY{p}{)}
+
+\PY{n}{sampler\PYZus{}spec} \PY{o}{=} \PY{n}{ReactiveNestedSampler}\PY{p}{(}
+    \PY{n}{param\PYZus{}names\PYZus{}extended}\PY{p}{,}
+    \PY{k}{lambda} \PY{n}{p}\PY{p}{:} \PY{n}{log\PYZus{}likelihood\PYZus{}spec}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{n}{spec}\PY{p}{)}\PY{p}{,}
+    \PY{n}{prior\PYZus{}transform\PYZus{}spec}\PY{p}{,}
+    \PY{n}{log\PYZus{}dir}\PY{o}{=}\PY{n}{log\PYZus{}dir}
+\PY{p}{)}
+
+\PY{n}{results\PYZus{}spec} \PY{o}{=} \PY{n}{sampler\PYZus{}spec}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creating directory for new run spectrum/run1
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+VBox(children=(HTML(value=''), GridspecLayout(children=(HTML(value="<div style='background-color:\#6E6BF4;'>\&nb…
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Z=-178.4(98.97\%) | Like=-166.44..-166.30 [-166.4376..-166.4374]*|
+it/evals=6640/31586 eff=21.2916\% N=400
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{97}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Plot a joint corner plot of all parameters (including derived ones)}
+\PY{n}{cornerplot}\PY{p}{(}\PY{n}{results\PYZus{}spec}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{param\PYZus{}true}\PY{o}{+}\PY{n}{derived\PYZus{}true}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_29_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{98}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Or, only the fitting parameters}
+\PY{n}{results\PYZus{}spec\PYZus{}fitting} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paramnames}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{param\PYZus{}names}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weighted\PYZus{}samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{\PYZob{}}
+        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{points}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{results\PYZus{}spec}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weighted\PYZus{}samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{points}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{n}{npar}\PY{p}{]}\PY{p}{,}
+        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weights}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{results\PYZus{}spec}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weighted\PYZus{}samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weights}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+    \PY{p}{\PYZcb{}}
+\PY{p}{\PYZcb{}}
+\PY{n}{cornerplot}\PY{p}{(}\PY{n}{results\PYZus{}spec\PYZus{}fitting}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{param\PYZus{}true}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_30_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{99}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Now, only the derived parameters}
+\PY{n}{results\PYZus{}spec\PYZus{}derived}  \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paramnames}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{derived\PYZus{}names}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weighted\PYZus{}samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{\PYZob{}}
+        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{points}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{results\PYZus{}spec}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weighted\PYZus{}samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{points}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{npar}\PY{p}{:}\PY{p}{]}\PY{p}{,}
+        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weights}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{results\PYZus{}spec}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weighted\PYZus{}samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weights}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+    \PY{p}{\PYZcb{}}
+\PY{p}{\PYZcb{}}
+\PY{n}{cornerplot}\PY{p}{(}\PY{n}{results\PYZus{}spec\PYZus{}derived}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{derived\PYZus{}true}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_31_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{100}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Report summary statistics}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{results\PYZus{}spec}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{results\PYZus{}spec}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paramnames}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{n}{percentiles}\PY{o}{=}\PY{p}{[}\PY{l+m+mf}{0.16}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.84}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{100}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                 A            w            B           x0            f  \textbackslash{}
+count  7052.000000  7052.000000  7052.000000  7052.000000  7052.000000
+mean     53.173646     5.054177    49.578374    -0.677938    26.803082
+std       4.111417     0.414249     1.419082     0.396803     2.289915
+min      38.351440     3.551228    43.825676    -2.267202    19.352341
+16\%      49.137275     4.653106    48.189423    -1.085254    24.565140
+50\%      53.095035     5.032934    49.574951    -0.674146    26.789800
+84\%      57.255888     5.475386    50.985784    -0.273479    29.122467
+max      71.934736     6.822641    55.657426     0.797904    36.536861
+
+           sigma\_v
+count  7052.000000
+mean     50.541767
+std       4.142488
+min      35.512277
+16\%      46.531061
+50\%      50.329342
+84\%      54.753863
+max      68.226411
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{101}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Compute the covariance matrix from the samples}
+\PY{n}{names}   \PY{o}{=} \PY{n}{results\PYZus{}spec}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paramnames}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{samples} \PY{o}{=} \PY{n}{results\PYZus{}spec}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{n}{df}  \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{samples}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{names}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{cov}\PY{p}{(}\PY{p}{)}\PY{p}{)}     \PY{c+c1}{\PYZsh{} Covariance matrix of all parameters}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{)}    \PY{c+c1}{\PYZsh{} Correlation matrix of all parameters}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+                 A         w         B        x0         f    sigma\_v
+A        16.903752 -0.718286 -1.202569  0.039755  4.687962  -7.182861
+w        -0.718286  0.171602 -0.284156 -0.013945  0.543687   1.716021
+B        -1.202569 -0.284156  2.013793  0.023001 -2.106028  -2.841558
+x0        0.039755 -0.013945  0.023001  0.157452 -0.051990  -0.139451
+f         4.687962  0.543687 -2.106028 -0.051990  5.243710   5.436873
+sigma\_v  -7.182861  1.716021 -2.841558 -0.139451  5.436873  17.160209
+                A         w         B        x0         f   sigma\_v
+A        1.000000 -0.421740 -0.206116  0.024368  0.497936 -0.421740
+w       -0.421740  1.000000 -0.483379 -0.084837  0.573150  1.000000
+B       -0.206116 -0.483379  1.000000  0.040847 -0.648093 -0.483379
+x0       0.024368 -0.084837  0.040847  1.000000 -0.057217 -0.084837
+f        0.497936  0.573150 -0.648093 -0.057217  1.000000  0.573150
+sigma\_v -0.421740  1.000000 -0.483379 -0.084837  0.573150  1.000000
+    \end{Verbatim}
+
+    \paragraph{Question 2.2: line identification via Bayesian model
+comparison}\label{question-2.2-line-identification-via-bayesian-model-comparison}
+
+\textbf{Tasks:} 1. Consider an alternative model without the Gaussian
+line component: \(N_{\rm exp} (x) = B\). Using the same simulated data
+from Question 2.1, compute the Bayesian evidence for both models (with
+and without the Gaussian line) using \texttt{UltraNest}. 2. Compute the
+Bayes factor to compare the two models.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{102}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{prior\PYZus{}transform\PYZus{}spec\PYZus{}no\PYZus{}line}\PY{p}{(}\PY{n}{cube}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Transform unit cube to uniform prior space for model without line.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        cube: array, unit cube samples}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        params: array, transformed parameters}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{params} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Only one parameter: B}
+    \PY{n}{pmin}\PY{p}{,} \PY{n}{pmax} \PY{o}{=} \PY{n}{param\PYZus{}ranges}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}  \PY{c+c1}{\PYZsh{} Range for B}
+    \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{pmin} \PY{o}{+} \PY{p}{(}\PY{n}{pmax} \PY{o}{\PYZhy{}} \PY{n}{pmin}\PY{p}{)} \PY{o}{*} \PY{n}{cube}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{k}{return} \PY{n}{params}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}likelihood\PYZus{}spec\PYZus{}no\PYZus{}line}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n}{spec}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the log\PYZhy{}likelihood of the observed data given the model parameters for model without line.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        params: array, model parameters [B]}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        logL: float, log\PYZhy{}likelihood value}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{B} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT below to complete the log\PYZhy{}likelihood calculation}
+    \PY{c+c1}{\PYZsh{} model: constant background B for all wavelength channels}
+    \PY{n}{N\PYZus{}exp} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full\PYZus{}like}\PY{p}{(}\PY{n}{spec}\PY{p}{,} \PY{n+nb}{float}\PY{p}{(}\PY{n}{B}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Poisson log\PYZhy{}likelihood: sum( n * log(lambda) \PYZhy{} lambda \PYZhy{} log(n!) )}
+    \PY{n}{const\PYZus{}term} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{gammaln}\PY{p}{(}\PY{n}{spec} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+    \PY{n}{logL} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{xlogy}\PY{p}{(}\PY{n}{spec}\PY{p}{,} \PY{n}{N\PYZus{}exp}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{N\PYZus{}exp}\PY{p}{)} \PY{o}{+} \PY{n}{const\PYZus{}term}
+    \PY{k}{return} \PY{n}{logL}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{103}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create and run the UltraNest sampler for the model without line}
+\PY{n}{log\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spectrum\PYZus{}no\PYZus{}line}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Parameter names for the no\PYZhy{}line model (only background B)}
+\PY{n}{param\PYZus{}names\PYZus{}no\PYZus{}line} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{B}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Create the sampler using the single\PYZhy{}parameter prior transform}
+\PY{n}{sampler\PYZus{}spec\PYZus{}no\PYZus{}line} \PY{o}{=} \PY{n}{ReactiveNestedSampler}\PY{p}{(}
+    \PY{n}{param\PYZus{}names\PYZus{}no\PYZus{}line}\PY{p}{,}
+    \PY{k}{lambda} \PY{n}{p}\PY{p}{:} \PY{n}{log\PYZus{}likelihood\PYZus{}spec\PYZus{}no\PYZus{}line}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{n}{spec}\PY{p}{)}\PY{p}{,}
+    \PY{n}{prior\PYZus{}transform\PYZus{}spec\PYZus{}no\PYZus{}line}\PY{p}{,}
+    \PY{n}{log\PYZus{}dir}\PY{o}{=}\PY{n}{log\PYZus{}dir}
+\PY{p}{)}
+
+\PY{n}{results\PYZus{}spec\PYZus{}no\PYZus{}line} \PY{o}{=} \PY{n}{sampler\PYZus{}spec\PYZus{}no\PYZus{}line}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creating directory for new run spectrum\_no\_line/run1
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+VBox(children=(HTML(value=''), GridspecLayout(children=(HTML(value="<div style='background-color:\#6E6BF4;'>\&nb…
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Z=-291.1(96.36\%) | Like=-287.41..-287.41 [-287.4101..-287.4101]*|
+it/evals=2800/3306 eff=96.3524\% N=400
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{104}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to compute the log Bayes factor for the two models}
+\PY{c+c1}{\PYZsh{} UltraNest returns log\PYZhy{}evidence in \PYZsq{}logz\PYZsq{}, so the log Bayes factor is simply the difference.}
+\PY{n}{logz\PYZus{}with\PYZus{}line} \PY{o}{=} \PY{n}{results\PYZus{}spec}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{logz\PYZus{}without\PYZus{}line} \PY{o}{=} \PY{n}{results\PYZus{}spec\PYZus{}no\PYZus{}line}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{log\PYZus{}bayes\PYZus{}factor} \PY{o}{=} \PY{n}{logz\PYZus{}with\PYZus{}line} \PY{o}{\PYZhy{}} \PY{n}{logz\PYZus{}without\PYZus{}line}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log Bayes Factor (with line vs without line): }\PY{l+s+si}{\PYZob{}}\PY{n}{log\PYZus{}bayes\PYZus{}factor}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Log Bayes Factor (with line vs without line): 112.68
+    \end{Verbatim}
+
+    \paragraph{Question 2.3: calibration
+systematics}\label{question-2.3-calibration-systematics}
+
+Assume that there is a uncalibrated wavelength-dependent instrument
+background that introduces a linear systematic bias in the expected
+photon counts:
+
+\(N'_{\rm exp} (x) = A \exp \left[ - \dfrac{(x-x_0)^2}{2 w^2} \right] + B + kx + b\)
+
+where \(k\) is the slope of the calibration bias, \(b\) is the
+intercept.
+
+\textbf{Tasks:} 1. Re-simulate the spectral line data from Question 2.1
+with a calibration bias with \(k=0.6\) and \(b=10\). Plot the biased
+spectral line data, and overlay the true spectral line model (without
+calibration bias). 2. Repeat the inference from Question 2.1 without
+accounting for the calibration bias. Plot the joint and marginalized
+posterior distributions of the parameters, and report the summary
+statistics as before.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{105}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{sim\PYZus{}spec\PYZus{}biased}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{w}\PY{p}{,} \PY{n}{B}\PY{p}{,} \PY{n}{x0}\PY{p}{,} \PY{n}{k}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Simulate a galaxy spectrum with calibration bias.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        A: float, line amplitude}
+\PY{l+s+sd}{        w: float, line width (standard deviation)}
+\PY{l+s+sd}{        B: float, background level}
+\PY{l+s+sd}{        x0: float, line center}
+\PY{l+s+sd}{        k: float, calibration bias slope}
+\PY{l+s+sd}{        b: float, calibration bias intercept}
+\PY{l+s+sd}{        seed: int, random seed for reproducibility (default: 42)}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        x: numpy array, wavelengths}
+\PY{l+s+sd}{        n\PYZus{}obs\PYZus{}biased: numpy array, observed photon counts with calibration bias}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{25}\PY{p}{,} \PY{l+m+mi}{26}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Wavelengths from \PYZhy{}25 to 25}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT below to simulate observed photon counts with calibration bias}
+    \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{N\PYZus{}exp} \PY{o}{=} \PY{n}{spec\PYZus{}model}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{A}\PY{p}{,} \PY{n}{w}\PY{p}{,} \PY{n}{B}\PY{p}{,} \PY{n}{x0}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} apply linear calibration bias k*x + b}
+    \PY{n}{N\PYZus{}exp\PYZus{}biased} \PY{o}{=} \PY{n}{N\PYZus{}exp} \PY{o}{+} \PY{n}{k} \PY{o}{*} \PY{n}{x} \PY{o}{+} \PY{n}{b}
+    \PY{c+c1}{\PYZsh{} ensure non\PYZhy{}negative expected counts}
+    \PY{n}{N\PYZus{}exp\PYZus{}biased} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{clip}\PY{p}{(}\PY{n}{N\PYZus{}exp\PYZus{}biased}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+    \PY{n}{n\PYZus{}obs\PYZus{}biased} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{poisson}\PY{p}{(}\PY{n}{N\PYZus{}exp\PYZus{}biased}\PY{p}{)}
+    \PY{k}{return} \PY{n}{x}\PY{p}{,} \PY{n}{n\PYZus{}obs\PYZus{}biased}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{106}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{k\PYZus{}true} \PY{o}{=} \PY{l+m+mf}{0.6}
+\PY{n}{b\PYZus{}true} \PY{o}{=} \PY{l+m+mi}{10}
+\PY{n}{x\PYZus{}spec}\PY{p}{,} \PY{n}{spec\PYZus{}biased} \PY{o}{=} \PY{n}{sim\PYZus{}spec\PYZus{}biased}\PY{p}{(}\PY{o}{*}\PY{p}{(}\PY{n}{param\PYZus{}true}\PY{p}{)}\PY{p}{,} \PY{n}{k\PYZus{}true}\PY{p}{,} \PY{n}{b\PYZus{}true}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x\PYZus{}model}\PY{p}{,} \PY{n}{y\PYZus{}model}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Expected Spectrum}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x\PYZus{}spec}\PY{p}{,} \PY{n}{spec\PYZus{}biased}\PY{p}{,} \PY{n}{drawstyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steps\PYZhy{}mid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Biased Simulated Spectrum}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Wavelength}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Photon Counts}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_40_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{107}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create and run the UltraNest sampler for the model with calibration systematics}
+\PY{n}{log\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spectrum\PYZus{}biased}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{n}{param\PYZus{}names\PYZus{}calibration} \PY{o}{=} \PY{n}{param\PYZus{}names\PYZus{}extended}
+
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to create the sampler}
+\PY{n}{sampler\PYZus{}biased} \PY{o}{=} \PY{n}{ReactiveNestedSampler}\PY{p}{(}
+    \PY{n}{param\PYZus{}names\PYZus{}calibration}\PY{p}{,}
+    \PY{k}{lambda} \PY{n}{p}\PY{p}{:} \PY{n}{log\PYZus{}likelihood\PYZus{}spec}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{n}{spec\PYZus{}biased}\PY{p}{)}\PY{p}{,}
+    \PY{n}{prior\PYZus{}transform\PYZus{}spec}\PY{p}{,}
+    \PY{n}{log\PYZus{}dir}\PY{o}{=}\PY{n}{log\PYZus{}dir}
+\PY{p}{)}
+
+\PY{n}{results\PYZus{}spec\PYZus{}biased} \PY{o}{=} \PY{n}{sampler\PYZus{}biased}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creating directory for new run spectrum\_biased/run1
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+VBox(children=(HTML(value=''), GridspecLayout(children=(HTML(value="<div style='background-color:\#6E6BF4;'>\&nb…
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Z=-215.1(98.92\%) | Like=-203.45..-203.29 [-203.4450..-203.4444]*|
+it/evals=6480/37662 eff=17.3904\% N=400
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{108}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{cornerplot}\PY{p}{(}\PY{n}{results\PYZus{}spec\PYZus{}biased}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{param\PYZus{}true}\PY{o}{+}\PY{n}{derived\PYZus{}true}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_42_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{109}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to report summary statistics}
+\PY{c+c1}{\PYZsh{} Report summary statistics for the calibration run (fall back to other spectrum results if not present)}
+\PY{n}{res} \PY{o}{=} \PY{n+nb}{globals}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{results\PYZus{}spec\PYZus{}calib}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o+ow}{or} \PY{n+nb}{globals}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{results\PYZus{}spec\PYZus{}biased}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o+ow}{or} \PY{n+nb}{globals}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{results\PYZus{}spec}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{k}{if} \PY{n}{res} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{No UltraNest results found (results\PYZus{}spec\PYZus{}calib / results\PYZus{}spec\PYZus{}biased / results\PYZus{}spec).}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{k}{else}\PY{p}{:}
+    \PY{n}{names} \PY{o}{=} \PY{n}{res}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paramnames}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+    \PY{n}{samples} \PY{o}{=} \PY{n}{res}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+    \PY{n}{df\PYZus{}res} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{samples}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{names}\PY{p}{)}
+
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Summary statistics (including 16/50/84 percentiles):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{n}{percentiles}\PY{o}{=}\PY{p}{[}\PY{l+m+mf}{0.16}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.84}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Covariance matrix:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{cov}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Correlation matrix:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+
+    \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{res}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Log\PYZhy{}evidence (logZ): }\PY{l+s+si}{\PYZob{}}\PY{n}{res}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s2}{.6g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{  ± }\PY{l+s+si}{\PYZob{}}\PY{n}{res}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logzerr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{+w}{ }\PY{n}{np}\PY{o}{.}\PY{n}{nan}\PY{p}{)}\PY{l+s+si}{:}\PY{l+s+s2}{.6g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Summary statistics (including 16/50/84 percentiles):
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+                 A            w            B           x0            k  \textbackslash{}
+count  7856.000000  7856.000000  7856.000000  7856.000000  7856.000000   
+mean     54.036501     4.925338    49.514879    -0.448873     0.602944   
+std       4.303335     0.424247     6.042962     0.417749     0.074478   
+min      37.859757     3.425318    34.411649    -1.859683     0.332806   
+16\%      49.894924     4.512572    42.513046    -0.866398     0.528912   
+50\%      54.060301     4.912948    49.674264    -0.451749     0.599592   
+84\%      58.292784     5.343534    56.367189    -0.029606     0.677626   
+max      72.065143     7.187090    62.989378     1.142170     0.839028   
+
+                 b            f      sigma\_v  
+count  7856.000000  7856.000000  7856.000000  
+mean      9.926886    26.543273    49.253384  
+std       5.864554     2.428798     4.242473  
+min       0.001669    18.212377    34.253178  
+16\%       3.035516    24.143715    45.125722  
+50\%       9.696400    26.532078    49.129480  
+84\%      16.954213    28.891584    53.435342  
+max      19.998368    36.619236    71.870904  
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Covariance matrix:
+                 A         w          B        x0         k          b  \textbackslash{}
+A        18.518693 -0.715416  -1.727820  0.031441 -0.026578   0.087038
+w        -0.715416  0.179986  -0.356649 -0.007555 -0.000865   0.039035
+B        -1.727820 -0.356649  36.517388  0.072025  0.014969 -34.223010
+x0        0.031441 -0.007555   0.072025  0.174514 -0.007802  -0.050074
+k        -0.026578 -0.000865   0.014969 -0.007802  0.005547   0.004398
+b         0.087038  0.039035 -34.223010 -0.050074  0.004398  34.392993
+f         5.256054  0.612783  -2.798292 -0.025257 -0.017789   0.271583
+sigma\_v  -7.154155  1.799857  -3.566488 -0.075550 -0.008647   0.390351
+
+                f    sigma\_v
+A        5.256054  -7.154155
+w        0.612783   1.799857
+B       -2.798292  -3.566488
+x0      -0.025257  -0.075550
+k       -0.017789  -0.008647
+b        0.271583   0.390351
+f        5.899059   6.127828
+sigma\_v  6.127828  17.998575
+
+Correlation matrix:
+                A         w         B        x0         k         b         f  \textbackslash{}
+A        1.000000 -0.391863 -0.066442  0.017490 -0.082926  0.003449  0.502879
+w       -0.391863  1.000000 -0.139114 -0.042629 -0.027365  0.015689  0.594698
+B       -0.066442 -0.139114  1.000000  0.028531  0.033260 -0.965680 -0.190657
+x0       0.017490 -0.042629  0.028531  1.000000 -0.250760 -0.020439 -0.024893
+k       -0.082926 -0.027365  0.033260 -0.250760  1.000000  0.010069 -0.098343
+b        0.003449  0.015689 -0.965680 -0.020439  0.010069  1.000000  0.019067
+f        0.502879  0.594698 -0.190657 -0.024893 -0.098343  0.019067  1.000000
+sigma\_v -0.391863  1.000000 -0.139114 -0.042629 -0.027365  0.015689  0.594698
+
+          sigma\_v
+A       -0.391863
+w        1.000000
+B       -0.139114
+x0      -0.042629
+k       -0.027365
+b        0.015689
+f        0.594698
+sigma\_v  1.000000
+
+Log-evidence (logZ): -186.124  ± 0.231188
+    \end{Verbatim}
+
+    \paragraph{Question 2.4: accounting for calibration
+systematics}\label{question-2.4-accounting-for-calibration-systematics}
+
+Now, assume that the calibration bias is noticed but the exact form is
+unknown. One way to account for this issue is to introduce additional
+nuisance parameters \(k\) and \(b\) in the model to capture the
+calibration bias.
+
+\textbf{Tasks:} 1. Repeat the inference from Question 2.1, now including
+the nuisance parameters \(k\) and \(b\) in the model. Use uniform priors
+for \(k \in [-1, 1]\) and \(b \in [0, 20]\). 2. Plot the joint and
+marginalized posterior distributions of all parameters, including \(k\)
+and \(b\). 3. Report the mean, standard deviation, and 16-50-84
+percentiles of the marginalized posterior distributions, as well as the
+covariance matrix of the joint posterior distribution (including the
+nuisance parameters). Compare the evidence with that from Question 2.3
+(without the nuisance parameters). 4. Do you really need the \(b\)
+parameter in the model? Try removing it and see how the inference
+results and evidence change. 5. Discuss all your results in the whole
+exercise.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{110}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{param\PYZus{}names\PYZus{}calib} \PY{o}{=} \PY{n}{param\PYZus{}names} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{npar\PYZus{}calib} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{param\PYZus{}names\PYZus{}calib}\PY{p}{)}
+\PY{n}{param\PYZus{}ranges\PYZus{}calib} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{param\PYZus{}ranges}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{n}{param\PYZus{}true\PYZus{}calib} \PY{o}{=} \PY{n}{param\PYZus{}true} \PY{o}{+} \PY{p}{[}\PY{n}{k\PYZus{}true}\PY{p}{,} \PY{n}{b\PYZus{}true}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{111}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{prior\PYZus{}transform\PYZus{}spec\PYZus{}calib}\PY{p}{(}\PY{n}{cube}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Transform unit cube to uniform prior space with calibration parameters.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        cube: array, unit cube samples}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        params: array, transformed parameters}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{params} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{npar\PYZus{}calib} \PY{o}{+} \PY{l+m+mi}{2}\PY{p}{)}   \PY{c+c1}{\PYZsh{} Derived parameters: f, sigma\PYZus{}v}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{pmin}\PY{p}{,} \PY{n}{pmax}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{param\PYZus{}ranges\PYZus{}calib}\PY{p}{)}\PY{p}{:}
+        \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{pmin} \PY{o}{+} \PY{p}{(}\PY{n}{pmax} \PY{o}{\PYZhy{}} \PY{n}{pmin}\PY{p}{)} \PY{o}{*} \PY{n}{cube}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+    \PY{c+c1}{\PYZsh{} Derived parameters}
+    \PY{n}{params}\PY{p}{[}\PY{n}{npar\PYZus{}calib}\PY{p}{]} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{/} \PY{l+m+mi}{10}   \PY{c+c1}{\PYZsh{} f = A * w / 10}
+    \PY{n}{params}\PY{p}{[}\PY{n}{npar\PYZus{}calib} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{10}           \PY{c+c1}{\PYZsh{} sigma\PYZus{}v = w * 10}
+    \PY{k}{return} \PY{n}{params}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}likelihood\PYZus{}spec\PYZus{}calib}\PY{p}{(}\PY{n}{params}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the log\PYZhy{}likelihood of the observed data given the model parameters with calibration bias.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        params: array, model parameters [A, w, B, x0, k, b]}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        logL: float, log\PYZhy{}likelihood value}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{k} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{n}{npar}\PY{p}{]}
+    \PY{n}{b} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{n}{npar} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{]}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT below to complete the log\PYZhy{}likelihood calculation}
+    \PY{c+c1}{\PYZsh{} expected counts: Gaussian line + background + linear calibration bias}
+    \PY{n}{N\PYZus{}exp} \PY{o}{=} \PY{n}{spec\PYZus{}model}\PY{p}{(}\PY{n}{x\PYZus{}spec}\PY{p}{,} \PY{o}{*}\PY{p}{(}\PY{n}{params}\PY{p}{[}\PY{p}{:}\PY{n}{npar}\PY{p}{]}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{n}{k} \PY{o}{*} \PY{n}{x\PYZus{}spec} \PY{o}{+} \PY{n}{b}
+    \PY{c+c1}{\PYZsh{} avoid non\PYZhy{}positive expected counts for log calculations}
+    \PY{n}{N\PYZus{}exp} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{clip}\PY{p}{(}\PY{n}{N\PYZus{}exp}\PY{p}{,} \PY{l+m+mf}{1e\PYZhy{}10}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Poisson log\PYZhy{}likelihood: sum( n*log(lambda) \PYZhy{} lambda \PYZhy{} log(n!) )}
+    \PY{n}{const\PYZus{}term} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{gammaln}\PY{p}{(}\PY{n}{spec} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+    \PY{n}{logL} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{xlogy}\PY{p}{(}\PY{n}{spec}\PY{p}{,} \PY{n}{N\PYZus{}exp}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{N\PYZus{}exp}\PY{p}{)} \PY{o}{+} \PY{n}{const\PYZus{}term}
+    \PY{k}{return} \PY{n}{logL}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{112}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create and run the UltraNest sampler for the model with calibration parameters}
+\PY{n}{log\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spectrum\PYZus{}calib}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Make sure the sampler\PYZsq{}s parameter names match what prior\PYZus{}transform\PYZus{}spec\PYZus{}calib returns.}
+\PY{c+c1}{\PYZsh{} prior\PYZus{}transform\PYZus{}spec\PYZus{}calib returns [A, w, B, x0, k, b, f, sigma\PYZus{}v] (npar\PYZus{}calib + 2)}
+\PY{n}{param\PYZus{}names\PYZus{}calib\PYZus{}extended} \PY{o}{=} \PY{n}{param\PYZus{}names\PYZus{}calib} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigma\PYZus{}v}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Use the biased observed spectrum as the global \PYZsq{}spec\PYZsq{} that log\PYZus{}likelihood\PYZus{}spec\PYZus{}calib expects}
+\PY{n}{spec} \PY{o}{=} \PY{n}{spec\PYZus{}biased}
+
+\PY{c+c1}{\PYZsh{} Create the sampler using the extended parameter names}
+\PY{n}{sampler\PYZus{}calib} \PY{o}{=} \PY{n}{ReactiveNestedSampler}\PY{p}{(}
+    \PY{n}{param\PYZus{}names\PYZus{}calib\PYZus{}extended}\PY{p}{,}
+    \PY{k}{lambda} \PY{n}{p}\PY{p}{:} \PY{n}{log\PYZus{}likelihood\PYZus{}spec\PYZus{}calib}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{p}{,}
+    \PY{n}{prior\PYZus{}transform\PYZus{}spec\PYZus{}calib}\PY{p}{,}
+    \PY{n}{log\PYZus{}dir}\PY{o}{=}\PY{n}{log\PYZus{}dir}
+\PY{p}{)}
+
+\PY{n}{results\PYZus{}spec\PYZus{}calib} \PY{o}{=} \PY{n}{sampler\PYZus{}calib}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creating directory for new run spectrum\_calib/run1
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+VBox(children=(HTML(value=''), GridspecLayout(children=(HTML(value="<div style='background-color:\#6E6BF4;'>\&nb…
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Z=-185.9(98.98\%) | Like=-172.17..-171.91 [-172.1680..-172.1677]*|
+it/evals=7360/55430 eff=13.3745\% N=400
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{113}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to make the corner plot with derived parameters}
+\PY{n}{cornerplot}\PY{p}{(}\PY{n}{results\PYZus{}spec\PYZus{}calib}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{param\PYZus{}true\PYZus{}calib} \PY{o}{+} \PY{n}{derived\PYZus{}true}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_48_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{114}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to report summary statistics}
+
+\PY{c+c1}{\PYZsh{} Use the \PYZsq{}results\PYZsq{} produced by UltraNest (light curve)}
+\PY{n}{names} \PY{o}{=} \PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paramnames}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{samples} \PY{o}{=} \PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Convert to DataFrame for easy summary}
+\PY{n}{df\PYZus{}res} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{samples}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{names}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Basic info}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Number of posterior samples: }\PY{l+s+si}{\PYZob{}}\PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{results}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Log\PYZhy{}evidence (logZ): }\PY{l+s+si}{\PYZob{}}\PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s2}{.6g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{  ± }\PY{l+s+si}{\PYZob{}}\PY{n}{results}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logzerr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{+w}{ }\PY{n}{np}\PY{o}{.}\PY{n}{nan}\PY{p}{)}\PY{l+s+si}{:}\PY{l+s+s2}{.6g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Standard descriptive summary including 16/50/84 percentiles}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Descriptive statistics (including 16/50/84 percentiles):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{n}{percentiles}\PY{o}{=}\PY{p}{[}\PY{l+m+mf}{0.16}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.84}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Explicit 16/50/84 table}
+\PY{n}{pct} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{,} \PY{l+m+mi}{84}\PY{p}{]}
+\PY{n}{percentiles} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{percentile}\PY{p}{(}\PY{n}{samples}\PY{p}{,} \PY{n}{pct}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+\PY{n}{df\PYZus{}pct} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{percentiles}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{n}{names}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{P}\PY{l+s+si}{\PYZob{}}\PY{n}{p}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{pct}\PY{p}{]}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Percentiles (16/50/84):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}pct}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Mean and standard deviation}
+\PY{n}{means} \PY{o}{=} \PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+\PY{n}{stds} \PY{o}{=} \PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{ddof}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{df\PYZus{}stats} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{means}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{std}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{stds}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Mean and standard deviation:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}stats}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Covariance and correlation matrices}
+\PY{n}{cov} \PY{o}{=} \PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{cov}\PY{p}{(}\PY{p}{)}
+\PY{n}{corr} \PY{o}{=} \PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Covariance matrix:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{display}\PY{p}{(}\PY{n}{cov}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Correlation matrix:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{display}\PY{p}{(}\PY{n}{corr}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of posterior samples: 8559
+Log-evidence (logZ): -21.417  ± 0.252925
+
+Descriptive statistics (including 16/50/84 percentiles):
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+                 A            T          phi           m0
+count  8559.000000  8559.000000  8559.000000  8559.000000
+mean      1.571754   100.297697     1.027605    15.048364
+std       0.074260     0.830979     0.110257     0.053563
+min       1.243882    97.592807     0.593769    14.821707
+16\%       1.497936    99.480002     0.916858    14.995999
+50\%       1.571524   100.293845     1.026627    15.047686
+84\%       1.646535   101.150908     1.137494    15.102016
+max       1.852623   103.807809     1.478882    15.227167
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Percentiles (16/50/84):
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+           P16         P50         P84
+A     1.497936    1.571524    1.646535
+T    99.480002  100.293845  101.150908
+phi   0.916858    1.026627    1.137494
+m0   14.995999   15.047686   15.102016
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Mean and standard deviation:
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+           mean       std
+A      1.571754  0.074260
+T    100.297697  0.830979
+phi    1.027605  0.110257
+m0    15.048364  0.053563
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Covariance matrix:
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+            A         T       phi        m0
+A    0.005515 -0.009929 -0.000836  0.000162
+T   -0.009929  0.690526  0.084081 -0.011616
+phi -0.000836  0.084081  0.012157 -0.001130
+m0   0.000162 -0.011616 -0.001130  0.002869
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Correlation matrix:
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+            A         T       phi        m0
+A    1.000000 -0.160906 -0.102085  0.040737
+T   -0.160906  1.000000  0.917700 -0.260984
+phi -0.102085  0.917700  1.000000 -0.191261
+m0   0.040737 -0.260984 -0.191261  1.000000
+    \end{Verbatim}
+
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{115}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to compute the bayes factor comparing with the model without calibration parameters}
+
+\PY{n}{evidence\PYZus{}biased} \PY{o}{=} \PY{n}{results\PYZus{}spec\PYZus{}biased}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{evidence\PYZus{}calib} \PY{o}{=} \PY{n}{results\PYZus{}spec\PYZus{}calib}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{log\PYZus{}bayes\PYZus{}factor\PYZus{}calib} \PY{o}{=} \PY{n}{evidence\PYZus{}calib} \PY{o}{\PYZhy{}} \PY{n}{evidence\PYZus{}biased}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log Bayes Factor (with calib vs biased): }\PY{l+s+si}{\PYZob{}}\PY{n}{log\PYZus{}bayes\PYZus{}factor\PYZus{}calib}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Log Bayes Factor (with calib vs biased): 29.16
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{116}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Repeat the inference without the b parameter}
+\PY{n}{param\PYZus{}names\PYZus{}calib\PYZus{}nob} \PY{o}{=} \PY{n}{param\PYZus{}names} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{npar\PYZus{}calib\PYZus{}nob} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{param\PYZus{}names\PYZus{}calib\PYZus{}nob}\PY{p}{)}
+\PY{n}{param\PYZus{}ranges\PYZus{}calib\PYZus{}nob} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{param\PYZus{}ranges}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{n}{param\PYZus{}true\PYZus{}calib\PYZus{}nob} \PY{o}{=} \PY{n}{param\PYZus{}true} \PY{o}{+} \PY{p}{[}\PY{n}{k\PYZus{}true}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{117}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Bayesian inference functions for UltraNest sampler without b parameter}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{prior\PYZus{}transform\PYZus{}spec\PYZus{}calib\PYZus{}nob}\PY{p}{(}\PY{n}{cube}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Transform unit cube to uniform prior space with calibration parameter k only.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        cube: array, unit cube samples}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        params: array, transformed parameters}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{params} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{npar\PYZus{}calib\PYZus{}nob} \PY{o}{+} \PY{l+m+mi}{2}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Derived parameters: f, sigma\PYZus{}v}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT below to complete the prior transform}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{pmin}\PY{p}{,} \PY{n}{pmax}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{param\PYZus{}ranges\PYZus{}calib\PYZus{}nob}\PY{p}{)}\PY{p}{:}
+        \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{pmin} \PY{o}{+} \PY{p}{(}\PY{n}{pmax} \PY{o}{\PYZhy{}} \PY{n}{pmin}\PY{p}{)} \PY{o}{*} \PY{n}{cube}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+    \PY{c+c1}{\PYZsh{} Derived parameters}
+    \PY{n}{params}\PY{p}{[}\PY{n}{npar\PYZus{}calib\PYZus{}nob}\PY{p}{]} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{/} \PY{l+m+mi}{10}
+    \PY{n}{params}\PY{p}{[}\PY{n}{npar\PYZus{}calib\PYZus{}nob} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{10}
+    \PY{k}{return} \PY{n}{params}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}likelihood\PYZus{}spec\PYZus{}calib\PYZus{}nob}\PY{p}{(}\PY{n}{params}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the log\PYZhy{}likelihood of the observed data given the model parameters with calibration bias k only.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        params: array, model parameters [A, w, B, x0, k]}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        logL: float, log\PYZhy{}likelihood value}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{k} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{n}{npar}\PY{p}{]}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT below to complete the log\PYZhy{}likelihood calculation}
+    \PY{n}{N\PYZus{}exp} \PY{o}{=} \PY{n}{spec\PYZus{}model}\PY{p}{(}\PY{n}{x\PYZus{}spec}\PY{p}{,} \PY{o}{*}\PY{p}{(}\PY{n}{params}\PY{p}{[}\PY{p}{:}\PY{n}{npar}\PY{p}{]}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{n}{k} \PY{o}{*} \PY{n}{x\PYZus{}spec}
+    \PY{n}{N\PYZus{}exp} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{clip}\PY{p}{(}\PY{n}{N\PYZus{}exp}\PY{p}{,} \PY{l+m+mf}{1e\PYZhy{}10}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+    \PY{n}{const\PYZus{}term} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{gammaln}\PY{p}{(}\PY{n}{spec} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+    \PY{n}{logL} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{xlogy}\PY{p}{(}\PY{n}{spec}\PY{p}{,} \PY{n}{N\PYZus{}exp}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{N\PYZus{}exp}\PY{p}{)} \PY{o}{+} \PY{n}{const\PYZus{}term}
+    \PY{k}{return} \PY{n}{logL}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{118}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create and run the UltraNest sampler for the model with calibration parameter k (no b)}
+\PY{n}{log\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spectrum\PYZus{}calib\PYZus{}nob}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{n}{param\PYZus{}names\PYZus{}calib\PYZus{}nob} \PY{o}{=} \PY{n}{param\PYZus{}names} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{c+c1}{\PYZsh{} prior\PYZus{}transform\PYZus{}spec\PYZus{}calib\PYZus{}nob returns also the two derived parameters (f, sigma\PYZus{}v),}
+\PY{c+c1}{\PYZsh{} so the sampler must be created with matching parameter names.}
+\PY{n}{param\PYZus{}names\PYZus{}calib\PYZus{}nob\PYZus{}extended} \PY{o}{=} \PY{n}{param\PYZus{}names\PYZus{}calib\PYZus{}nob} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigma\PYZus{}v}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Create the sampler using the extended parameter names so shapes match}
+\PY{n}{sampler\PYZus{}calib\PYZus{}nob} \PY{o}{=} \PY{n}{ReactiveNestedSampler}\PY{p}{(}
+    \PY{n}{param\PYZus{}names\PYZus{}calib\PYZus{}nob\PYZus{}extended}\PY{p}{,}
+    \PY{k}{lambda} \PY{n}{p}\PY{p}{:} \PY{n}{log\PYZus{}likelihood\PYZus{}spec\PYZus{}calib\PYZus{}nob}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{p}{,}
+    \PY{n}{prior\PYZus{}transform\PYZus{}spec\PYZus{}calib\PYZus{}nob}\PY{p}{,}
+    \PY{n}{log\PYZus{}dir}\PY{o}{=}\PY{n}{log\PYZus{}dir}
+\PY{p}{)}
+
+\PY{n}{results\PYZus{}spec\PYZus{}calib\PYZus{}nob} \PY{o}{=} \PY{n}{sampler\PYZus{}calib\PYZus{}nob}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creating directory for new run spectrum\_calib\_nob/run1
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+VBox(children=(HTML(value=''), GridspecLayout(children=(HTML(value="<div style='background-color:\#6E6BF4;'>\&nb…
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Z=-185.9(98.95\%) | Like=-172.20..-171.91 [-172.2041..-172.2041]*|
+it/evals=7320/44595 eff=16.5630\% N=400
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{119}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to make the corner plot}
+\PY{n}{cornerplot}\PY{p}{(}\PY{n}{results\PYZus{}spec\PYZus{}calib\PYZus{}nob}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{param\PYZus{}true\PYZus{}calib\PYZus{}nob} \PY{o}{+} \PY{n}{derived\PYZus{}true}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_54_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{120}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Compute log Bayes factor comparing model with (results\PYZus{}spec\PYZus{}calib) vs without b (results\PYZus{}spec\PYZus{}calib\PYZus{}nob)}
+\PY{n}{logz\PYZus{}calib} \PY{o}{=} \PY{n}{results\PYZus{}spec\PYZus{}calib}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{logzerr\PYZus{}calib} \PY{o}{=} \PY{n}{results\PYZus{}spec\PYZus{}calib}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logzerr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{nan}\PY{p}{)}
+
+\PY{n}{logz\PYZus{}calib\PYZus{}nob} \PY{o}{=} \PY{n}{results\PYZus{}spec\PYZus{}calib\PYZus{}nob}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{logzerr\PYZus{}calib\PYZus{}nob} \PY{o}{=} \PY{n}{results\PYZus{}spec\PYZus{}calib\PYZus{}nob}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logzerr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{nan}\PY{p}{)}
+
+\PY{n}{log\PYZus{}bayes\PYZus{}factor\PYZus{}b} \PY{o}{=} \PY{n}{logz\PYZus{}calib} \PY{o}{\PYZhy{}} \PY{n}{logz\PYZus{}calib\PYZus{}nob}
+\PY{n}{log\PYZus{}bayes\PYZus{}factor\PYZus{}err} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{p}{(}\PY{n}{logzerr\PYZus{}calib} \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{isfinite}\PY{p}{(}\PY{n}{logzerr\PYZus{}calib}\PY{p}{)} \PY{k}{else} \PY{l+m+mf}{0.0}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{+}
+                               \PY{p}{(}\PY{n}{logzerr\PYZus{}calib\PYZus{}nob} \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{isfinite}\PY{p}{(}\PY{n}{logzerr\PYZus{}calib\PYZus{}nob}\PY{p}{)} \PY{k}{else} \PY{l+m+mf}{0.0}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} linear Bayes factor (may overflow for very large values)}
+\PY{n}{bayes\PYZus{}factor\PYZus{}b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{log\PYZus{}bayes\PYZus{}factor\PYZus{}b}\PY{p}{)} \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{isfinite}\PY{p}{(}\PY{n}{log\PYZus{}bayes\PYZus{}factor\PYZus{}b}\PY{p}{)} \PY{o+ow}{and} \PY{n}{log\PYZus{}bayes\PYZus{}factor\PYZus{}b} \PY{o}{\PYZlt{}} \PY{l+m+mi}{700} \PY{k}{else} \PY{n}{np}\PY{o}{.}\PY{n}{inf}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log Bayes Factor (with b vs without b): }\PY{l+s+si}{\PYZob{}}\PY{n}{log\PYZus{}bayes\PYZus{}factor\PYZus{}b}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ ± }\PY{l+s+si}{\PYZob{}}\PY{n}{log\PYZus{}bayes\PYZus{}factor\PYZus{}err}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bayes Factor (with b / without b): }\PY{l+s+si}{\PYZob{}}\PY{n}{bayes\PYZus{}factor\PYZus{}b}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Log Bayes Factor (with b vs without b): -0.047 ± 0.571
+Bayes Factor (with b / without b): 0.9541855806492162
+    \end{Verbatim}
+
+    \subsubsection{Exercise 3: Hubble diagram
+fitting}\label{exercise-3-hubble-diagram-fitting}
+
+Assume the variable stars in Exercise 1 are used as standard candles to
+measure cosmological distances. The Hubble diagram relates the distance
+\(d\) to the recession velocity \(v\) of an object, given by Hubble's
+law:
+
+\(v = H_0 d\)
+
+where \(H_0\) is the cosmic expansion rate (Hubble constant).
+
+Assume the measurements are precise, but the recession velocities have
+an additional Gaussian scatter due to peculiar velocities of galaxies,
+characterized by a standard deviation \(\sigma\):
+
+\(v_i = H_0 d_i + \epsilon_i\),
+
+where \(\epsilon_i \sim \mathcal{N}(0, \sigma^2)\).
+
+\paragraph{Question 3.1: Hubble constant
+inference}\label{question-3.1-hubble-constant-inference}
+
+\textbf{Tasks:} 1. Simulate a dataset of 50 variable stars with
+distances \(d_i\) uniformly distributed between 10 Mpc and 100 Mpc. The
+recession velocities \(v_i\) are generated using Hubble's law with a
+true Hubble constant \(H_0 = 70\) km/s/Mpc, plus Gaussian noise with a
+standard deviation of \(\sigma = 500\) km/s to account for peculiar
+velocities. Plot the simulated Hubble diagram data. 2. Infer the Hubble
+constant \(H_0\) and peculiar velocity dispersion \(\sigma\) using the
+\texttt{UltraNest} package with a uniform prior over the range
+\(H_0 \in [50, 100]\) km/s/Mpc and \(\sigma \in [100, 1500]\) km/s. 3.
+Plot the joint and marginalized posterior distributions of \(H_0\) and
+\(\sigma\). 4. Report the mean, standard deviation, and 16-50-84
+percentiles of the marginalized posterior distribution of \(H_0\).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{121}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{sim\PYZus{}hubble\PYZus{}diagram}\PY{p}{(}\PY{n}{num}\PY{p}{,} \PY{n}{H0}\PY{o}{=}\PY{l+m+mi}{70}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{,} \PY{n}{dmin}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{dmax}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Simulate a Hubble diagram with Gaussian noise from peculiar velocities.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        num: int, number of data points}
+\PY{l+s+sd}{        H0: float, Hubble constant in km/s/Mpc}
+\PY{l+s+sd}{        sigma: float, velocity dispersion in km/s}
+\PY{l+s+sd}{        dmin: float, minimum distance in Mpc}
+\PY{l+s+sd}{        dmax: float, maximum distance in Mpc}
+\PY{l+s+sd}{        seed: int, random seed for reproducibility}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        d: array, distances in Mpc}
+\PY{l+s+sd}{        v\PYZus{}obs: array, observed velocities in km/s}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT below to complete the function}
+    \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed}\PY{p}{)}
+    \PY{n}{d} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{n}{dmin}\PY{p}{,} \PY{n}{dmax}\PY{p}{,} \PY{n}{num}\PY{p}{)}
+    \PY{n}{v\PYZus{}obs} \PY{o}{=} \PY{n}{H0} \PY{o}{*} \PY{n}{d} \PY{o}{+} \PY{n}{rng}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{num}\PY{p}{)}
+    \PY{k}{return} \PY{n}{d}\PY{p}{,} \PY{n}{v\PYZus{}obs}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{2024011182}
+\PY{n}{num} \PY{o}{=} \PY{l+m+mi}{50}
+\PY{n}{param\PYZus{}names} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{H0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigma}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{param\PYZus{}true} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{70}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{]}
+\PY{n}{param\PYZus{}ranges} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{l+m+mi}{50}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{1500}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{d\PYZus{}obs}\PY{p}{,} \PY{n}{v\PYZus{}obs} \PY{o}{=} \PY{n}{sim\PYZus{}hubble\PYZus{}diagram}\PY{p}{(}\PY{n}{num}\PY{p}{,} \PY{n}{H0}\PY{o}{=}\PY{n}{param\PYZus{}true}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{n}{param\PYZus{}true}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{seed}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{d\PYZus{}obs}\PY{p}{,} \PY{n}{v\PYZus{}obs}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Observed data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{d\PYZus{}model} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{110}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+\PY{n}{v\PYZus{}model} \PY{o}{=} \PY{n}{param\PYZus{}true}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{n}{d\PYZus{}model}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{d\PYZus{}model}\PY{p}{,} \PY{n}{v\PYZus{}model}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True Hubble Law}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance (Mpc)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Velocity (km/s)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_58_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{123}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Bayesian inference functions for UltraNest sampler}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{prior\PYZus{}transform\PYZus{}hubble}\PY{p}{(}\PY{n}{cube}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Transform unit cube to uniform prior space for H0 and sigma.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        cube: array, unit cube samples}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        params: array, transformed parameters}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT below to complete the prior transform}
+    \PY{n}{params} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{cube}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{pmin}\PY{p}{,} \PY{n}{pmax}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{param\PYZus{}ranges}\PY{p}{)}\PY{p}{:}
+        \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{pmin} \PY{o}{+} \PY{p}{(}\PY{n}{pmax} \PY{o}{\PYZhy{}} \PY{n}{pmin}\PY{p}{)} \PY{o}{*} \PY{n}{cube}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+    \PY{k}{return} \PY{n}{params}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}likelihood\PYZus{}hubble}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n}{d\PYZus{}data}\PY{p}{,} \PY{n}{v\PYZus{}data}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Gaussian log\PYZhy{}likelihood for v = H0 * d with scatter sigma.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        params: array, model parameters [H0, sigma]}
+\PY{l+s+sd}{        d\PYZus{}data: array, observed distances}
+\PY{l+s+sd}{        v\PYZus{}data: array, observed velocities}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        logL: float, log\PYZhy{}likelihood value}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT below to complete the log\PYZhy{}likelihood calculation}
+    \PY{n}{H0}\PY{p}{,} \PY{n}{sigma} \PY{o}{=} \PY{n}{params}
+    \PY{c+c1}{\PYZsh{} enforce positive sigma}
+    \PY{k}{if} \PY{n}{sigma} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{0} \PY{o+ow}{or} \PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{isfinite}\PY{p}{(}\PY{n}{sigma}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{inf}
+    \PY{n}{v\PYZus{}model} \PY{o}{=} \PY{n}{H0} \PY{o}{*} \PY{n}{d\PYZus{}data}
+    \PY{n}{resid} \PY{o}{=} \PY{n}{v\PYZus{}data} \PY{o}{\PYZhy{}} \PY{n}{v\PYZus{}model}
+    \PY{n}{n} \PY{o}{=} \PY{n}{resid}\PY{o}{.}\PY{n}{size}
+    \PY{n}{const} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{n} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{*} \PY{n}{sigma}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+    \PY{n}{chi2} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{(}\PY{n}{resid} \PY{o}{/} \PY{n}{sigma}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}
+    \PY{n}{logL} \PY{o}{=} \PY{n}{const} \PY{o}{+} \PY{n}{chi2}
+    \PY{k}{return} \PY{n+nb}{float}\PY{p}{(}\PY{n}{logL}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{124}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create and run the UltraNest sampler for the Hubble diagram}
+\PY{n}{log\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hubble}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Use the Hubble parameter names defined earlier ([\PYZsq{}H0\PYZsq{}, \PYZsq{}sigma\PYZsq{}])}
+\PY{n}{param\PYZus{}hubble} \PY{o}{=} \PY{n}{param\PYZus{}names}
+
+\PY{c+c1}{\PYZsh{} Create the sampler and pass the observed data arrays to the likelihood}
+\PY{n}{sampler\PYZus{}hubble} \PY{o}{=} \PY{n}{ReactiveNestedSampler}\PY{p}{(}
+    \PY{n}{param\PYZus{}hubble}\PY{p}{,}
+    \PY{k}{lambda} \PY{n}{p}\PY{p}{:} \PY{n}{log\PYZus{}likelihood\PYZus{}hubble}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{n}{d\PYZus{}obs}\PY{p}{,} \PY{n}{v\PYZus{}obs}\PY{p}{)}\PY{p}{,}
+    \PY{n}{prior\PYZus{}transform\PYZus{}hubble}\PY{p}{,}
+    \PY{n}{log\PYZus{}dir}\PY{o}{=}\PY{n}{log\PYZus{}dir}
+\PY{p}{)}
+
+\PY{n}{results\PYZus{}hubble} \PY{o}{=} \PY{n}{sampler\PYZus{}hubble}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creating directory for new run hubble/run1
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+VBox(children=(HTML(value=''), GridspecLayout(children=(HTML(value="<div style='background-color:\#6E6BF4;'>\&nb…
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Z=-384.8(99.00\%) | Like=-379.63..-379.62 [-379.6324..-379.6323]*|
+it/evals=3920/5610 eff=75.2399\% N=400
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{125}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to make the corner plot}
+\PY{n}{cornerplot}\PY{p}{(}\PY{n}{results\PYZus{}hubble}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{param\PYZus{}true}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_61_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{126}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to report summary statistics}
+\PY{c+c1}{\PYZsh{} Report summary statistics for results\PYZus{}spec\PYZus{}biased}
+\PY{n}{res} \PY{o}{=} \PY{n}{results\PYZus{}spec\PYZus{}biased}
+\PY{n}{names} \PY{o}{=} \PY{n}{res}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paramnames}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{samples} \PY{o}{=} \PY{n}{res}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{res}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weighted\PYZus{}samples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{points}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{n}{df\PYZus{}res} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{samples}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{names}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Number of posterior samples: }\PY{l+s+si}{\PYZob{}}\PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{res}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Log\PYZhy{}evidence (logZ): }\PY{l+s+si}{\PYZob{}}\PY{n}{res}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s2}{.6g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{  ± }\PY{l+s+si}{\PYZob{}}\PY{n}{res}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logzerr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{+w}{ }\PY{n}{np}\PY{o}{.}\PY{n}{nan}\PY{p}{)}\PY{l+s+si}{:}\PY{l+s+s2}{.6g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Descriptive statistics (including 16/50/84 percentiles):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{n}{percentiles}\PY{o}{=}\PY{p}{[}\PY{l+m+mf}{0.16}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.84}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Explicit 16/50/84 percentiles table}
+\PY{n}{pct} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{percentile}\PY{p}{(}\PY{n}{samples}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{,} \PY{l+m+mi}{84}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+\PY{n}{df\PYZus{}pct} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{pct}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{n}{names}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{P16}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{P50}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{P84}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Percentiles (16/50/84):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}pct}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Mean and standard deviation}
+\PY{n}{means} \PY{o}{=} \PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+\PY{n}{stds} \PY{o}{=} \PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{ddof}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{df\PYZus{}stats} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{means}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{std}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{stds}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Mean and standard deviation:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}stats}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Covariance and correlation matrices}
+\PY{n}{cov} \PY{o}{=} \PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{cov}\PY{p}{(}\PY{p}{)}
+\PY{n}{corr} \PY{o}{=} \PY{n}{df\PYZus{}res}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Covariance matrix:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{display}\PY{p}{(}\PY{n}{cov}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Correlation matrix:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{display}\PY{p}{(}\PY{n}{corr}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Maximum\PYZhy{}likelihood info if available}
+\PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maximum\PYZus{}likelihood}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{res}\PY{p}{:}
+    \PY{n}{ml} \PY{o}{=} \PY{n}{res}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maximum\PYZus{}likelihood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Maximum\PYZhy{}likelihood logL:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{ml}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logl}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+    \PY{k}{if} \PY{n}{ml}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{point}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None}\PY{p}{:}
+        \PY{k}{try}\PY{p}{:}
+            \PY{n}{display}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{ml}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{point}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{n}{names}\PY{p}{)}\PY{p}{)}
+        \PY{k}{except} \PY{n+ne}{Exception}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} fallback if shapes differ}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Maximum\PYZhy{}likelihood point (array):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{ml}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{point}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of posterior samples: 6911
+Log-evidence (logZ): -215.062  ± 0.28392
+
+Descriptive statistics (including 16/50/84 percentiles):
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+                 A            w            B           x0            f  \textbackslash{}
+count  6911.000000  6911.000000  6911.000000  6911.000000  6911.000000   
+mean     53.949639     4.975316    59.298064     0.440475    26.761429   
+std       4.381937     0.470764     1.602727     0.426493     2.598471   
+min      38.063131     3.508343    53.504158    -1.044797    17.625409   
+16\%      49.609767     4.520479    57.716251     0.021621    24.242975   
+50\%      53.765030     4.942921    59.304163     0.429753    26.678065   
+84\%      58.316035     5.442124    60.902015     0.873952    29.345219   
+max      69.000594     7.273710    65.096888     1.969774    37.697309   
+
+           sigma\_v  
+count  6911.000000  
+mean     49.753161  
+std       4.707644  
+min      35.083433  
+16\%      45.204794  
+50\%      49.429208  
+84\%      54.421237  
+max      72.737104  
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Percentiles (16/50/84):
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+               P16        P50        P84
+A        49.609767  53.765030  58.316035
+w         4.520479   4.942921   5.442124
+B        57.716251  59.304163  60.902015
+x0        0.021621   0.429753   0.873952
+f        24.242975  26.678065  29.345219
+sigma\_v  45.204794  49.429208  54.421237
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Mean and standard deviation:
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+              mean       std
+A        53.949639  4.381937
+w         4.975316  0.470764
+B        59.298064  1.602727
+x0        0.440475  0.426493
+f        26.761429  2.598471
+sigma\_v  49.753161  4.707644
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Covariance matrix:
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+                 A         w         B        x0         f    sigma\_v
+A        19.201372 -0.802336 -1.661693 -0.195709  5.185635  -8.023364
+w        -0.802336  0.221619 -0.357337  0.046378  0.781943   2.216191
+B        -1.661693 -0.357337  2.568733 -0.071267 -2.742698  -3.573365
+x0       -0.195709  0.046378 -0.071267  0.181896  0.149330   0.463776
+f         5.185635  0.781943 -2.742698  0.149330  6.752053   7.819432
+sigma\_v  -8.023364  2.216191 -3.573365  0.463776  7.819432  22.161913
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Correlation matrix:
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+                A         w         B        x0         f   sigma\_v
+A        1.000000 -0.388944 -0.236606 -0.104721  0.455426 -0.388944
+w       -0.388944  1.000000 -0.473603  0.230990  0.639225  1.000000
+B       -0.236606 -0.473603  1.000000 -0.104260 -0.658568 -0.473603
+x0      -0.104721  0.230990 -0.104260  1.000000  0.134747  0.230990
+f        0.455426  0.639225 -0.658568  0.134747  1.000000  0.639225
+sigma\_v -0.388944  1.000000 -0.473603  0.230990  0.639225  1.000000
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Maximum-likelihood logL: -203.29279122049047
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+A          54.383761
+w           4.897237
+B          59.318791
+x0          0.389422
+f          26.633017
+sigma\_v    48.972371
+dtype: float64
+    \end{Verbatim}
+
+    
+    \paragraph{Question 3.2: outliers}\label{question-3.2-outliers}
+
+We now observe that a few data points in the Hubble diagram are
+significant outliers, possibly due to misidentification of variable
+stars. As a result, the distances of these objects are underestimated by
+around 50\%.
+
+\textbf{Tasks:} 1. Randomly select 5 data points from the simulated
+dataset in Question 3.1 and multiply their distances \(d_i\) by a
+uniform fraction in \([0.4, 0.6]\) to simulate outliers. Plot the
+modified Hubble diagram data, and overlay the true Hubble law for
+comparison. 2. Repeat the inference from Question 3.1 using the modified
+dataset with outliers. 3. Compare the inference results of \(H_0\) and
+\(\sigma\) with and without outliers.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{127}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Contaminate the data with outliers}
+\PY{n}{num\PYZus{}outliers} \PY{o}{=} \PY{l+m+mi}{5}
+\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{n}{seed} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{outlier\PYZus{}indices} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{num}\PY{p}{,} \PY{n}{num\PYZus{}outliers}\PY{p}{,} \PY{n}{replace}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\PY{n}{d\PYZus{}obs\PYZus{}outliers} \PY{o}{=} \PY{n}{d\PYZus{}obs}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+\PY{n}{d\PYZus{}obs\PYZus{}outliers}\PY{p}{[}\PY{n}{outlier\PYZus{}indices}\PY{p}{]} \PY{o}{*}\PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{l+m+mf}{0.4}\PY{p}{,} \PY{l+m+mf}{0.6}\PY{p}{,} \PY{n}{num\PYZus{}outliers}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Plot the contaminated data}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{d\PYZus{}obs\PYZus{}outliers}\PY{p}{,} \PY{n}{v\PYZus{}obs}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Observed data with outliers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{d\PYZus{}obs\PYZus{}outliers}\PY{p}{[}\PY{n}{outlier\PYZus{}indices}\PY{p}{]}\PY{p}{,} \PY{n}{v\PYZus{}obs}\PY{p}{[}\PY{n}{outlier\PYZus{}indices}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Outliers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{d\PYZus{}model}\PY{p}{,} \PY{n}{v\PYZus{}model}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True Hubble Law}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance (Mpc)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Velocity (km/s)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_64_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{128}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create and run the UltraNest sampler for the Hubble diagram with outliers}
+\PY{n}{log\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hubble\PYZus{}outliers}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to create the sampler}
+\PY{n}{sampler\PYZus{}hubble\PYZus{}outliers} \PY{o}{=} \PY{n}{ReactiveNestedSampler}\PY{p}{(}
+    \PY{n}{param\PYZus{}hubble}\PY{p}{,}
+    \PY{k}{lambda} \PY{n}{p}\PY{p}{:} \PY{n}{log\PYZus{}likelihood\PYZus{}hubble}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{n}{d\PYZus{}obs\PYZus{}outliers}\PY{p}{,} \PY{n}{v\PYZus{}obs}\PY{p}{)}\PY{p}{,}
+    \PY{n}{prior\PYZus{}transform\PYZus{}hubble}\PY{p}{,}
+    \PY{n}{log\PYZus{}dir}\PY{o}{=}\PY{n}{log\PYZus{}dir}
+\PY{p}{)}
+
+\PY{n}{results\PYZus{}hubble\PYZus{}outliers} \PY{o}{=} \PY{n}{sampler\PYZus{}hubble\PYZus{}outliers}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creating directory for new run hubble\_outliers/run1
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+VBox(children=(HTML(value=''), GridspecLayout(children=(HTML(value="<div style='background-color:\#6E6BF4;'>\&nb…
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Z=-419.6(98.98\%) | Like=-415.65..-415.64 [-415.6467..-415.6467]*|
+it/evals=3420/4822 eff=77.3406\% N=400
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{129}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to compare the results (do not forget to make the corner plot with two cases labeled)}
+\PY{n}{cornerplot}\PY{p}{(}\PY{n}{results\PYZus{}hubble\PYZus{}outliers}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{param\PYZus{}true}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_66_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    很明显，这里和真值的偏移已经非常大了.
+
+    \paragraph{Question 3.3: robust inference with mixture
+model}\label{question-3.3-robust-inference-with-mixture-model}
+
+To robustly account for outliers in the Hubble diagram data, we can use
+a mixture model approach. In this model, each data point has a
+probability \((1-\epsilon)\) of being an inlier (following the Hubble
+law with Gaussian scatter) and a probability \(\epsilon\) of being an
+outlier (following a broader distribution). In this case, the likelihood
+for each data point can be expressed as:
+
+\(\mathcal{L}_i = (1 - \epsilon) \mathcal{N}(v_i | H_0 d_i, \sigma_{\rm in}^2) + \epsilon \mathcal{N}(v_i | H_0 d_i, \sigma_{\rm out}^2)\),
+
+where \(\sigma_{\rm in} = \sigma\) is the standard deviation for the
+inliers, and \(\sigma_{\rm out}^2 = \sigma^2 + (H_0 \tau)^2\) is the
+variance for the outliers, with \(\tau\) representing the additional
+uncertainty due to distance measurement. Assume that the actual bias in
+distances for outliers are unknown, so we model it as an additional
+Gaussian scatter in velocity space.
+
+Here, \(\mathcal{N}(v_i | \mu_i, \sigma_i^2)\) denotes the Gaussian
+probability density function:
+
+\(\mathcal{N} (v_i | \mu_i, \sigma_i^2) = \dfrac{1}{\sqrt{2 \pi \sigma_i^2}} \exp\left[-\dfrac{(v_i - \mu_i)^2}{2 \sigma_i^2}\right]\)
+
+\textbf{Tasks:} 1. Implement the mixture model for the Hubble diagram
+data, introducing two additional parameters: the outlier fraction
+\(\epsilon\) and the additional scatter \(\tau\). Assume a uniform prior
+of \(\tau \in [0, 50]\) Mpc and a Beta prior
+\(p(\epsilon|I) \sim {\rm Beta} (1,9)\) that favors low values of
+\(\epsilon\). 2. Repeat the inference from Question 3.2 using the
+mixture model on the modified dataset with outliers. 3. Plot the joint
+and marginalized posterior distributions of \(H_0\), \(\sigma\),
+\(\epsilon\), and \(\tau\). 4. Report the summary statistics of \(H_0\)
+and \(\sigma\) from the mixture model inference, and compare them with
+the results from Question 3.2. 5. Discuss all your results in the whole
+exercise.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{130}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{beta}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{prior\PYZus{}transform\PYZus{}hubble\PYZus{}mixture}\PY{p}{(}\PY{n}{cube}\PY{p}{,} \PY{n}{ranges}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Transform unit cube to uniform prior space for mixture model.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        cube: array, unit cube samples}
+\PY{l+s+sd}{        ranges: list of tuples, parameter ranges [(min, max), ...]}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        params: array, transformed parameters}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{params} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{cube}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{pmin}\PY{p}{,} \PY{n}{pmax}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{ranges}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{:}  \PY{c+c1}{\PYZsh{} For epsilon, apply the Beta prior transformation}
+            \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{beta}\PY{o}{.}\PY{n}{ppf}\PY{p}{(}\PY{n}{cube}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)}
+        \PY{k}{else}\PY{p}{:}
+            \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{pmin} \PY{o}{+} \PY{p}{(}\PY{n}{pmax} \PY{o}{\PYZhy{}} \PY{n}{pmin}\PY{p}{)} \PY{o}{*} \PY{n}{cube}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+    \PY{k}{return} \PY{n}{params}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{log\PYZus{}likelihood\PYZus{}hubble\PYZus{}mixture}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n}{d\PYZus{}data}\PY{p}{,} \PY{n}{v\PYZus{}data}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the log\PYZhy{}likelihood of the observed data given the mixture model parameters.}
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        params: array, model parameters [H0, sigma, epsilon, tau]}
+\PY{l+s+sd}{        d\PYZus{}data: array, observed distances}
+\PY{l+s+sd}{        v\PYZus{}data: array, observed velocities}
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        log\PYZus{}likelihood: float, log\PYZhy{}likelihood value}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{H0}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{epsilon}\PY{p}{,} \PY{n}{tau} \PY{o}{=} \PY{n}{params}
+    \PY{c+c1}{\PYZsh{} NOTE: EDIT below to complete the log\PYZhy{}likelihood calculation}
+    \PY{c+c1}{\PYZsh{} validate parameters}
+    \PY{k}{if} \PY{p}{(}\PY{n}{sigma} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)} \PY{o+ow}{or} \PY{p}{(}\PY{n}{tau} \PY{o}{\PYZlt{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o+ow}{or} \PY{p}{(}\PY{n}{epsilon} \PY{o}{\PYZlt{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o+ow}{or} \PY{p}{(}\PY{n}{epsilon} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1}\PY{p}{)} \PY{o+ow}{or} \PY{p}{(}\PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{isfinite}\PY{p}{(}\PY{n}{H0}\PY{p}{)}\PY{p}{)} \PYZbs{}
+       \PY{o+ow}{or} \PY{p}{(}\PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{isfinite}\PY{p}{(}\PY{n}{sigma}\PY{p}{)}\PY{p}{)} \PY{o+ow}{or} \PY{p}{(}\PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{isfinite}\PY{p}{(}\PY{n}{epsilon}\PY{p}{)}\PY{p}{)} \PY{o+ow}{or} \PY{p}{(}\PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{isfinite}\PY{p}{(}\PY{n}{tau}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{inf}
+
+    \PY{n}{mu} \PY{o}{=} \PY{n}{H0} \PY{o}{*} \PY{n}{d\PYZus{}data}
+    \PY{n}{sigma\PYZus{}in} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{sigma}\PY{p}{)}
+    \PY{n}{sigma\PYZus{}out} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{sigma\PYZus{}in}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{+} \PY{p}{(}\PY{n}{H0} \PY{o}{*} \PY{n}{tau}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} avoid non\PYZhy{}positive variances}
+    \PY{k}{if} \PY{n}{sigma\PYZus{}out} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{0}\PY{p}{:}
+        \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{inf}
+
+    \PY{c+c1}{\PYZsh{} log of Gaussian PDFs}
+    \PY{n}{resid} \PY{o}{=} \PY{n}{v\PYZus{}data} \PY{o}{\PYZhy{}} \PY{n}{mu}
+    \PY{n}{log\PYZus{}pref\PYZus{}in} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{*} \PY{n}{sigma\PYZus{}in}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+    \PY{n}{log\PYZus{}exp\PYZus{}in} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{p}{(}\PY{n}{resid}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{sigma\PYZus{}in}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+    \PY{n}{log\PYZus{}pdf\PYZus{}in} \PY{o}{=} \PY{n}{log\PYZus{}pref\PYZus{}in} \PY{o}{+} \PY{n}{log\PYZus{}exp\PYZus{}in}
+
+    \PY{n}{log\PYZus{}pref\PYZus{}out} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{*} \PY{n}{sigma\PYZus{}out}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+    \PY{n}{log\PYZus{}exp\PYZus{}out} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{p}{(}\PY{n}{resid}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{sigma\PYZus{}out}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+    \PY{n}{log\PYZus{}pdf\PYZus{}out} \PY{o}{=} \PY{n}{log\PYZus{}pref\PYZus{}out} \PY{o}{+} \PY{n}{log\PYZus{}exp\PYZus{}out}
+
+    \PY{c+c1}{\PYZsh{} mixture log\PYZhy{}likelihood per point using log\PYZhy{}sum\PYZhy{}exp for stability}
+    \PY{n}{log\PYZus{}term\PYZus{}in} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{l+m+mf}{1.0} \PY{o}{\PYZhy{}} \PY{n}{epsilon}\PY{p}{)} \PY{o}{+} \PY{n}{log\PYZus{}pdf\PYZus{}in}
+    \PY{n}{log\PYZus{}term\PYZus{}out} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{epsilon}\PY{p}{)} \PY{o}{+} \PY{n}{log\PYZus{}pdf\PYZus{}out}
+    \PY{n}{log\PYZus{}likes} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{logaddexp}\PY{p}{(}\PY{n}{log\PYZus{}term\PYZus{}in}\PY{p}{,} \PY{n}{log\PYZus{}term\PYZus{}out}\PY{p}{)}
+
+    \PY{n}{log\PYZus{}likelihood} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{log\PYZus{}likes}\PY{p}{)}
+    \PY{k}{return} \PY{n}{log\PYZus{}likelihood}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{131}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{param\PYZus{}mixture\PYZus{}names} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{H0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigma}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{epsilon}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tau}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{param\PYZus{}mixture\PYZus{}ranges} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{l+m+mi}{50}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{1500}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\PY{n}{param\PYZus{}mixture\PYZus{}true} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{70}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Create and run the UltraNest sampler for the Hubble diagram with mixture model}
+\PY{n}{log\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hubble\PYZus{}mixture}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to create the sampler}
+\PY{n}{sampler\PYZus{}hubble\PYZus{}mixture} \PY{o}{=} \PY{n}{ReactiveNestedSampler}\PY{p}{(}
+    \PY{n}{param\PYZus{}mixture\PYZus{}names}\PY{p}{,}
+    \PY{k}{lambda} \PY{n}{p}\PY{p}{:} \PY{n}{log\PYZus{}likelihood\PYZus{}hubble\PYZus{}mixture}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{n}{d\PYZus{}obs\PYZus{}outliers}\PY{p}{,} \PY{n}{v\PYZus{}obs}\PY{p}{)}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{} pass a one\PYZhy{}argument prior\PYZus{}transform callable that closes over the ranges}
+    \PY{k}{lambda} \PY{n}{cube}\PY{p}{:} \PY{n}{prior\PYZus{}transform\PYZus{}hubble\PYZus{}mixture}\PY{p}{(}\PY{n}{cube}\PY{p}{,} \PY{n}{param\PYZus{}mixture\PYZus{}ranges}\PY{p}{)}\PY{p}{,}
+    \PY{n}{log\PYZus{}dir}\PY{o}{=}\PY{n}{log\PYZus{}dir}
+\PY{p}{)}
+
+\PY{n}{results\PYZus{}hubble\PYZus{}mixture} \PY{o}{=} \PY{n}{sampler\PYZus{}hubble\PYZus{}mixture}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creating directory for new run hubble\_mixture/run1
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+VBox(children=(HTML(value=''), GridspecLayout(children=(HTML(value="<div style='background-color:\#6E6BF4;'>\&nb…
+    \end{Verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Z=-406.8(98.96\%) | Like=-400.14..-400.00 [-400.1353..-400.1350]*|
+it/evals=4520/10486 eff=44.8146\% N=400
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{132}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} NOTE: EDIT below to complete this question (please make the corner plot, and feel free to add more cells if needed)}
+\PY{n}{cornerplot}\PY{p}{(}\PY{n}{results\PYZus{}hubble\PYZus{}mixture}\PY{p}{,} \PY{n}{truths}\PY{o}{=}\PY{n}{param\PYZus{}mixture\PYZus{}true}\PY{p}{)}
+\PY{k}{pass}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Exercise_week_07_files/Exercise_week_07_71_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subparagraph{Discussions}\label{discussions}
+
+这三种不同情况的对比能够很容易看出，加入 outlier
+之后的真值和估计值差距比较大，在没有加入 outlier
+之前的真值估计算是比较准确，但是还没有达到足够的精度，只有最后一种同时考虑到
+inlier 和 outlier 的模型做出了最准确的真值估计.
+
+    \subsubsection{Note: steps for submitting the
+exercise}\label{note-steps-for-submitting-the-exercise}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  In the menu bar, select \texttt{File\ \textgreater{}\ Download} to
+  download your notebook as a \texttt{.ipynb} file.
+\item
+  Select
+  \texttt{File\ \textgreater{}\ Save\ and\ Export\ Notebook\ As\ \textgreater{}\ PDF}
+  to export your notebook as a PDF file.
+\item
+  Combine the \texttt{.ipynb} and \texttt{.pdf} files into a single
+  \texttt{.zip} or \texttt{.tar.gz} archive.
+\item
+  Upload your archive to the web learning platform (网络学堂).
+\end{enumerate}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
